@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import * as Color from '../components/Colors/colors';
+import * as IconName from '../components/Icons/IconName';
 import { Badge } from '../components/Icons/Badge';
 import { Icon } from '../components/Icons/Icons';
 import MainScreen from '../screens/MainBottomTabs/MainScreen';
@@ -16,19 +17,20 @@ const MainBottomTabNavigation = () => {
       screenOptions={({ route }) => ({
         tabBarShowLabel: false,
         headerShown: false,
+        tabBarHideOnKeyboard: true,
         unmountOnBlur: true,
         tabBarIcon: ({ focused }) => {
           const getIconName = () => {
             if (route.name === 'Main') {
-              return 'home-outline';
+              return IconName.HOME;
             } else if (route.name === 'star') {
-              return 'star-outline';
+              return IconName.STAR;
             } else if (route.name === 'chart') {
-              return 'pie-chart-outline';
+              return IconName.CHART;
             } else if (route.name === 'search') {
-              return 'search';
+              return IconName.SEARCH;
             } else if (route.name === 'user') {
-              return 'person-outline';
+              return IconName.USER;
             }
           };
           const iconName = getIconName();

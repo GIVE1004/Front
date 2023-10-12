@@ -1,13 +1,13 @@
-import { View, Text, SafeAreaView } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { MainHeader } from '../../components/Headers/Headers';
-import { StyleSheet } from 'react-native';
 import * as Color from '../../components/Colors/colors';
+import { Heading } from '../../components/Typography/Typography';
 
 const MainScreen = () => {
   return (
     <View style={styles.container}>
       <MainHeader />
-      <Text>MainScreen</Text>
+      <Heading>MainScreen</Heading>
     </View>
   );
 };

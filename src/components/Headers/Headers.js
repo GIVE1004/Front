@@ -6,6 +6,7 @@ import * as Color from '../Colors/colors';
 import { Icon } from '../Icons/Icons';
 import { Logo } from '../Images/Logo';
 import { useNavigation } from '@react-navigation/native';
+import { SingleLineInput } from '../Inputs/Inputs';
 
 export const Header = (props) => {
   const insets = useSafeAreaInsets();
@@ -117,6 +118,10 @@ export const CloseHeader = (props) => {
   );
 };
 
-export const SearchHeader = () => {
-  return <Header></Header>;
+export const SearchHeader = (props) => {
+  return (
+    <Header>
+      <SingleLineInput placeholder='🔍 Search' onSubmitEditing={props.onSubmitEditing} onChangeText={props.onChangeText} />
+    </Header>
+  );
 };
