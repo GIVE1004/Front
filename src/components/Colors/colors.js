@@ -13,12 +13,12 @@ export const Secondary_20 = '#FBBAB6';
 export const Success_80 = '#2C714B';
 export const Success_60 = '#49BB7D';
 export const Success_50 = '#50CD89';
-export const Success_40 = '#E64370';
-export const Success_20 = '#F193AD';
+export const Success_40 = '#73D7A1';
+export const Success_20 = '#AFE8C9';
 
 export const Danger_80 = '#7B0B2A';
 export const Danger_60 = '#CC1245';
-export const Danger_50 = '#50CD89';
+export const Danger_50 = '#E0144C';
 export const Danger_40 = '#E64370';
 export const Danger_20 = '#F193AD';
 
