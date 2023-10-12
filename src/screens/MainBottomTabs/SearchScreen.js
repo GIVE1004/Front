@@ -1,7 +1,8 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { SearchHeader } from '../../components/Headers/Headers';
 import * as Color from '../../components/Colors/colors';
 import { Body } from '../../components/Typography/Typography';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const SearchScreen = () => {
   return (
@@ -11,7 +12,9 @@ const SearchScreen = () => {
           console.log('press Search');
         }}
       />
-      <Body>SearchScreen</Body>
+      <KeyboardAwareScrollView>
+        <Body>SearchScreen</Body>
+      </KeyboardAwareScrollView>
     </View>
   );
 };

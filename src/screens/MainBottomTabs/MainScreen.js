@@ -2,12 +2,15 @@ import { View, StyleSheet } from 'react-native';
 import { MainHeader } from '../../components/Headers/Headers';
 import * as Color from '../../components/Colors/colors';
 import { Heading } from '../../components/Typography/Typography';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const MainScreen = () => {
   return (
     <View style={styles.container}>
       <MainHeader />
-      <Heading>MainScreen</Heading>
+      <KeyboardAwareScrollView>
+        <Heading>MainScreen</Heading>
+      </KeyboardAwareScrollView>
     </View>
   );
 };
