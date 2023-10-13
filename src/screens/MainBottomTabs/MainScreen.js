@@ -4,7 +4,7 @@ import * as Color from '../../components/Colors/colors';
 import { Body, Heading } from '../../components/Typography/Typography';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { BasicButton } from '../../components/Buttons/Buttons';
-import { Footer } from '../../components/footers/footers';
+import { Footer } from '../../components/Footers/Footers';
 
 const MainScreen = () => {
   return (
@@ -17,11 +17,11 @@ const MainScreen = () => {
         </BasicButton>
       </KeyboardAwareScrollView>
       <Footer>
-        <BasicButton>
-          <Body>footer</Body>
+        <BasicButton borderRadius={14} width={140} borderColor={Color.Primary_50} backgroundColor={Color.White_100}>
+          <Body>취소</Body>
         </BasicButton>
-        <BasicButton>
-          <Body>footer</Body>
+        <BasicButton borderRadius={14} width={140} borderColor={Color.Primary_50} backgroundColor={Color.Primary_50}>
+          <Body>확인</Body>
         </BasicButton>
       </Footer>
     </View>
