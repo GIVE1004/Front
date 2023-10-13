@@ -1,8 +1,10 @@
 import { View, StyleSheet } from 'react-native';
 import { MainHeader } from '../../components/Headers/Headers';
 import * as Color from '../../components/Colors/colors';
-import { Heading } from '../../components/Typography/Typography';
+import { Body, Heading } from '../../components/Typography/Typography';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { BasicButton } from '../../components/Buttons/Buttons';
+import { Footer } from '../../components/footers/footers';
 
 const MainScreen = () => {
   return (
@@ -10,7 +12,18 @@ const MainScreen = () => {
       <MainHeader />
       <KeyboardAwareScrollView>
         <Heading>MainScreen</Heading>
+        <BasicButton>
+          <Body>route test</Body>
+        </BasicButton>
       </KeyboardAwareScrollView>
+      <Footer>
+        <BasicButton>
+          <Body>footer</Body>
+        </BasicButton>
+        <BasicButton>
+          <Body>footer</Body>
+        </BasicButton>
+      </Footer>
     </View>
   );
 };
