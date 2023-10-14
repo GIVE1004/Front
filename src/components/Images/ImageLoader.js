@@ -4,7 +4,7 @@ import { Image, View } from 'react-native';
 export const ImageLoader = (props) => {
   return (
     <View>
-      <Image source={require('../../../assets/logo.png')} style={props.style} />
+      <Image source={{ uri: props.source }} style={props.style} />
     </View>
   );
 };

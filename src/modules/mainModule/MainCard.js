@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Body, Caption, Heading } from '../../components/Typography/Typography';
 import * as Color from '../../components/Colors/colors';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { Spacer } from '../../components/Basic/Spacer';
 import { Graph } from '../../components/Graphs/Graphs';
 import { GraphLabel } from '../../components/Labels/Labels';
 import { AddComma } from '../../util/util';
+import { ImageLoader } from '../../components/Images/ImageLoader';
+import { useNavigation } from '@react-navigation/native';
 
 // selected = 기부액/기부자
 // pmGive = 증감기부액
@@ -23,74 +25,128 @@ export const MainGraphCard = () => {
   return (
     <View style={{ flex: 1, flexDirection: 'column' }}>
       <View style={{ marginHorizontal: 14 }}>
-        <Heading fontSize={18}>오늘 {selectedLabel}</Heading>
+        <Heading fontSize={20}>오늘 {selectedLabel}</Heading>
         <Spacer space={4} />
-        <Heading>{AddComma(Math.floor(give))}</Heading>
+        <Heading fontSize={26}>{AddComma(Math.floor(give))}</Heading>
         <Spacer space={4} />
         <Body fontSize={16} color={Color.Danger_50}>
           {AddComma(Math.floor(pmGive))} ({Math.floor(percentPmGive * 100) / 100}%)
         </Body>
       </View>
-      <Graph labels={graphlabel} data={data} color={Color.Danger_40} />
+      <Graph selectedLabel={selectedLabel} labels={graphlabel} data={data} color={Color.Danger_40} />
       <GraphLabel width={160} isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} />
     </View>
   );
 };
 
 export const MainRecomentGroupCard = () => {
+  const tmpdata = [
+    { source: 'https://picsum.photos/300', groupId: 1, groupName: '사회복지법인 굿네이버스1', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+    { source: 'https://picsum.photos/300', groupId: 2, groupName: '사회복지법인 굿네이버스2', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+    { source: 'https://picsum.photos/300', groupId: 3, groupName: '사회복지법인 굿네이버스3', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+    { source: 'https://picsum.photos/300', groupId: 4, groupName: '사회복지법인 굿네이버스4', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+    { source: 'https://picsum.photos/300', groupId: 5, groupName: '사회복지법인 굿네이버스5', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+  ];
   return (
-    <View style={{ flex: 1, flexDirection: 'column' }}>
-      <View style={{ marginHorizontal: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Heading fontSize={20}>추천 재단</Heading>
+    <View style={{ flex: 1, flexDirection: 'column', paddingHorizontal: 14 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Heading fontSize={20}>🌟 추천 재단</Heading>
         <Heading color={Color.Secondary_60} fontSize={18}>
           GIVE가 추천해드립니다.
         </Heading>
       </View>
+      <Spacer space={12} />
       <ScrollView horizontal={true}>
-        <GroupCard />
+        {tmpdata.map((data, index) => (
+          <GroupCard source={data.source} groupId={data.groupId} groupName={data.groupName} groupTag={data.groupTag} groupLabel={data.groupLabel} />
+        ))}
+      </ScrollView>
+    </View>
+  );
+};
+
+export const MainIncreaseGroupCard = () => {
+  const tmpdata = [
+    { source: 'https://picsum.photos/300', groupId: 1, groupName: '사회복지법인 굿네이버스1', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+    { source: 'https://picsum.photos/300', groupId: 2, groupName: '사회복지법인 굿네이버스2', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+    { source: 'https://picsum.photos/300', groupId: 3, groupName: '사회복지법인 굿네이버스3', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+    { source: 'https://picsum.photos/300', groupId: 4, groupName: '사회복지법인 굿네이버스4', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+    { source: 'https://picsum.photos/300', groupId: 5, groupName: '사회복지법인 굿네이버스5', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+  ];
+  return (
+    <View style={{ flex: 1, flexDirection: 'column', paddingHorizontal: 14 }}>
+      <Heading fontSize={20}>🔥 급상승 재단</Heading>
+      <Spacer space={12} />
+      <ScrollView horizontal={true}>
+        {tmpdata.map((data, index) => (
+          <GroupCard source={data.source} groupId={data.groupId} groupName={data.groupName} groupTag={data.groupTag} groupLabel={data.groupLabel} />
+        ))}
       </ScrollView>
     </View>
   );
 };
 
 export const GroupCard = (props) => {
+  const navigation = useNavigation();
   return (
-    <View style={{ backgroundColor: Color.Black_20, borderRadius: 8, flexDirection: 'column' }}>
-      <Body fontSize={18}>hello</Body>
-      <Caption fontSize={16}>hello</Caption>
-    </View>
+    <TouchableOpacity
+      style={{
+        backgroundColor: Color.White_100,
+        borderColor: Color.Black_20,
+        borderWidth: 0.5,
+        borderBottomWidth: 4,
+        borderRadius: 12,
+        flexDirection: 'column',
+        minWidth: 220,
+        height: 160,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 10,
+        paddingHorizontal: 16,
+      }}
+      onPress={() => {
+        navigation.navigate('GroupDetailScreen', { groupId: props.groupId });
+      }}
+    >
+      <ImageLoader source={props.source} style={{ width: 60, height: 60, borderRadius: 100 }} />
+      <Spacer space={10} />
+      <Heading fontSize={props.fontSize || 18}>{props.groupName}</Heading>
+      <Caption fontSize={props.fontSize || 16}>
+        {props.groupTag} | {props.groupLabel}
+      </Caption>
+    </TouchableOpacity>
   );
 };
 
 const graphData = [
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
-  Math.random() * 50 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
+  Math.random() * 100000000 + 1,
 ];
