@@ -1,12 +1,12 @@
 import { View, StyleSheet } from 'react-native';
 import { MainHeader } from '../../components/Headers/Headers';
 import * as Color from '../../components/Colors/colors';
-import { Body } from '../../components/Typography/Typography';
+import { Body, Heading } from '../../components/Typography/Typography';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { BasicButton } from '../../components/Buttons/Buttons';
 import { useNavigation } from '@react-navigation/native';
-import { MainGraphCard, MainRecomentGroupCard } from '../../modules/mainModule/MainCard';
-import { Spacer } from '../../components/Basic/Spacer';
+import { MainGraphCard } from '../../modules/mainModule/mainCard';
+import { AddComma } from '../../util/util';
 
 const MainScreen = () => {
   const navigation = useNavigation();
@@ -14,20 +14,28 @@ const MainScreen = () => {
     <View style={styles.container}>
       <MainHeader />
       <KeyboardAwareScrollView>
-        <MainGraphCard />
-        <Spacer space={12} />
-
-        <MainRecomentGroupCard />
-        <Spacer space={12} />
-
+        <MainGraphCard
+          selected={'기부액'}
+          give={AddComma(55705604)}
+          pmGive={AddComma(1115572)}
+          percentPmGive={-0.5}
+          data={[
+            Math.random() * 50 + 1,
+            Math.random() * 50 + 1,
+            Math.random() * 50 + 1,
+            Math.random() * 50 + 1,
+            Math.random() * 50 + 1,
+            Math.random() * 50 + 1,
+            Math.random() * 50 + 1,
+          ]}
+        />
         <BasicButton
-          borderColor={Color.Primary_50}
-          backgroundColor={Color.Primary_50}
+          borderColor={Color.Secondary_50}
           onPress={() => {
             navigation.navigate('GroupDetailScreen');
           }}
         >
-          <Body>go group detail</Body>
+          <Body>route test</Body>
         </BasicButton>
       </KeyboardAwareScrollView>
     </View>

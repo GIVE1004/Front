@@ -3,7 +3,7 @@ import { View, Dimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { Heading } from '../Typography/Typography';
 import * as Color from '../Colors/colors';
-import { Spacer } from '../Basic/Spacer';
+import { Spacer } from '../Typography/Spacer';
 
 export const Graph = (props) => {
   return (
@@ -20,12 +20,12 @@ export const Graph = (props) => {
               },
             ],
           }}
-          width={Dimensions.get('window').width - 20}
+          width={Dimensions.get('window').width - 16}
           height={props.height || 200}
           withDots={false} // 데이터 포인트를 숨김
           withInnerLines={false} // 내부 라인 숨김
-          yLabelsOffset={32}
-          xAxisLabel={'일'}
+          withOuterLines={false} // 외부 라인(경계선)을 숨김
+          yLabelsOffset={36}
           chartConfig={{
             backgroundColor: props.backgroundColor || Color.White_100,
             backgroundGradientFrom: props.backgroundGradientFrom || Color.White_100,
@@ -40,17 +40,7 @@ export const Graph = (props) => {
           }}
         />
       ) : (
-        <View
-          style={{
-            width: '95%',
-            borderRadius: 16,
-            margin: 8,
-            backgroundColor: Color.Black_20,
-            height: props.height || 200,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
+        <View style={{ borderRadius: 16, backgroundColor: Color.Black_20, height: props.height || 200, alignItems: 'center', justifyContent: 'center' }}>
           <Heading fontSize={20} color={Color.Black_40}>
             * 정보를 불러오지 못했습니다.
           </Heading>
