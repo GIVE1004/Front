@@ -6,12 +6,12 @@ import * as Color from '../../components/Colors/colors';
 import { Body } from '../../components/Typography/Typography';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { SwiftLabel } from '../../components/Labels/Labels';
-import { GroupCard } from '../../modules/mainModule/MainCard';
-import { Scaleing } from '../../util/util';
+import { SearchCard, SearchGroupCard } from '../../modules/searchModule/SearchCard';
 
 const SearchScreen = () => {
   const labels = ['지금 뜨는', '높은 신뢰도', '작은 기부단위', '활발한 활동'];
   const [isFocus, setIsFocus] = useState([true, false]);
+  const selectedLabel = labels[isFocus.indexOf(true)];
 
   return (
     <View style={styles.container}>
@@ -20,17 +20,15 @@ const SearchScreen = () => {
           console.log('press Search');
         }}
       />
-      <View width='90%'>
-        <Spacer space={10}/>
-        <Body fontWeight={'bold'}>기부단체 검색</Body>  
-        <Spacer space={10}/>
-        <View>
-          <SwiftLabel isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} />
-        </View>
         <KeyboardAwareScrollView>
-          <GroupCard></GroupCard>
+          <View style={{width:'100%', paddingHorizontal:15}}>
+          <Spacer space={10}/>
+          <Body fontWeight={'bold'}>기부단체 검색</Body>  
+          <Spacer space={10}/>
+          <SwiftLabel isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} />
+          <SearchGroupCard/>
+          </View>
         </KeyboardAwareScrollView>
-      </View>
     </View>
   );
 };
