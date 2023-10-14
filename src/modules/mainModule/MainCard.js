@@ -5,6 +5,7 @@ import { View } from 'react-native';
 import { Spacer } from '../../components/Basic/Spacer';
 import { Graph } from '../../components/Graphs/Graphs';
 import { GraphLabel } from '../../components/Labels/Labels';
+import { AddComma } from '../../util/util';
 
 // selected = 기부액/기부자
 // pmGive = 증감기부액
@@ -20,8 +21,31 @@ export const MainGraphCard = () => {
     Math.random() * 50 + 1,
     Math.random() * 50 + 1,
     Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
+    Math.random() * 50 + 1,
   ];
-  const graphlabel = ['월', '화', '수', '목', '금', '토', '일'];
+  const graphlabel = [1, 5, 10, 15, 20, 25];
   const labels = ['기부액', '기부자'];
   const [isFocus, setIsFocus] = useState([true, false]);
   const selectedLabel = labels[isFocus.indexOf(true)];
@@ -30,10 +54,10 @@ export const MainGraphCard = () => {
       <View style={{ marginHorizontal: 14 }}>
         <Heading fontSize={18}>오늘 {selectedLabel}</Heading>
         <Spacer space={4} />
-        <Heading>{Math.floor(give)}</Heading>
+        <Heading>{AddComma(Math.floor(give))}</Heading>
         <Spacer space={4} />
         <Body fontSize={16} color={Color.Danger_50}>
-          {Math.floor(pmGive)} ({Math.floor(percentPmGive * 100) / 100}%)
+          {AddComma(Math.floor(pmGive))} ({Math.floor(percentPmGive * 100) / 100}%)
         </Body>
       </View>
       <Graph labels={graphlabel} data={data} color={Color.Danger_40} />

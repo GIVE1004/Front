@@ -25,6 +25,7 @@ export const Graph = (props) => {
           withDots={false} // 데이터 포인트를 숨김
           withInnerLines={false} // 내부 라인 숨김
           yLabelsOffset={32}
+          xAxisLabel={'일'}
           chartConfig={{
             backgroundColor: props.backgroundColor || Color.White_100,
             backgroundGradientFrom: props.backgroundGradientFrom || Color.White_100,
