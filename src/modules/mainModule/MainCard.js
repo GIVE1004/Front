@@ -25,7 +25,7 @@ export const MainGraphCard = () => {
   return (
     <View style={{ flex: 1, flexDirection: 'column' }}>
       <View style={{ marginHorizontal: 14 }}>
-        <Heading fontSize={20}>오늘 {selectedLabel}</Heading>
+        <Heading fontSize={20}>오늘의 {selectedLabel}</Heading>
         <Spacer space={4} />
         <Heading fontSize={26}>{AddComma(Math.floor(give))}</Heading>
         <Spacer space={4} />
@@ -33,7 +33,7 @@ export const MainGraphCard = () => {
           {AddComma(Math.floor(pmGive))} ({Math.floor(percentPmGive * 100) / 100}%)
         </Body>
       </View>
-      <Graph selectedLabel={selectedLabel} labels={graphlabel} data={data} color={Color.Danger_40} />
+      <Graph selectedLabel={selectedLabel} labels={graphlabel} data={data} color={selectedLabel == '기부액' ? Color.Danger_40 : Color.Success_50} />
       <GraphLabel width={160} isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} />
     </View>
   );

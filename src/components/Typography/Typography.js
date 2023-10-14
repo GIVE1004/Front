@@ -4,6 +4,8 @@ import * as Color from '../Colors/colors';
 export const Body = (props) => {
   return (
     <Text
+      numberOfLines={props.numberOfLines}
+      ellipsizeMode={props.numberOfLines && 'tail'}
       style={{
         color: props.color || Color.Black_80,
         fontSize: props.fontSize || 18,
@@ -18,6 +20,8 @@ export const Body = (props) => {
 export const Heading = (props) => {
   return (
     <Text
+      numberOfLines={props.numberOfLines}
+      ellipsizeMode={props.numberOfLines && 'tail'}
       style={{
         color: props.color || Color.Black_80,
         fontSize: props.fontSize || 24,
@@ -32,6 +36,8 @@ export const Heading = (props) => {
 export const Caption = (props) => {
   return (
     <Text
+      numberOfLines={props.numberOfLines}
+      ellipsizeMode={props.numberOfLines && 'tail'}
       style={{
         color: props.color || Color.Black_60,
         fontSize: props.fontSize || 10,
