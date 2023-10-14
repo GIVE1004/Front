@@ -40,25 +40,23 @@ export const SwiftLabel = (props) => {
     props.setIsFocus(updatedIsFocus);
   };
   return (
-    <ScrollView horizontal={true}>
-      <View style={{ width: width, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
-        {props.labels.map((label, index) => (
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
-            <SwiftButton
-              borderRadius={10}
-              width={props.width}
-              isFocus={props.isFocus[index]}
-              onPress={() => {
-                onPress(index);
-              }}
-            >
-              <Body fontSize={14} color={props.isFocus[index] ? Color.White_100 : Color.Black_80}>
-                {label}
-              </Body>
-            </SwiftButton>
-          </View>
-        ))}
-      </View>
-    </ScrollView>
+    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
+      {props.labels.map((label, index) => (
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
+          <SwiftButton
+            borderRadius={10}
+            width={props.width}
+            isFocus={props.isFocus[index]}
+            onPress={() => {
+              onPress(index);
+            }}
+          >
+            <Body fontSize={14} color={props.isFocus[index] ? Color.White_100 : Color.Black_80}>
+              {label}
+            </Body>
+          </SwiftButton>
+        </View>
+      ))}
+    </View>
   );
 };
