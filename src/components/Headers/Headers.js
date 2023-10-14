@@ -3,6 +3,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { View, useWindowDimensions, Text, TouchableOpacity } from 'react-native';
 import { Platform } from 'react-native';
 import * as Color from '../Colors/colors';
+import * as IconName from '../Icons/IconName';
 import { Icon } from '../Icons/Icons';
 import { Logo } from '../Images/Logo';
 import { useNavigation } from '@react-navigation/native';
@@ -18,8 +19,6 @@ export const Header = (props) => {
           width: width,
           flexDirection: 'row',
           height: Platform.OS === 'android' ? 56 : 50,
-          borderBottomColor: Color.Black_20,
-          borderBottomWidth: 1,
           alignItems: 'center',
           justifyContent: 'space-between',
           paddingHorizontal: 20,
@@ -31,7 +30,7 @@ export const Header = (props) => {
   );
 };
 
-export const StarHeader = () => {
+export const StarHeader = (props) => {
   const navigation = useNavigation();
   return (
     <Header>
@@ -41,11 +40,17 @@ export const StarHeader = () => {
             navigation.goBack();
           }}
         >
-          <Icon name='chevron-back-outline' size={22} />
+          <Icon name={IconName.BACK} size={22} />
         </TouchableOpacity>
       </View>
       <View style={{ size: 24 }}>
-        <Icon name='star-outline' size={20} />
+        <TouchableOpacity
+          onPress={() => {
+            props.setIsStar(!props.isStar);
+          }}
+        >
+          <Icon name={props.isStar ? IconName.FILLSTAR : IconName.STAR} size={22} iconColor={Color.Primary_50} />
+        </TouchableOpacity>
       </View>
     </Header>
   );
@@ -73,7 +78,7 @@ export const BackHeader = () => {
             navigation.goBack();
           }}
         >
-          <Icon name='chevron-back-outline' size={22} />
+          <Icon name={IconName.BACK} size={22} />
         </TouchableOpacity>
       </View>
       <View style={{ width: 24 }}></View>
@@ -91,7 +96,7 @@ export const BackWithLogoHeader = () => {
             navigation.goBack();
           }}
         >
-          <Icon name='chevron-back-outline' size={22} />
+          <Icon name={IconName.BACK} size={22} />
         </TouchableOpacity>
       </View>
       <View>
@@ -107,7 +112,7 @@ export const CloseHeader = (props) => {
     <Header>
       <View style={{ width: 24 }}>
         <TouchableOpacity onPress={props.onPress}>
-          <Icon name='close' size={22} />
+          <Icon name={IconName.CLOSE} size={22} />
         </TouchableOpacity>
       </View>
       <View>
