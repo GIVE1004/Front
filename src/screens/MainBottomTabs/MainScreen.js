@@ -7,6 +7,7 @@ import { BasicButton } from '../../components/Buttons/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import { MainGraphCard } from '../../modules/mainModule/MainCard';
 import { Footer } from '../../components/Footers/Footers';
+import { AddComma } from '../../util/util';
 
 const MainScreen = () => {
   const navigation = useNavigation();

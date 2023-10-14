@@ -14,6 +14,7 @@ const SearchScreen = () => {
       />
       <KeyboardAwareScrollView>
         <Body>SearchScreen</Body>
+        
       </KeyboardAwareScrollView>
     </View>
   );
