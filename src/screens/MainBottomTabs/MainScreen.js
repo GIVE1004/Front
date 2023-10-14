@@ -6,6 +6,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { BasicButton } from '../../components/Buttons/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import { MainGraphCard } from '../../modules/mainModule/mainCard';
+import { AddComma } from '../../util/util';
 
 const MainScreen = () => {
   const navigation = useNavigation();
@@ -15,8 +16,8 @@ const MainScreen = () => {
       <KeyboardAwareScrollView>
         <MainGraphCard
           selected={'기부액'}
-          give={55705604}
-          pmGive={1115572}
+          give={AddComma(55705604)}
+          pmGive={AddComma(1115572)}
           percentPmGive={-0.5}
           data={[
             Math.random() * 50 + 1,
