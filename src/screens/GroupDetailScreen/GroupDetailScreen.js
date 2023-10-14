@@ -11,7 +11,6 @@ import { Body, Heading } from '../../components/Typography/Typography';
 const GroupDetailScreen = (props) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isStar, setIsStar] = useState(false);
-  const [value, setValue] = useState(0);
   return (
     <View style={styles.container}>
       <StarHeader isStar={isStar} setIsStar={setIsStar} />

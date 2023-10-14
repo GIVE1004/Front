@@ -10,7 +10,7 @@ export const GraphLabel = (props) => {
     props.setIsFocus(updatedIsFocus);
   };
   return (
-    <ScrollView horizontal={true}>
+    <ScrollView horizontal={true} style={{ paddingVertical: 10 }}>
       <View style={{ width: width, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
         {props.labels.map((label, index) => (
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
@@ -40,7 +40,7 @@ export const SwiftLabel = (props) => {
     props.setIsFocus(updatedIsFocus);
   };
   return (
-    <ScrollView horizontal={true}>
+    <ScrollView horizontal={true} style={{ paddingVertical: 10 }}>
       <View style={{ width: width, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
         {props.labels.map((label, index) => (
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
