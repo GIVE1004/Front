@@ -20,7 +20,7 @@ export const Graph = (props) => {
               },
             ],
           }}
-          width={Dimensions.get('window').width - 16}
+          width={Dimensions.get('window').width - 20}
           height={props.height || 200}
           withDots={false} // 데이터 포인트를 숨김
           withInnerLines={false} // 내부 라인 숨김
@@ -40,7 +40,17 @@ export const Graph = (props) => {
           }}
         />
       ) : (
-        <View style={{ borderRadius: 16, backgroundColor: Color.Black_20, height: props.height || 200, alignItems: 'center', justifyContent: 'center' }}>
+        <View
+          style={{
+            width: '95%',
+            borderRadius: 16,
+            margin: 8,
+            backgroundColor: Color.Black_20,
+            height: props.height || 200,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
           <Heading fontSize={20} color={Color.Black_40}>
             * 정보를 불러오지 못했습니다.
           </Heading>
