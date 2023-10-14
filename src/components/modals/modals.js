@@ -1,6 +1,7 @@
 import { Modal, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Icon } from '../Icons/Icons';
+import * as IconName from '../Icons/IconName';
 import * as Color from '../Colors/colors';
 
 export const MyModal = (props) => {
@@ -39,7 +40,7 @@ export const MyModal = (props) => {
                     props.setIsVisible(false);
                   }}
                 >
-                  <Icon name='close' size={30} color={Color.White_100} />
+                  <Icon name={IconName.CLOSE} size={30} color={Color.White_100} />
                 </TouchableOpacity>
               )}
               {props.children}

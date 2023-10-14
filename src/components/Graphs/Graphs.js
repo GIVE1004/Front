@@ -7,42 +7,40 @@ import { Spacer } from '../Typography/Spacer';
 
 export const Graph = (props) => {
   return (
-    <View style={{ margin: 5 }}>
+    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
       <Heading fontSize={22}>{props.title}</Heading>
-      <Spacer space={6} />
-      {props.data && props.data.length != 0 ? (
+      {props.title && <Spacer space={6} />}
+      {props.data && props.data.length !== 0 ? (
         <LineChart
           data={{
             labels: props.labels,
             datasets: [
               {
-                data: props.data || [Math.random() * 100],
+                data: props.data,
               },
             ],
           }}
-          propsForBackgroundLines={{ stroke: 'transparent' }}
-          width={Dimensions.get('window').width}
-          height={props.height || 220}
-          withInnerLines={false} // 내부 라인 숨기기
-          withVerticalLines={false}
-          withHorizontalLines={false}
+          width={Dimensions.get('window').width - 16}
+          height={props.height || 200}
+          withDots={false} // 데이터 포인트를 숨김
+          withInnerLines={false} // 내부 라인 숨김
+          withOuterLines={false} // 외부 라인(경계선)을 숨김
+          yLabelsOffset={36}
           chartConfig={{
             backgroundColor: props.backgroundColor || Color.White_100,
             backgroundGradientFrom: props.backgroundGradientFrom || Color.White_100,
             backgroundGradientTo: props.backgroundGradientTo || Color.White_100,
-            decimalPlaces: 0,
             color: () => props.color || Color.Black_80,
-            labelColor: () => props.labelColor || Color.Black_50,
-            style: {
-              borderRadius: 16,
-            },
-            propsForDots: {
-              r: '0',
-            },
+            labelColor: () => Color.Black_50,
+            decimalPlaces: 0,
+          }}
+          style={{
+            marginVertical: 8,
+            borderRadius: 16,
           }}
         />
       ) : (
-        <View style={{ borderRadius: 16, backgroundColor: Color.Black_20, height: props.height || 220, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{ borderRadius: 16, backgroundColor: Color.Black_20, height: props.height || 200, alignItems: 'center', justifyContent: 'center' }}>
           <Heading fontSize={20} color={Color.Black_40}>
             * 정보를 불러오지 못했습니다.
           </Heading>

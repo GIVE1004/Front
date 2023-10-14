@@ -18,6 +18,7 @@ export const SingleLineInput = (props) => {
         marginVertical: 4,
         borderRadius: 10,
         borderWidth: 1,
+        height: props.height,
         margin: 4,
         borderColor: borderColor,
         backgroundColor: props.basic ? undefined : Color.Black_20,
