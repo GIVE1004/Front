@@ -14,3 +14,11 @@ export const Scaleing = (number) =>{
     return number.toString();
   }
 }
+
+function truncateString(str, maxLength) {
+  if (str.length > maxLength) {
+    return str.substring(0, maxLength - 3) + '...';
+  } else {
+    return str;
+  }
+}
