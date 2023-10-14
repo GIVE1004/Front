@@ -5,7 +5,7 @@ import { Body } from '../../components/Typography/Typography';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { BasicButton } from '../../components/Buttons/Buttons';
 import { useNavigation } from '@react-navigation/native';
-import { MainGraphCard } from '../../modules/mainModule/MainCard';
+import { MainGraphCard, MainRecomentGroupCard } from '../../modules/mainModule/MainCard';
 import { Spacer } from '../../components/Basic/Spacer';
 
 const MainScreen = () => {
@@ -15,6 +15,9 @@ const MainScreen = () => {
       <MainHeader />
       <KeyboardAwareScrollView>
         <MainGraphCard />
+        <Spacer space={12} />
+
+        <MainRecomentGroupCard />
         <Spacer space={12} />
 
         <BasicButton

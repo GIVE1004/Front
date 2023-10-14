@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Body, Heading } from '../../components/Typography/Typography';
+import { Body, Caption, Heading } from '../../components/Typography/Typography';
 import * as Color from '../../components/Colors/colors';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { Spacer } from '../../components/Basic/Spacer';
 import { Graph } from '../../components/Graphs/Graphs';
 import { GraphLabel } from '../../components/Labels/Labels';
@@ -32,7 +32,32 @@ export const MainGraphCard = () => {
         </Body>
       </View>
       <Graph labels={graphlabel} data={data} color={Color.Danger_40} />
-      <GraphLabel isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} />
+      <GraphLabel width={160} isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} />
+    </View>
+  );
+};
+
+export const MainRecomentGroupCard = () => {
+  return (
+    <View style={{ flex: 1, flexDirection: 'column' }}>
+      <View style={{ marginHorizontal: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Heading fontSize={20}>추천 재단</Heading>
+        <Heading color={Color.Secondary_60} fontSize={18}>
+          GIVE가 추천해드립니다.
+        </Heading>
+      </View>
+      <ScrollView horizontal={true}>
+        <GroupCard />
+      </ScrollView>
+    </View>
+  );
+};
+
+export const GroupCard = (props) => {
+  return (
+    <View style={{ backgroundColor: Color.Black_20, borderRadius: 8, flexDirection: 'column' }}>
+      <Body fontSize={18}>hello</Body>
+      <Caption fontSize={16}>hello</Caption>
     </View>
   );
 };
