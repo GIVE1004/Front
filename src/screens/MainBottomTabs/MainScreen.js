@@ -7,6 +7,7 @@ import { BasicButton } from '../../components/Buttons/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import { MainGraphCard } from '../../modules/mainModule/MainCard';
 import { Footer } from '../../components/Footers/Footers';
+import { Spacer } from '../../components/Basic/Spacer';
 
 const MainScreen = () => {
   const navigation = useNavigation();
@@ -15,19 +16,18 @@ const MainScreen = () => {
       <MainHeader />
       <KeyboardAwareScrollView>
         <MainGraphCard />
-      </KeyboardAwareScrollView>
-      <Footer>
+        <Spacer space={12} />
+
         <BasicButton
-          width='100%'
           borderColor={Color.Primary_50}
           backgroundColor={Color.Primary_50}
           onPress={() => {
             navigation.navigate('GroupDetailScreen');
           }}
         >
-          <Body>route test</Body>
+          <Body>go group detail</Body>
         </BasicButton>
-      </Footer>
+      </KeyboardAwareScrollView>
     </View>
   );
 };

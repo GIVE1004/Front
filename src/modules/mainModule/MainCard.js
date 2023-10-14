@@ -13,38 +13,9 @@ export const MainGraphCard = () => {
   const give = Math.random() * 10000000 + 1;
   const pmGive = Math.random() * 10000000 + 1;
   const percentPmGive = Math.random();
-  const data = [
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-    Math.random() * 50 + 1,
-  ];
+  const data = graphData;
+  // useEffect로 selectedLabel 검사해서 바뀐다면 fetch 날릴 듯
+  // 처음 useEffect로 기부액 가져오기
   const graphlabel = [1, 5, 10, 15, 20, 25];
   const labels = ['기부액', '기부자'];
   const [isFocus, setIsFocus] = useState([true, false]);
@@ -65,3 +36,36 @@ export const MainGraphCard = () => {
     </View>
   );
 };
+
+const graphData = [
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+  Math.random() * 50 + 1,
+];
