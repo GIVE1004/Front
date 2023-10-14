@@ -6,9 +6,9 @@ import * as Color from '../../components/Colors/colors';
 import { Footer } from '../../components/Footers/Footers';
 import { StarHeader } from '../../components/Headers/Headers';
 import { MyModal } from '../../components/Modals/Modals';
-import { Body } from '../../components/Typography/Typography';
+import { Body, Heading } from '../../components/Typography/Typography';
 
-const GroupDetailScreen = () => {
+const GroupDetailScreen = (props) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isStar, setIsStar] = useState(false);
   return (
@@ -16,22 +16,22 @@ const GroupDetailScreen = () => {
       <StarHeader isStar={isStar} setIsStar={setIsStar} />
 
       <KeyboardAwareScrollView>
-        <Body>GroupDetailScreen</Body>
-        <BasicButton onPress={() => setIsVisible(true)} borderRadius={14} width={160} borderColor={Color.Primary_50} backgroundColor={Color.White_100}>
-          <Body>모달켜기</Body>
-        </BasicButton>
+        <Body>GroupId: {props.route.params.groupId}</Body>
       </KeyboardAwareScrollView>
 
       <Footer>
-        <BasicButton width='100%' backgroundColor={Color.Primary_50} borderColor={Color.Primary_50}>
+        <BasicButton onPress={() => setIsVisible(true)} width='100%' backgroundColor={Color.Primary_50} borderColor={Color.Primary_50}>
           <Body>기부하기</Body>
         </BasicButton>
       </Footer>
 
-      <MyModal height='50%' isVisible={isVisible} setIsVisible={setIsVisible}>
+      <MyModal height='80%' isVisible={isVisible} setIsVisible={setIsVisible}>
+        <View style={{ height: 70, alignItems: 'center', flexDirection: 'row', paddingHorizontal: 20 }}>
+          <Heading fontSize={20}>기부하기</Heading>
+        </View>
         <Footer>
           <BasicButton width='100%' backgroundColor={Color.Primary_50} borderColor={Color.Primary_50}>
-            <Body>Modal Test</Body>
+            <Body>기부하기</Body>
           </BasicButton>
         </Footer>
       </MyModal>
