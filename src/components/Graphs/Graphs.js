@@ -3,7 +3,7 @@ import { View, Dimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { Heading } from '../Typography/Typography';
 import * as Color from '../Colors/colors';
-import { Spacer } from '../Typography/Spacer';
+import { Spacer } from '../Basic/Spacer';
 
 export const Graph = (props) => {
   return (
@@ -24,8 +24,7 @@ export const Graph = (props) => {
           height={props.height || 200}
           withDots={false} // 데이터 포인트를 숨김
           withInnerLines={false} // 내부 라인 숨김
-          withOuterLines={false} // 외부 라인(경계선)을 숨김
-          yLabelsOffset={36}
+          yLabelsOffset={32}
           chartConfig={{
             backgroundColor: props.backgroundColor || Color.White_100,
             backgroundGradientFrom: props.backgroundGradientFrom || Color.White_100,
