@@ -6,7 +6,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { BasicButton } from '../../components/Buttons/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import { MainGraphCard } from '../../modules/mainModule/MainCard';
-import { Footer } from '../../components/Footers/Footers';
 import { Spacer } from '../../components/Basic/Spacer';
 
 const MainScreen = () => {
