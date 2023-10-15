@@ -8,3 +8,11 @@ export const ImageLoader = (props) => {
     </View>
   );
 };
+
+export const LocalImageLoader = (props) => {
+  return (
+    <View>
+      <Image source={props.source} style={props.style} resizeMode={props.resizeMode} />
+    </View>
+  );
+};
