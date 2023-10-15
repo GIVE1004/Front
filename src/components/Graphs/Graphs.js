@@ -4,11 +4,11 @@ import { LineChart } from 'react-native-chart-kit';
 import { Heading } from '../Typography/Typography';
 import * as Color from '../Colors/colors';
 import { Spacer } from '../Basic/Spacer';
-import { AddComma } from '../../util/util';
+import { Scaleing } from '../../util/util';
 
 export const Graph = (props) => {
   const formatYLabel = (value) => {
-    return AddComma(value);
+    return Scaleing(value);
   };
   return (
     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
@@ -29,7 +29,7 @@ export const Graph = (props) => {
           withDots={false} // 데이터 포인트를 숨김
           withInnerLines={false} // 내부 라인 숨김
           formatYLabel={formatYLabel}
-          yAxisSuffix={props.selectedLabel == '기부자' ? '명' : ''}
+          yAxisSuffix={props.selectedLabel == '기부자' ? '명' : '원'}
           xAxisLabel={'일'}
           chartConfig={{
             backgroundColor: props.backgroundColor || Color.White_100,

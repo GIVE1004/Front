@@ -1,17 +1,25 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, RefreshControl } from 'react-native';
 import { MainHeader } from '../../components/Headers/Headers';
 import * as Color from '../../components/Colors/colors';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useNavigation } from '@react-navigation/native';
 import { MainGraphCard, MainIncreaseGroupCard, MainRecomentGroupCard } from '../../modules/mainModule/MainCard';
 import { Spacer } from '../../components/Basic/Spacer';
+import { useCallback, useState } from 'react';
 
 const MainScreen = () => {
-  const navigation = useNavigation();
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 500);
+  }, []);
+
   return (
     <View style={styles.container}>
       <MainHeader />
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
         <MainGraphCard />
         <Spacer space={22} />
 

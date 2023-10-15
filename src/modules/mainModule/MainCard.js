@@ -27,10 +27,14 @@ export const MainGraphCard = () => {
       <View style={{ marginHorizontal: 14 }}>
         <Heading fontSize={20}>오늘의 {selectedLabel}</Heading>
         <Spacer space={4} />
-        <Heading fontSize={26}>{AddComma(Math.floor(give))}</Heading>
+        <Heading fontSize={26}>
+          {AddComma(Math.floor(give))}
+          {selectedLabel == '기부액' ? '원' : '명'}
+        </Heading>
         <Spacer space={4} />
         <Body fontSize={16} color={Color.Danger_50}>
-          {AddComma(Math.floor(pmGive))} ({Math.floor(percentPmGive * 100) / 100}%)
+          {AddComma(Math.floor(pmGive))}
+          {selectedLabel == '기부액' ? '원' : '명'} ({Math.floor(percentPmGive * 100) / 100}%)
         </Body>
       </View>
       <Graph selectedLabel={selectedLabel} labels={graphlabel} data={data} color={selectedLabel == '기부액' ? Color.Danger_40 : Color.Success_50} />
@@ -56,7 +60,7 @@ export const MainRecomentGroupCard = () => {
         </Heading>
       </View>
       <Spacer space={12} />
-      <ScrollView horizontal={true}>
+      <ScrollView horizontal={true} style={{ paddingVertical: 10 }}>
         {tmpdata.map((data, index) => (
           <GroupCard source={data.source} groupId={data.groupId} groupName={data.groupName} groupTag={data.groupTag} groupLabel={data.groupLabel} />
         ))}
@@ -77,7 +81,7 @@ export const MainIncreaseGroupCard = () => {
     <View style={{ flex: 1, flexDirection: 'column', paddingHorizontal: 14 }}>
       <Heading fontSize={20}>🔥 급상승 재단</Heading>
       <Spacer space={12} />
-      <ScrollView horizontal={true}>
+      <ScrollView horizontal={true} style={{ paddingVertical: 10 }}>
         {tmpdata.map((data, index) => (
           <GroupCard source={data.source} groupId={data.groupId} groupName={data.groupName} groupTag={data.groupTag} groupLabel={data.groupLabel} />
         ))}
@@ -92,7 +96,7 @@ export const GroupCard = (props) => {
     <TouchableOpacity
       style={{
         backgroundColor: Color.White_100,
-        borderColor: Color.Black_20,
+        borderColor: props.color || Color.Black_20,
         borderWidth: 0.5,
         borderBottomWidth: 4,
         borderRadius: 12,
@@ -119,34 +123,34 @@ export const GroupCard = (props) => {
 };
 
 const graphData = [
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
-  Math.random() * 100000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
+  Math.random() * 1000000000 + 1,
 ];
