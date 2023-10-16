@@ -7,6 +7,8 @@ import { Footer } from '../../components/Footers/Footers';
 import { StarHeader } from '../../components/Headers/Headers';
 import { MyModal } from '../../components/Modals/Modals';
 import { Body, Heading } from '../../components/Typography/Typography';
+import { GroupDetailInfoCard, GroupGraphCard, GroupInfoCard } from '../../modules/groupDetailModule/GroupCard';
+import { Spacer } from '../../components/Basic/Spacer';
 
 const GroupDetailScreen = (props) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -15,12 +17,21 @@ const GroupDetailScreen = (props) => {
     <View style={styles.container}>
       <StarHeader isStar={isStar} setIsStar={setIsStar} />
       <KeyboardAwareScrollView>
-        <Body>GroupId: {props.route.params.groupId}</Body>
+        <GroupInfoCard />
+        <Spacer space={6} />
+        <GroupGraphCard />
+        <Spacer space={10} />
+        <GroupDetailInfoCard />
+
+        {/* footer만큼의 크기를 임의로 넣었다. */}
+        <View style={{ margin: 20 }}>
+          <BasicButton />
+        </View>
       </KeyboardAwareScrollView>
       {/* 그룹 디테일 Footer */}
       <Footer>
         <BasicButton onPress={() => setIsVisible(true)} width='100%' backgroundColor={Color.Primary_50} borderColor={Color.Primary_50}>
-          <Body>기부하기</Body>
+          <Heading fontSize={16}>기부하기</Heading>
         </BasicButton>
       </Footer>
 
@@ -31,7 +42,7 @@ const GroupDetailScreen = (props) => {
         </View>
         <Footer>
           <BasicButton width='100%' backgroundColor={Color.Primary_50} borderColor={Color.Primary_50}>
-            <Body>기부하기</Body>
+            <Heading fontSize={16}>기부하기</Heading>
           </BasicButton>
         </Footer>
       </MyModal>

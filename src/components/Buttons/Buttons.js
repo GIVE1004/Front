@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
 import * as Color from '../../components/Colors/colors';
+import { LocalImageLoader } from '../Images/ImageLoader';
 
 export const BasicButton = (props) => {
   return (
@@ -43,6 +44,17 @@ export const GraphSwiftButton = (props) => {
   );
 };
 
+export const LoginButton = (props) => {
+  return (
+    <BasicButton backgroundColor={props.backgroundColor} onPress={props.onPress}>
+      <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+        <LocalImageLoader source={props.source} />
+        {props.children}
+      </View>
+    </BasicButton>
+  );
+};
+
 const styles = StyleSheet.create({
   BasicBtnView: {
     paddingHorizontal: 20,
@@ -52,14 +64,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   SwiftBtnView: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 12,
     paddingVertical: 6,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
   },
   GraphSwiftBtnView: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 12,
     paddingVertical: 6,
     alignItems: 'center',
     justifyContent: 'center',

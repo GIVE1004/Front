@@ -29,7 +29,7 @@ export const Graph = (props) => {
           withDots={false} // 데이터 포인트를 숨김
           withInnerLines={false} // 내부 라인 숨김
           formatYLabel={formatYLabel}
-          yAxisSuffix={props.selectedLabel == '기부자' ? '명' : '원'}
+          yAxisSuffix={props.selectedLabel == '기부자' ? '명' : props.selectedLabel == '기부액' ? '원' : ''}
           xAxisLabel={'일'}
           chartConfig={{
             backgroundColor: props.backgroundColor || Color.White_100,
