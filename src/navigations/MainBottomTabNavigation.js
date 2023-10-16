@@ -35,8 +35,8 @@ const MainBottomTabNavigation = () => {
           };
           const iconName = getIconName();
           return (
-            <Badge badgeBackGroudColor={focused ? Color.Black_60 : Color.White_100}>
-              <Icon name={iconName} size={22} iconColor={focused ? Color.Primary_50 : Color.Black_40} />
+            <Badge badgeBackGroudColor={focused ? Color.Black_80 : Color.White_100}>
+              <Icon name={iconName} size={22} iconColor={focused ? Color.Primary_50 : Color.Black_60} />
             </Badge>
           );
         },

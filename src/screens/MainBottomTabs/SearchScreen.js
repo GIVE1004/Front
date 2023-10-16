@@ -36,37 +36,37 @@ const SearchScreen = () => {
   );
 };
 
-// export const HotNow= () => {
-//   return (
-//     <View>
-//       <SearchGroupCard/>
-//     </View>
-//   );
-// };
+export const HotNow= () => {
+  return (
+    <View>
+      <SearchGroupCard/>
+    </View>
+  );
+};
 
-// export const HighValidity =() =>{
-//   return(
-//     <View>
-//       {/* <SearchGroupCard/> */}
-//     </View>
-//   );
-// };
+export const HighValidity =() =>{
+  return(
+    <View>
+      <SearchGroupCard/>
+    </View>
+  );
+};
 
-// export const SmallBudget=() =>{
-//   return(
-//     <View>
-//       <SearchGroupCard/>
-//     </View>
-//   );
-// };
+export const SmallBudget=() =>{
+  return(
+    <View>
+      {/* <SearchGroupCard/> */}
+    </View>
+  );
+};
 
-// export const Activity =() =>{
-//   return(
-//     <View>
-//       <SearchGroupCard/>
-//     </View>
-//   );
-// };
+export const Activity =() =>{
+  return(
+    <View>
+      <SearchGroupCard/>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
