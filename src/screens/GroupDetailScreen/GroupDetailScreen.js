@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { BasicButton } from '../../components/Buttons/Buttons';
 import * as Color from '../../components/Colors/colors';
 import { Footer } from '../../components/Footers/Footers';
 import { StarHeader } from '../../components/Headers/Headers';
 import { MyModal } from '../../components/Modals/Modals';
-import { Body, Heading } from '../../components/Typography/Typography';
-import { GroupDetailInfoCard, GroupGraphCard, GroupInfoCard } from '../../modules/groupDetailModule/GroupCard';
+import { Heading } from '../../components/Typography/Typography';
 import { Spacer } from '../../components/Basic/Spacer';
+import { GroupDetailInfoCard, GroupGraphCard, GroupInfoCard } from '../../modules/groupDetailModule/GroupBasicCard';
 
 const GroupDetailScreen = (props) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -24,9 +24,7 @@ const GroupDetailScreen = (props) => {
         <GroupDetailInfoCard />
 
         {/* footer만큼의 크기를 임의로 넣었다. */}
-        <View style={{ margin: 20 }}>
-          <BasicButton />
-        </View>
+        <Spacer space={Platform.OS == 'android' ? 100 : 120} />
       </KeyboardAwareScrollView>
       {/* 그룹 디테일 Footer */}
       <Footer>
