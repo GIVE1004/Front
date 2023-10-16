@@ -23,10 +23,10 @@ export const Danger_40 = '#E64370';
 export const Danger_20 = '#F193AD';
 
 export const Black_80 = '#2E3032';
-export const Black_60 = '#5C5E61';
-export const Black_50 = '#8C8F93';
-export const Black_40 = '#B1B5BA';
-export const Black_20 = '#D9DDE3';
+export const Black_60 = '#8C8F93';
+export const Black_50 = '#B1B5BA';
+export const Black_40 = '#C8CCD2';
+export const Black_20 = '#F2F4F6';
 
 export const White_100 = '#FFFFFF';
 
