@@ -31,7 +31,7 @@ const SplashScreen = () => {
         backgroundColor={Color.Primary_50}
         borderColor={Color.Primary_50}
         onPress={() => {
-          navigation.reset({ routes: [{ name: 'OauthScreen' }] });
+          navigation.navigate('OauthScreen');
         }}
       >
         <Heading fontSize={16}>시작하기</Heading>

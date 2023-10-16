@@ -12,41 +12,43 @@ import { useNavigation } from '@react-navigation/native';
 // selected = 기부액/기부자
 // pmGive = 증감기부액
 export const MainGraphCard = () => {
-  const give = Math.random() * 10000000 + 1;
-  const pmGive = Math.random() * 10000000 + 1;
-  const percentPmGive = Math.random();
-  const data = [
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-    Math.random() * 1000000000 + 1,
-  ];
+  const data = {
+    give: Math.random() * 10000000 + 1,
+    pmGive: Math.random() * 10000000 + 1,
+    percentPmGive: Math.random(),
+    graphData: [
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+      Math.random() * 1000000000 + 1,
+    ],
+  };
   const { width } = useWindowDimensions();
   // useEffect로 selectedLabel 검사해서 바뀐다면 fetch 날릴 듯
   // 처음 useEffect로 기부액 가져오기
@@ -60,16 +62,16 @@ export const MainGraphCard = () => {
         <Heading fontSize={20}>오늘의 {selectedLabel}</Heading>
         <Spacer space={4} />
         <Heading fontSize={26}>
-          {AddComma(Math.floor(give))}
+          {AddComma(Math.floor(data.give))}
           {selectedLabel == '기부액' ? '원' : '명'}
         </Heading>
         <Spacer space={4} />
         <Body fontSize={16} color={Color.Danger_50}>
-          {AddComma(Math.floor(pmGive))}
-          {selectedLabel == '기부액' ? '원' : '명'} ({Math.floor(percentPmGive * 100) / 100}%)
+          {AddComma(Math.floor(data.pmGive))}
+          {selectedLabel == '기부액' ? '원' : '명'} ({Math.floor(data.percentPmGive * 100) / 100}%)
         </Body>
       </View>
-      <Graph selectedLabel={selectedLabel} labels={graphlabel} data={data} color={selectedLabel == '기부액' ? Color.Danger_40 : Color.Success_50} />
+      <Graph selectedLabel={selectedLabel} labels={graphlabel} data={data.graphData} color={selectedLabel == '기부액' ? Color.Danger_40 : Color.Success_50} />
       <GraphLabel width={width / 2 - 40} isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} />
     </View>
   );
@@ -128,7 +130,7 @@ export const GroupCard = (props) => {
     <TouchableOpacity
       style={{
         backgroundColor: Color.White_100,
-        borderColor: props.color || Color.Black_20,
+        borderColor: props.color || Color.Black_40,
         borderWidth: 0.5,
         borderBottomWidth: 4,
         borderRadius: 12,
