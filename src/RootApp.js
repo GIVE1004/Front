@@ -1,13 +1,13 @@
 import { useRecoilState } from 'recoil';
 import { goMainPageState } from './util/recoil/Atoms';
 import MainStack from './stacks/MainStack';
-import SplashScreen from './SplashScreen';
+import SplashView from './SplashView';
 
 export const RootApp = () => {
   const [goMainPage, setGoMainPage] = useRecoilState(goMainPageState);
 
   if (!goMainPage) {
-    return <SplashScreen />;
+    return <SplashView />;
   }
   return <MainStack />;
 };

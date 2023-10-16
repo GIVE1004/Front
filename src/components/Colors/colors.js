@@ -29,3 +29,7 @@ export const Black_40 = '#B1B5BA';
 export const Black_20 = '#D9DDE3';
 
 export const White_100 = '#FFFFFF';
+
+export const logo_kakao = '#FFCD00';
+export const logo_naver = '#06CC80';
+export const logo_google = '#4285F4';
