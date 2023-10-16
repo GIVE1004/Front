@@ -27,7 +27,7 @@ export const SearchGroupCard = () => {
 
 export const SearchCard = (props) => {
     return (
-      <View style={{ backgroundColor: Color.White_100, borderColor: Color.Black_20, borderWidth:1, borderRadius: 8, flexDirection: 'column',  marginVertical:6, width:375}}>
+      <View style={{ backgroundColor: Color.White_100, borderColor: Color.Black_20, borderWidth:1, borderRadius: 8, flexDirection: 'column',  marginVertical:3, width:375, paddingBottom:10}}>
         <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
             <View style={{flexDirection: 'row', alignItems:'center'}}>
                 <View style={{paddingLeft:10, paddingRight:15}}>
