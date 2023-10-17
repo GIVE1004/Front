@@ -61,7 +61,7 @@ export const MainHeader = (props) => {
     <Header>
       <View style={{ width: 22 }}></View>
       <View>
-        <Logo style={{ height: props.height || 22, width: props.width || 130 }} />
+        <Logo style={{ height: props.height || 30, aspectRatio: 5 / 1 }} />
       </View>
       <View style={{ width: 22 }}></View>
     </Header>
@@ -100,7 +100,7 @@ export const BackWithLogoHeader = () => {
         </TouchableOpacity>
       </View>
       <View>
-        <Logo style={{ height: 22, width: 130 }} />
+        <Logo style={{ height: 30, aspectRatio: 5 / 1 }} />
       </View>
       <View style={{ width: 24 }}></View>
     </Header>
@@ -116,7 +116,7 @@ export const CloseHeader = (props) => {
         </TouchableOpacity>
       </View>
       <View>
-        <Logo style={{ height: 22, width: 130 }} />
+        <Logo style={{ height: 30, aspectRatio: 5 / 1 }} />
       </View>
       <View style={{ width: 22 }}></View>
     </Header>
