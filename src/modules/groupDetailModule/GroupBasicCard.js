@@ -11,6 +11,7 @@ import { ReviewView } from './GroupReviewCard';
 import { NewsView } from './GroupNewsCard';
 import { AIReportView } from './GroupAIReportCard';
 import { GroupFinancialView } from './GroupFinancialCard';
+import { InfoView } from './GroupInfoCard';
 
 export const GroupInfoCard = () => {
   const data = { source: 'https://picsum.photos/300', groupId: 1, groupName: '사회복지법인 굿네이버스1', groupTag: '사회복지', groupLabel: '지정기부금단체' };
@@ -32,11 +33,12 @@ export const GroupInfoCard = () => {
 
 // selected = 기부액/기부자
 // pmGive = 증감기부액
+// percentPmGive = 증감기부액 퍼센트
 export const GroupGraphCard = () => {
   const data = {
     give: Math.random() * 10000000 + 1,
-    pmGive: Math.random() * 10000000 + 1,
-    percentPmGive: Math.random(),
+    pmGive: (Math.random() - 0.5) * 100000,
+    percentPmGive: (Math.random() - 0.5) * 2,
     graphData: [
       Math.random() * 1000000000 + 1,
       Math.random() * 1000000000 + 1,
@@ -86,7 +88,7 @@ export const GroupGraphCard = () => {
           {AddComma(Math.floor(data.pmGive))} ({Math.floor(data.percentPmGive * 100) / 100}%)
         </Body>
       </View>
-      <Graph selectedLabel={selectedLabel} labels={graphlabel} data={data.graphData} color={selectedLabel == '기부액' ? Color.Danger_40 : Color.Success_50} />
+      <Graph selectedLabel={selectedLabel} labels={graphlabel} data={data.graphData} color={data.pmGive < 0 ? Color.Danger_40 : Color.Success_50} />
       <GraphLabel width={width / labels.length - 20} isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} />
     </View>
   );
@@ -105,7 +107,7 @@ export const GroupDetailInfoCard = () => {
         {selectedLabel == '언론보도' && <NewsView />}
         {selectedLabel == 'GIVE AI 분석' && <AIReportView />}
         {selectedLabel == '재무재표' && <GroupFinancialView />}
-        {selectedLabel == '단체정보' && null}
+        {selectedLabel == '단체정보' && <InfoView />}
       </View>
     </View>
   );

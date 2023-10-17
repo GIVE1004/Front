@@ -33,3 +33,5 @@ export const White_100 = '#FFFFFF';
 export const logo_kakao = '#FFCD00';
 export const logo_naver = '#06CC80';
 export const logo_google = '#4285F4';
+
+export const Purple_80 = '#610C9F';

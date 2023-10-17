@@ -79,7 +79,7 @@ export const FinancialCard = () => {
       <Spacer space={12} />
       <View>
         <View style={{ flex: 1, marginVertical: 10 }}>
-          <Table borderStyle={{ borderWidth: 1, borderColor: Color.Black_60 }} style={{ backgroundColor: Color.Black_20, borderRadius: 6 }}>
+          <Table borderStyle={{ borderWidth: 1, borderColor: Color.Black_60 }} style={{ backgroundColor: Color.Black_20 }}>
             <Row data={data.tableHead} flexArr={[1, 1, 1, 1]} style={{ height: 40, backgroundColor: Color.Black_40 }} textStyle={{ textAlign: 'center' }} />
             <TableWrapper style={{ flexDirection: 'row' }}>
               <Col data={tableTitle} style={{ flex: 1, backgroundColor: Color.Black_40 }} heightArr={[40, 40, 40, 40, 40, 40]} textStyle={{ textAlign: 'center' }} />
