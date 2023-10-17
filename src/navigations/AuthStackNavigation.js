@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import SplashScreen from '../screens/AuthScreen/SplashScreen';
-import OauthScreen from '../screens/AuthScreen/OauthScreen';
+import SplashScreen from '../screens/authScreen/SplashScreen';
+import OauthScreen from '../screens/authScreen/OauthScreen';
 
 const Stack = createNativeStackNavigator();
 const AuthStackNavigation = () => {
