@@ -39,7 +39,7 @@ const DATA = [
   },
 ];
 
-const StarScreen = () => {
+const StarScreen = (props) => {
   const toggleBookmark = (itemId) => {
     const updatedData = DATA.map((item) => {
       if (item.id === itemId) {
@@ -55,7 +55,10 @@ const StarScreen = () => {
   return (
     <View style={styles.container}>
       <BackWithLogoHeader />
+      <View style={styles.titlecontainer}>
       <Heading>응원하는단체</Heading>
+
+      </View>
       <FlatList
         style={styles.list}
         data={DATA}
@@ -75,8 +78,10 @@ const StarScreen = () => {
               </View>
             </View>
             <View style={styles.footbox}>
-              <TouchableOpacity onPress={() => toggleBookmark(item.id)}>
-                {item.isBookmarked ? <Icon name={IconName.STAR} iconColor={Color.Primary_50} /> : <Icon name={IconName.FILLSTAR} iconColor={Color.Primary_50} />}
+              <TouchableOpacity onPress={() => {
+                props.setIsStar(!props.isStar);
+              }}>
+                <Icon name={props.isStar ? IconName.FILLSTAR : IconName.STAR} size={22} iconColor={Color.Primary_50} />
               </TouchableOpacity>
             </View>
           </View>
@@ -91,6 +96,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Color.White_100,
+  },
+  titlecontainer: {
+    marginLeft: 20,
+    marginTop: 10,
+
   },
   list: {
     flex: 1,

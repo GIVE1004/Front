@@ -8,13 +8,14 @@ import { ImageLoader } from '../../components/Images/ImageLoader';
 import React, { useState } from 'react';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-const UserInfoScreen = () => {
+const PlusScreen = () => {
 
   return (
     <View style={styles.container}>
       <BackWithLogoHeader />
       <View style={styles.titlecontainer}>
-      <Heading>내 정보</Heading>
+      <Heading>기부단체 추가하기</Heading>
+
       </View>
       
     </View>
@@ -33,4 +34,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserInfoScreen;
+export default PlusScreen;
