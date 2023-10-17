@@ -19,7 +19,10 @@ export const MySlider = (props) => {
         thumbTintColor={Color.Primary_50}
         disabled={props.disabled}
       />
-      <Body>{props.value}점</Body>
+      <Body>
+        {props.value}
+        {props.type == 'score' ? '점' : '%'}
+      </Body>
     </View>
   );
 };
