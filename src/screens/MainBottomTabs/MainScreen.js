@@ -1,34 +1,33 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, RefreshControl } from 'react-native';
 import { MainHeader } from '../../components/Headers/Headers';
 import * as Color from '../../components/Colors/colors';
-import { Body } from '../../components/Typography/Typography';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { BasicButton } from '../../components/Buttons/Buttons';
-import { useNavigation } from '@react-navigation/native';
-import { MainGraphCard, MainRecomentGroupCard } from '../../modules/mainModule/MainCard';
+import { MainGraphCard, MainIncreaseGroupCard, MainRecomentGroupCard } from '../../modules/mainModule/MainCard';
 import { Spacer } from '../../components/Basic/Spacer';
+import { useCallback, useState } from 'react';
 
 const MainScreen = () => {
-  const navigation = useNavigation();
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 500);
+  }, []);
+
   return (
     <View style={styles.container}>
       <MainHeader />
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
         <MainGraphCard />
-        <Spacer space={12} />
+        <Spacer space={22} />
 
         <MainRecomentGroupCard />
-        <Spacer space={12} />
+        <Spacer space={22} />
 
-        <BasicButton
-          borderColor={Color.Primary_50}
-          backgroundColor={Color.Primary_50}
-          onPress={() => {
-            navigation.navigate('GroupDetailScreen');
-          }}
-        >
-          <Body>go group detail</Body>
-        </BasicButton>
+        <MainIncreaseGroupCard />
+        <Spacer space={22} />
       </KeyboardAwareScrollView>
     </View>
   );

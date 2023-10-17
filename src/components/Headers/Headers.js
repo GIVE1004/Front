@@ -56,12 +56,12 @@ export const StarHeader = (props) => {
   );
 };
 
-export const MainHeader = () => {
+export const MainHeader = (props) => {
   return (
     <Header>
       <View style={{ width: 22 }}></View>
       <View>
-        <Logo style={{ height: 20, width: 130 }} />
+        <Logo style={{ height: props.height || 22, width: props.width || 130 }} />
       </View>
       <View style={{ width: 22 }}></View>
     </Header>

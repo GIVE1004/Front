@@ -9,3 +9,6 @@ export const EYE = 'eye-outline';
 export const EYECLOSE = 'eye-off-outline';
 export const CLOSE = 'close';
 export const BACK = 'chevron-back-outline';
+export const CHAT = 'chatbubble-outline';
+export const UPALLOW = 'chevron-up-outline';
+export const DOWNALLOW = 'chevron-down-outline';
