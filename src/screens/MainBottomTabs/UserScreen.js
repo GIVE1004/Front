@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Pressable, TouchableOpacity } from 'react-native';
 import { MainHeader } from '../../components/Headers/Headers';
 import { Body, Caption, Heading } from '../../components/Typography/Typography';
 import * as Color from '../../components/Colors/colors';
@@ -8,82 +8,78 @@ import { BasicButton } from '../../components/Buttons/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import { Spacer } from '../../components/Basic/Spacer';
 import { Icon } from '../../components/Icons/Icons';
+import { Logo } from '../../components/Images/Logo';
+import { Divider } from 'react-native-paper';
 
 const UserScreen = () => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <MainHeader />
-      <KeyboardAwareScrollView>
-        <View style={styles.titlecontainer}>
+      <KeyboardAwareScrollView style={{ padding: 8 }}>
+        <View style={{ paddingHorizontal: 12 }}>
           <Heading>Settings</Heading>
         </View>
-        <Spacer space={20}/>
-        <View style={styles.maincontainer}>
-          
-          
-          <BasicButton
-            onPress={() => {
-              navigation.navigate('UserInfoScreen');
-            }}
-            style={styles.userinfocontainer}
-          >
-            <View style={styles.iconbtn}>
-            <Icon name={IconName.USER} size={22} />
-            </View>
-            
-            <View style={styles.textbtn}>
-            <Body>  계정정보                                                      </Body>
-          
-            </View>
+        <Spacer space={14} />
 
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('UserInfoScreen');
+          }}
+          style={{ flexDirection: 'row', paddingHorizontal: 12, paddingVertical: 20, alignItems: 'center' }}
+        >
+          <Icon name={IconName.USER} size={22} />
+          <Spacer space={14} horizontal={true} />
+          <Body> 계정정보</Body>
+        </TouchableOpacity>
+        <Divider />
 
-          </BasicButton>
-          <Spacer space={16}/>
-          <BasicButton
-            onPress={() => {
-              navigation.navigate('StarScreen');
-            }}
-            style={styles.starbtn}
-          >
-            
-          <Icon name={IconName.STAR} size={22}/>
-          <Body>  관심 기부단체                                                      </Body>
-            
-          </BasicButton>
-          <Spacer space={16}/>
-          <BasicButton
-            onPress={() => {
-              navigation.navigate('PlusScreen');
-            }}
-          >
-            <Icon name={IconName.LIST} size={22}/>
-            <Body>  기부단체 추가하기                                                      </Body>
-          </BasicButton>
-          <Spacer space={16}/>
-          <BasicButton
-            onPress={() => {
-              navigation.navigate('CalScreen');
-            }}
-          >
-            <Icon name={IconName.CHAT} size={22}/>
-            <Body>  세금 계산기                                                      </Body>
-          </BasicButton>
-          <Spacer space={16}/>
-          <BasicButton
-            onPress={() => {
-              navigation.navigate('StarScreen');
-            }}
-          >
-            <Icon name={IconName.CLOSE} size={22} iconColor={Color.Danger_50}/>
-            <Body color={Color.Danger_50}>  로그아웃                                                      </Body>
-          </BasicButton>
-           
-        </View>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('StarScreen');
+          }}
+          style={{ flexDirection: 'row', paddingHorizontal: 12, paddingVertical: 20, alignItems: 'center' }}
+        >
+          <Icon name={IconName.STAR} size={22} />
+          <Spacer space={14} horizontal={true} />
+          <Body> 관심 기부단체</Body>
+        </TouchableOpacity>
+        <Divider />
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('PlusScreen');
+          }}
+          style={{ flexDirection: 'row', paddingHorizontal: 12, paddingVertical: 20, alignItems: 'center' }}
+        >
+          <Icon name={IconName.DUPLICATE} size={22} />
+          <Spacer space={14} horizontal={true} />
+          <Body> 기부단체 추가하기</Body>
+        </TouchableOpacity>
+        <Divider />
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('CalScreen');
+          }}
+          style={{ flexDirection: 'row', paddingHorizontal: 12, paddingVertical: 20, alignItems: 'center' }}
+        >
+          <Icon name={IconName.CALCULATOR} size={22} />
+          <Spacer space={14} horizontal={true} />
+          <Body> 세금 계산기</Body>
+        </TouchableOpacity>
+        <Divider />
+
+        <TouchableOpacity onPress={() => {}} style={{ flexDirection: 'row', paddingHorizontal: 12, paddingVertical: 20, alignItems: 'center' }}>
+          <Icon name={IconName.EXIT} size={22} iconColor={Color.Danger_50} />
+          <Spacer space={14} horizontal={true} />
+          <Body color={Color.Danger_50}>로그아웃</Body>
+        </TouchableOpacity>
+        <Divider />
+
         <View style={styles.footcontainer}>
-          <MainHeader/>
+          <Logo style={{ height: 32, aspectRatio: 5 / 1 }} />
           <Caption>Version 1.0.0.</Caption>
-
         </View>
       </KeyboardAwareScrollView>
     </View>
@@ -98,24 +94,11 @@ const styles = StyleSheet.create({
   titlecontainer: {
     marginLeft: 20,
     marginTop: 10,
-
-  },
-  maincontainer: {
-    marginLeft: 20,
-    marginRight: 20,
-   
-
-  },
-  userinfocontainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    
-
   },
   footcontainer: {
+    marginVertical: 20,
     alignItems: 'center',
   },
-
 });
 
 export default UserScreen;

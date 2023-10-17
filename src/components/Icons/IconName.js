@@ -12,3 +12,6 @@ export const BACK = 'chevron-back-outline';
 export const CHAT = 'chatbubble-outline';
 export const UPALLOW = 'chevron-up-outline';
 export const DOWNALLOW = 'chevron-down-outline';
+export const DUPLICATE = 'duplicate-outline';
+export const CALCULATOR = 'calculator-outline';
+export const EXIT = 'exit-outline';
