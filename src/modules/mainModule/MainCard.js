@@ -14,8 +14,8 @@ import { useNavigation } from '@react-navigation/native';
 export const MainGraphCard = () => {
   const data = {
     give: Math.random() * 10000000 + 1,
-    pmGive: Math.random() * 10000000 + 1,
-    percentPmGive: Math.random(),
+    pmGive: (Math.random() - 0.5) * 100000,
+    percentPmGive: (Math.random() - 0.5) * 2,
     graphData: [
       Math.random() * 1000000000 + 1,
       Math.random() * 1000000000 + 1,
@@ -71,7 +71,7 @@ export const MainGraphCard = () => {
           {selectedLabel == '기부액' ? '원' : '명'} ({Math.floor(data.percentPmGive * 100) / 100}%)
         </Body>
       </View>
-      <Graph selectedLabel={selectedLabel} labels={graphlabel} data={data.graphData} color={selectedLabel == '기부액' ? Color.Danger_40 : Color.Success_50} />
+      <Graph selectedLabel={selectedLabel} labels={graphlabel} data={data.graphData} color={data.pmGive < 0 ? Color.Danger_40 : Color.Success_50} />
       <GraphLabel width={width / 2 - 40} isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} />
     </View>
   );
