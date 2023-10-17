@@ -16,7 +16,7 @@ const ChartScreen = () => {
     BadgePm:'1',
 
   }
-
+  
   return (
     <View style={styles.container}>
       <MainHeader />
