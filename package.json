@@ -42,7 +42,8 @@
     "react-native-progress": "^5.0.0",
     "react-native-progress-circle": "^2.1.0",
     "react-native-slide": "^0.2.2",
-    "react-native-svg": "^13.14.0"
+    "react-native-svg": "^13.14.0",
+    "react-native-table-component": "^1.2.2"
   },
   "private": true
 }

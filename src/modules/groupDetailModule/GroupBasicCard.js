@@ -10,6 +10,7 @@ import { ImageLoader } from '../../components/Images/ImageLoader';
 import { ReviewView } from './GroupReviewCard';
 import { NewsView } from './GroupNewsCard';
 import { AIReportView } from './GroupAIReportCard';
+import { GroupFinancialView } from './GroupFinancialCard';
 
 export const GroupInfoCard = () => {
   const data = { source: 'https://picsum.photos/300', groupId: 1, groupName: '사회복지법인 굿네이버스1', groupTag: '사회복지', groupLabel: '지정기부금단체' };
@@ -103,7 +104,7 @@ export const GroupDetailInfoCard = () => {
         {selectedLabel == '리뷰' && <ReviewView />}
         {selectedLabel == '언론보도' && <NewsView />}
         {selectedLabel == 'GIVE AI 분석' && <AIReportView />}
-        {selectedLabel == '재무재표' && null}
+        {selectedLabel == '재무재표' && <GroupFinancialView />}
         {selectedLabel == '단체정보' && null}
       </View>
     </View>
