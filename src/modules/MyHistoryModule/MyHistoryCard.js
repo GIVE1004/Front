@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect  } from 'react';
 import { Body, Caption, Heading } from '../../components/Typography/Typography';
 import * as Color from '../../components/Colors/colors';
-import { ScrollView, TouchableOpacity, View} from 'react-native';
+import {  Modal, ScrollView, TouchableOpacity,TouchableWithoutFeedback, View} from 'react-native';
 import { Spacer } from '../../components/Basic/Spacer';
 import { ImageLoader } from '../../components/Images/ImageLoader';
 import { useNavigation } from '@react-navigation/native';
+import { Icon } from '../../components/Icons/Icons';
 
 export const UserHistory = (props) => {
 
@@ -43,7 +44,7 @@ export const UserHistory = (props) => {
     );
   };
 
-export const DonationNowGroupCard = () => {
+export const DonationNowGroupCard = (props) => {
     const tmpdata = [
       { source: 'https://picsum.photos/300', groupId: 1, groupName: '사회복지법인 굿네이버스1', groupTag: '사회복지', groupLabel: '지정기부금단체' },
       { source: 'https://picsum.photos/300', groupId: 2, groupName: '사회복지법인 굿네이버스2', groupTag: '사회복지', groupLabel: '지정기부금단체' },
@@ -51,6 +52,11 @@ export const DonationNowGroupCard = () => {
       { source: 'https://picsum.photos/300', groupId: 4, groupName: '사회복지법인 굿네이버스4', groupTag: '사회복지', groupLabel: '지정기부금단체' },
       { source: 'https://picsum.photos/300', groupId: 5, groupName: '사회복지법인 굿네이버스5', groupTag: '사회복지', groupLabel: '지정기부금단체' },
     ];
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const toggleModal = () => {
+        setIsModalVisible(!isModalVisible);
+      };
+
     return (
       <View style={{ flex: 1, flexDirection: 'column', paddingHorizontal: 20 }}>
         <Heading fontSize={20}>기부 중</Heading>
@@ -64,7 +70,7 @@ export const DonationNowGroupCard = () => {
     );
   };
   
-  export const HistoryGroupCard = () => {
+  export const HistoryGroupCard = (props) => {
     const tmpdata = [
       { source: 'https://picsum.photos/300', groupId: 1, groupName: '사회복지법인 굿네이버스1', groupTag: '사회복지', groupLabel: '지정기부금단체' },
       { source: 'https://picsum.photos/300', groupId: 2, groupName: '사회복지법인 굿네이버스2', groupTag: '사회복지', groupLabel: '지정기부금단체' },
@@ -78,6 +84,7 @@ export const DonationNowGroupCard = () => {
         <Spacer space={12} />
         <ScrollView horizontal={true} style={{ paddingVertical: 10 }}>
           {tmpdata.map((data, index) => (
+
             <GroupCard source={data.source} groupId={data.groupId} groupName={data.groupName} groupTag={data.groupTag} groupLabel={data.groupLabel} />
           ))}
         </ScrollView>
@@ -86,7 +93,6 @@ export const DonationNowGroupCard = () => {
   };
   
   export const GroupCard = (props) => {
-    const navigation = useNavigation();
     return (
       <TouchableOpacity
         style={{
@@ -104,7 +110,7 @@ export const DonationNowGroupCard = () => {
           paddingHorizontal: 16,
         }}
         onPress={() => {
-          navigation.navigate('GroupDetailScreen', { groupId: props.groupId });
+            props.toggleModal(); // 모달 토글 함수 호출
         }}
       >
         <ImageLoader source={props.source} style={{ width: 60, height: 60, borderRadius: 100 }} />
@@ -114,5 +120,53 @@ export const DonationNowGroupCard = () => {
           {props.groupTag} | {props.groupLabel}
         </Caption>
       </TouchableOpacity>
+    );
+  };
+
+  export const MyModal = (props) => {
+    const [modalHeight, setModalHeight] = useState(0);
+  
+    // 모달이 나타날 때 높이를 설정하는 함수
+    const setModalMaxHeight = () => {
+      // props.height를 최대 높이로 설정
+      setModalHeight(props.height);
+    };
+  
+    // 모달이 나타날 때 최대 높이를 설정
+    useEffect(() => {
+      if (props.isVisible) {
+        setModalMaxHeight();
+      }
+    }, [props.isVisible]);
+  
+    return (
+      <Modal animationType='slide' transparent={true} visible={props.isVisible} onBackdropPress={() => props.setIsVisible(false)}>
+        <>
+          <TouchableOpacity
+            onPress={() => {
+              props.setIsVisible(false);
+            }}
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: `rgba(128, 128, 128, 0.2)` }}
+          >
+            <TouchableWithoutFeedback>
+              <View
+                style={{ width: '100%', height: modalHeight, backgroundColor: Color.White_100, position: 'absolute', bottom: 0, borderTopLeftRadius: 30, borderTopRightRadius: 30 }}
+              >
+                {modalHeight > '50%' && (
+                  <TouchableOpacity
+                    style={{ position: 'absolute', top: 20, right: 20, zIndex: 1 }}
+                    onPress={() => {
+                      props.setIsVisible(false);
+                    }}
+                  >
+                    <Icon name='close' size={30} color={Color.White_100} />
+                  </TouchableOpacity>
+                )}
+                {props.children}
+              </View>
+            </TouchableWithoutFeedback>
+          </TouchableOpacity>
+        </>
+      </Modal>
     );
   };
