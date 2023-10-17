@@ -4,7 +4,8 @@ import * as Color from '../../components/Colors/colors';
 import { View, ScrollView  } from 'react-native';
 import { BasicButton } from '../../components/Buttons/Buttons';
 import { ImageLoader } from '../../components/Images/ImageLoader';
-
+import { useNavigation } from '@react-navigation/native';
+import { Spacer } from '../../components/Basic/Spacer';
 
 export const SearchGroupCard = () => {
   const tmpdata = [
@@ -26,9 +27,10 @@ export const SearchGroupCard = () => {
   };
 
 export const SearchCard = (props) => {
+  const navigation = useNavigation();
     return (
-      <View style={{ backgroundColor: Color.White_100, borderColor: Color.Black_20, borderWidth:1, borderRadius: 8, flexDirection: 'column',  marginVertical:6, width:375}}>
-        <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
+      <View style={{ backgroundColor: Color.White_100, borderColor: Color.Black_20, borderWidth:1, borderRadius: 8, flexDirection: 'column',paddingBottom:10,  marginVertical:6, width:375}}>
+        <View style={{flexDirection: 'row', justifyContent:'space-between', marginBottom:5}}>
             <View style={{flexDirection: 'row', alignItems:'center'}}>
                 <View style={{paddingLeft:10, paddingRight:15}}>
                   {/* 이미지위치 */}
@@ -38,7 +40,8 @@ export const SearchCard = (props) => {
                   {/* 이름 */}
                   <Caption fontWeight={'bold'} fontSize={16}>{props.groupName}</Caption>
                   {/*  기부단체 종류*/}
-                  <Caption style={{paddingTop:4}}>{props.groupTag}|{props.groupLabel}</Caption>
+                  <Spacer space={3}></Spacer>
+                  <Caption>{props.groupTag}|{props.groupLabel}</Caption>
                 </View>
             </View>
             {/* 상세페이지이동버튼 */}
@@ -52,17 +55,17 @@ export const SearchCard = (props) => {
         <View style={{flexDirection: 'row', justifyContent:'space-around'}}>
             <View style={{alignItems:'center'}}>
               {/* 평점란 */}
-                <View><Caption color={Color.Black_80}>리뷰 평점</Caption></View>
-                  <Caption>{props.groupScore}/ 100</Caption>
+                <View><Caption>리뷰 평점</Caption></View>
+                  <Caption>{props.groupScore} / 100</Caption>
             </View>
             <View style={{alignItems:'center'}}>
               {/* 기부자 */}
-                <View><Caption color={Color.Black_80}>기부자(월 단위 증감)</Caption></View>
+                <View><Caption>기부자(월 단위 증감)</Caption></View>
                   <Caption>{props.groupNumber} 명 {props.groupNumberPm}</Caption>
             </View>
             <View style={{alignItems:'center'}}>
               {/* 관심지수 */}
-                <View><Caption color={Color.Black_80}>관심지수</Caption></View>
+                <View><Caption>관심지수</Caption></View>
                   <Caption>{props.groupStar} 점 {props.gruopStarPm}</Caption>
             </View>
         </View>
