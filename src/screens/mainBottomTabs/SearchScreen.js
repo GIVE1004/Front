@@ -20,50 +20,15 @@ const SearchScreen = () => {
           console.log('press Search');
         }}
       />
+      <View style={{ width: '100%', paddingHorizontal: 15 }}>
+        <Spacer space={10} />
+        <Body fontWeight={'bold'}>기부단체 검색</Body>
+        <Spacer space={10} />
+        <SwiftLabel isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} />
+      </View>
       <KeyboardAwareScrollView>
-        <View style={{ width: '100%', paddingHorizontal: 15 }}>
-          <Spacer space={10} />
-          <Body fontWeight={'bold'}>기부단체 검색</Body>
-          <Spacer space={10} />
-          <SwiftLabel isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} />
-          {selectedLabel === '지금 뜨는' && <HotNow />}
-          {selectedLabel === '높은 신뢰도' && <HighValidity />}
-          {selectedLabel === '작은 기부단위' && <SmallBudget />}
-          {selectedLabel === '활발한 활동' && <Activity />}
-        </View>
+        <SearchGroupCard selectedLabel={selectedLabel} />
       </KeyboardAwareScrollView>
-    </View>
-  );
-};
-
-export const HotNow= () => {
-  return (
-    <View>
-      <SearchGroupCard/>
-    </View>
-  );
-};
-
-export const HighValidity =() =>{
-  return(
-    <View>
-      <SearchGroupCard/>
-    </View>
-  );
-};
-
-export const SmallBudget=() =>{
-  return(
-    <View>
-      {/* <SearchGroupCard/> */}
-    </View>
-  );
-};
-
-export const Activity =() =>{
-  return(
-    <View>
-      <SearchGroupCard/>
     </View>
   );
 };
