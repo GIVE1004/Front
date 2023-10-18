@@ -26,44 +26,9 @@ const SearchScreen = () => {
           <Body fontWeight={'bold'}>기부단체 검색</Body>
           <Spacer space={10} />
           <SwiftLabel isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} />
-          {selectedLabel === '지금 뜨는' && <HotNow />}
-          {selectedLabel === '높은 신뢰도' && <HighValidity />}
-          {selectedLabel === '작은 기부단위' && <SmallBudget />}
-          {selectedLabel === '활발한 활동' && <Activity />}
+          <SearchGroupCard selectedLabel={selectedLabel} />
         </View>
       </KeyboardAwareScrollView>
-    </View>
-  );
-};
-
-export const HotNow = (props) => {
-  return (
-    <View>
-      <SearchGroupCard props={props} />
-    </View>
-  );
-};
-
-export const HighValidity = (props) => {
-  return (
-    <View>
-      <SearchGroupCard props={props} />
-    </View>
-  );
-};
-
-export const SmallBudget = (props) => {
-  return (
-    <View>
-      <SearchGroupCard props={props} />
-    </View>
-  );
-};
-
-export const Activity = (props) => {
-  return (
-    <View>
-      <SearchGroupCard props={props} />
     </View>
   );
 };
