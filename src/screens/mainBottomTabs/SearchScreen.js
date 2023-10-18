@@ -36,34 +36,34 @@ const SearchScreen = () => {
   );
 };
 
-export const HotNow= () => {
+export const HotNow = (props) => {
   return (
     <View>
-      <SearchGroupCard/>
+      <SearchGroupCard props={props} />
     </View>
   );
 };
 
-export const HighValidity =() =>{
-  return(
+export const HighValidity = (props) => {
+  return (
     <View>
-      <SearchGroupCard/>
+      <SearchGroupCard props={props} />
     </View>
   );
 };
 
-export const SmallBudget=() =>{
-  return(
+export const SmallBudget = (props) => {
+  return (
     <View>
-      {/* <SearchGroupCard/> */}
+      <SearchGroupCard props={props} />
     </View>
   );
 };
 
-export const Activity =() =>{
-  return(
+export const Activity = (props) => {
+  return (
     <View>
-      <SearchGroupCard/>
+      <SearchGroupCard props={props} />
     </View>
   );
 };
