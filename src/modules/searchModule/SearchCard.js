@@ -1,13 +1,18 @@
 import { useState } from 'react';
-import { Caption } from '../../components/Typography/Typography';
+import { Body, Caption, Heading } from '../../components/Typography/Typography';
 import * as Color from '../../components/Colors/colors';
-import { View, ScrollView } from 'react-native';
-import { BasicButton } from '../../components/Buttons/Buttons';
+import { View, useWindowDimensions, TouchableOpacity } from 'react-native';
 import { ImageLoader } from '../../components/Images/ImageLoader';
 import { useNavigation } from '@react-navigation/native';
 import { Spacer } from '../../components/Basic/Spacer';
 
-export const SearchGroupCard = (data) => {
+export const SearchGroupCard = (props) => {
+  console.log(props);
+  if (props.selectedLabel == '지금뜨는') {
+    //fetch(주소)
+  } else {
+    // fetch(다른 주소)
+  }
   const tmpdata = [
     {
       source: 'https://picsum.photos/300',
@@ -71,96 +76,85 @@ export const SearchGroupCard = (data) => {
     },
   ];
   return (
-    <View style={{ flex: 1, marginTop: 3, alignItems: 'center' }}>
-      <View>
-        {tmpdata.map((data, index) => (
-          <SearchCard
-            source={data.source}
-            groupId={data.groupId}
-            groupName={data.groupName}
-            groupTag={data.groupTag}
-            groupLabel={data.groupLabel}
-            groupScore={data.groupScore}
-            groupNumber={data.groupNumber}
-            groupNumberPm={data.groupNumberPm}
-            groupStar={data.groupStar}
-            gruopStarPm={data.gruopStarPm}
-          />
-        ))}
-      </View>
+    <View style={{ flex: 1, alignItems: 'center' }}>
+      {tmpdata.map((values, index) => (
+        <SearchCard data={values} />
+      ))}
     </View>
   );
 };
 
 export const SearchCard = (props) => {
+  const data = props.data;
   const navigation = useNavigation();
+  const { width } = useWindowDimensions();
   return (
     <View
       style={{
         backgroundColor: Color.White_100,
-        borderColor: Color.Black_20,
+        borderColor: Color.Black_40,
+        borderBottomWidth: 2,
         borderWidth: 1,
         borderRadius: 8,
         flexDirection: 'column',
-        paddingBottom: 10,
-        marginVertical: 6,
-        width: 375,
+        marginVertical: 4,
+        width: width * 0.94,
+        padding: 10,
       }}
     >
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5, marginRight: 12 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View style={{ paddingLeft: 10, paddingRight: 15 }}>
-            {/* 이미지위치 */}
-            <ImageLoader source={props.source} style={{ width: 45, height: 45, borderRadius: 100 }} />
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('GroupDetailScreen', { groupId: data.groupId });
+        }}
+      >
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 6 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', flexGrow: 4 }}>
+            <ImageLoader source={data.source} style={{ width: 40, height: 40, borderRadius: 100 }} />
+            <Spacer space={16} horizontal={true} />
+            <View>
+              <Heading fontSize={14} color={Color.Black_80}>
+                {data.groupName}
+              </Heading>
+              <Spacer space={4}></Spacer>
+              <Caption fontSize={12}>
+                {data.groupTag}|{data.groupLabel}
+              </Caption>
+            </View>
           </View>
-          <View>
-            {/* 이름 */}
-            <Caption fontWeight={'bold'} fontSize={16} color={Color.Black_80}>
-              {props.groupName}
-            </Caption>
-            {/*  기부단체 종류*/}
-            <Spacer space={3}></Spacer>
-            <Caption color={Color.Black_80}>
-              {props.groupTag}|{props.groupLabel}
-            </Caption>
+          {/* 상세페이지이동버튼 */}
+          <View style={{ flexGrow: 1 }}>
+            <Body fontSize={12} color={Color.Black_60}>
+              상세보기
+            </Body>
           </View>
         </View>
-        {/* 상세페이지이동버튼 */}
-        <BasicButton
-          onPress={() => {
-            navigation.navigate('GroupDetailScreen', { groupId: props.groupId });
-          }}
-        >
-          <Caption color={Color.Black_60}>상세보기</Caption>
-        </BasicButton>
-      </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-        <View style={{ alignItems: 'center' }}>
-          {/* 평점란 */}
-          <View>
-            <Caption color={Color.Black_80}>리뷰 평점</Caption>
+        <Spacer space={14} />
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+          <View style={{ alignItems: 'center' }}>
+            {/* 평점란 */}
+            <Body fontSize={12}>리뷰 평점</Body>
+            <Spacer space={4} />
+            <Heading fontSize={12}>{data.groupScore} / 100</Heading>
           </View>
-          <Caption color={Color.Black_80}>{props.groupScore} / 100</Caption>
-        </View>
-        <View style={{ alignItems: 'center' }}>
-          {/* 기부자 */}
-          <View>
-            <Caption color={Color.Black_80}>기부자(월 단위 증감)</Caption>
+          <View style={{ alignItems: 'center' }}>
+            {/* 기부자 */}
+            <Body fontSize={12}>기부자(월 단위 증감)</Body>
+            <Spacer space={4} />
+            <Heading fontSize={12} color={Color.Danger_50}>
+              {data.groupNumber} 명 {data.groupNumberPm}
+            </Heading>
           </View>
-          <Caption color={Color.Danger_50}>
-            {props.groupNumber} 명 {props.groupNumberPm}
-          </Caption>
-        </View>
-        <View style={{ alignItems: 'center' }}>
-          {/* 관심지수 */}
-          <View>
-            <Caption color={Color.Black_80}>관심지수</Caption>
+          <View style={{ alignItems: 'center' }}>
+            {/* 관심지수 */}
+            <Body fontSize={12}>관심지수</Body>
+            <Spacer space={4} />
+            <Heading fontSize={12} color={Color.Success_50}>
+              {data.groupStar} 점 {data.gruopStarPm}
+            </Heading>
           </View>
-          <Caption color={Color.Success_50}>
-            {props.groupStar} 점 {props.gruopStarPm}
-          </Caption>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };

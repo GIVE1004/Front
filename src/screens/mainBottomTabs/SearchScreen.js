@@ -20,14 +20,14 @@ const SearchScreen = () => {
           console.log('press Search');
         }}
       />
+      <View style={{ width: '100%', paddingHorizontal: 15 }}>
+        <Spacer space={10} />
+        <Body fontWeight={'bold'}>기부단체 검색</Body>
+        <Spacer space={10} />
+        <SwiftLabel isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} />
+      </View>
       <KeyboardAwareScrollView>
-        <View style={{ width: '100%', paddingHorizontal: 15 }}>
-          <Spacer space={10} />
-          <Body fontWeight={'bold'}>기부단체 검색</Body>
-          <Spacer space={10} />
-          <SwiftLabel isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} />
-          <SearchGroupCard selectedLabel={selectedLabel} />
-        </View>
+        <SearchGroupCard selectedLabel={selectedLabel} />
       </KeyboardAwareScrollView>
     </View>
   );
