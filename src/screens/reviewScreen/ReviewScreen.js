@@ -17,12 +17,13 @@ const ReviewScreen = () => {
       <BackWithLogoHeader />
       <Spacer space={10} />
 
-      <View style={{ marginHorizontal: 20 }}>
+      <View style={{ padding: 8 }}>
         <View style={{ marginLeft: 6 }}>
           <Heading>리뷰 작성</Heading>
         </View>
-        <View style={{ paddingVertical: 10, flexDirection: 'row', alignItems: 'center', width: width, paddingHorizontal: 20 }}>
+        <View style={{ paddingVertical: 10, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20 }}>
           <Heading fontSize={20}>점수</Heading>
+          <Spacer space={4} horizontal={true} />
           <MySlider />
         </View>
         <Spacer space={10} />

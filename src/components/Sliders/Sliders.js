@@ -18,14 +18,14 @@ export const MySlider = () => {
       onValueChange={(value) => console.log('onValueChange()', value)}
       orientation='horizontal'
       step={1}
-      style={{ width: '80%' }}
-      thumbStyle={{ height: 80, width: 80, backgroundColor: 'transparent' }}
+      style={{ width: '90%' }}
+      thumbStyle={{ height: 20, width: 20, backgroundColor: 'transparent' }}
       thumbProps={{
-        children: <Icon name={IconName.FILLSTAR} size={40} />,
+        children: <Icon name={IconName.FILLSTAR} size={20} color={Color.Black_20} />,
       }}
       thumbTintColor='#0c0'
       thumbTouchSize={{ width: 40, height: 40 }}
-      trackStyle={{ height: 10, borderRadius: 20 }}
+      trackStyle={{ height: 20, borderRadius: 20 }}
       value={50}
     />
   );
