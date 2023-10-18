@@ -2,32 +2,9 @@ import Slider from '@react-native-community/slider';
 import { View } from 'react-native';
 import * as Color from '../Colors/colors';
 import { Body } from '../Typography/Typography';
-
-export const MySlider = (props) => {
-  return (
-    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
-      <Slider
-        style={{ height: 40, width: 300 }}
-        value={props.value}
-        onValueChange={(value) => props.setValue(value)}
-        minimumValue={0}
-        maximumValue={100}
-        maximumTrackTintColor={Color.Black_20}
-        minimumTrackTintColor={props.color || Color.Primary_50}
-        step={1}
-        tapToSeek={true}
-        thumbTintColor={Color.Primary_50}
-        disabled={props.disabled}
-      />
-      <Body>
-        {props.value}
-        {props.type == 'score' ? '점' : '%'}
-      </Body>
-    </View>
-  );
-};
-
-export const HeartSlider = (props) => {
+import { Icon } from '../../components/Icons/Icons';
+import * as IconName from '../../components/Icons/IconName';
+export const MySlider = () => {
   return (
     <Slider
       animateTransitions
@@ -41,10 +18,10 @@ export const HeartSlider = (props) => {
       onValueChange={(value) => console.log('onValueChange()', value)}
       orientation='horizontal'
       step={1}
-      style={{ width: '80%', height: 200 }}
-      thumbStyle={{ height: 20, width: 20 }}
+      style={{ width: '80%' }}
+      thumbStyle={{ height: 80, width: 80, backgroundColor: 'transparent' }}
       thumbProps={{
-        children: <Icon name='STAR' type='font-awesome' size={20} reverse containerStyle={{ bottom: 20, right: 20 }} color='#f50' />,
+        children: <Icon name={IconName.FILLSTAR} size={40} />,
       }}
       thumbTintColor='#0c0'
       thumbTouchSize={{ width: 40, height: 40 }}

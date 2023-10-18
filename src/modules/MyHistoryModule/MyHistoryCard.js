@@ -12,57 +12,60 @@ import { Divider } from 'react-native-paper';
 export const UserHistory = (props) => {
   return (
     <View style={{ paddingHorizontal: 20 }}>
-      <Heading fontSize={20}>"{props.UserNickname}" 님의 기부 내역</Heading>
+      <Heading fontSize={22}>"{props.UserNickname}" 님의 기부 내역</Heading>
       <View style={{ paddingLeft: 10 }}>
         <Spacer space={10} />
-        <Body fontWeight={'bold'} fontSize={12}>
+        <Body fontWeight={'bold'} fontSize={16}>
           월 기부금
         </Body>
-        <Body fontWeight={'bold'} fontSize={16}>
+        <Body fontWeight={'bold'} fontSize={20}>
           {props.UserMonthlyDonation} 원
         </Body>
         <Spacer space={3} />
         <View style={{ flexDirection: 'row' }}>
-          <Body fontWeight={'bold'} fontSize={10}>
-            또래 평균보다
+          <Body fontWeight={'bold'} fontSize={14}>
+            평균보다
           </Body>
-          <Body color={Color.Danger_50} fontWeight={'bold'} fontSize={10}>
+          <Spacer horizontal={true} space={8} />
+          <Body color={Color.Danger_50} fontWeight={'bold'} fontSize={14}>
             {props.UserMonthlyDonationPm} 원
           </Body>
         </View>
-        <Spacer space={15}></Spacer>
-        <Body fontWeight={'bold'} fontSize={12}>
+        <Spacer space={16}></Spacer>
+        <Body fontWeight={'bold'} fontSize={16}>
           총 기부금
         </Body>
-        <Body fontWeight={'bold'} fontSize={16}>
+        <Body fontWeight={'bold'} fontSize={20}>
           {props.UserTotlaDonation} 원
         </Body>
         <Spacer space={3} />
         <View style={{ flexDirection: 'row' }}>
-          <Body fontWeight={'bold'} fontSize={10}>
-            또래 평균보다
+          <Body fontWeight={'bold'} fontSize={14}>
+            평균보다
           </Body>
-          <Body color={Color.Success_50} fontSize={10}>
+          <Spacer horizontal={true} space={8} />
+          <Body color={Color.Success_50} fontSize={14}>
             {props.UserTotlaDonationPm} 원
           </Body>
         </View>
         <Spacer space={15}></Spacer>
-        <Body fontWeight={'bold'} fontSize={12}>
-          보유 뱃지
-        </Body>
         <Body fontWeight={'bold'} fontSize={16}>
-          {props.Badge} 개
+          기부횟수
+        </Body>
+        <Body fontWeight={'bold'} fontSize={20}>
+          {props.Badge} 회
         </Body>
         <Spacer space={3} />
         <View style={{ flexDirection: 'row' }}>
-          <Body fontWeight={'bold'} fontSize={10}>
-            또래 평균보다
+          <Body fontWeight={'bold'} fontSize={14}>
+            평균보다
           </Body>
-          <Body fontSize={10} color={Color.Success_50} fontWeight={'bold'}>
+          <Spacer horizontal={true} space={8} />
+          <Body fontSize={14} color={Color.Success_50} fontWeight={'bold'}>
             {props.BadgePm}
           </Body>
-          <Body color={Color.Success_50} fontWeight={'bold'} fontSize={10}>
-            개
+          <Body color={Color.Success_50} fontWeight={'bold'} fontSize={14}>
+            회
           </Body>
         </View>
       </View>
