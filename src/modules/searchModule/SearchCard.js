@@ -107,25 +107,17 @@ export const SearchCard = (props) => {
           navigation.navigate('GroupDetailScreen', { groupId: data.groupId });
         }}
       >
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 6 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', flexGrow: 4 }}>
-            <ImageLoader source={data.source} style={{ width: 40, height: 40, borderRadius: 100 }} />
-            <Spacer space={16} horizontal={true} />
-            <View>
-              <Heading fontSize={14} color={Color.Black_80}>
-                {data.groupName}
-              </Heading>
-              <Spacer space={4}></Spacer>
-              <Caption fontSize={12}>
-                {data.groupTag}|{data.groupLabel}
-              </Caption>
-            </View>
-          </View>
-          {/* 상세페이지이동버튼 */}
-          <View style={{ flexGrow: 1 }}>
-            <Body fontSize={12} color={Color.Black_60}>
-              상세보기
-            </Body>
+        <View style={{ flexDirection: 'row', alignItems: 'center', flexGrow: 4, paddingHorizontal: 6 }}>
+          <ImageLoader source={data.source} style={{ width: 40, height: 40, borderRadius: 100 }} />
+          <Spacer space={16} horizontal={true} />
+          <View>
+            <Heading fontSize={14} color={Color.Black_80}>
+              {data.groupName}
+            </Heading>
+            <Spacer space={4}></Spacer>
+            <Caption fontSize={12}>
+              {data.groupTag}|{data.groupLabel}
+            </Caption>
           </View>
         </View>
         <Spacer space={14} />
