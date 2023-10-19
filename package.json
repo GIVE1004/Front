@@ -45,7 +45,8 @@
     "react-native-slide": "^0.2.2",
     "react-native-svg": "^13.14.0",
     "react-native-table-component": "^1.2.2",
-    "react-native-view-slider": "^1.1.1"
+    "react-native-view-slider": "^1.1.1",
+    "react-native-webview": "^13.6.2"
   },
   "private": true
 }
