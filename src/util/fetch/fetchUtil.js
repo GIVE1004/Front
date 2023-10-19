@@ -23,10 +23,24 @@ export const makeQueryStringForGet = (baseUrl, queryParams) => {
   return fullUrl;
 };
 
+//********* AuthFetch **********/
 /// oauth/{oAuthServerType}
 // oauth 페이지 호출
 export const getAuthRedirectFetch = async (oAuthServerType) => {
   const baseUrl = `${url}/oauth/${oAuthServerType}`;
+
+  return await fetch(baseUrl, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+};
+
+// /login/{kakao}?code=인증코드
+export const getLoginFetch = async (oAuthServerType, code) => {
+  const baseUrl = `${url}/oauth/login/${oAuthServerType}?code=${code}`;
 
   return await fetch(baseUrl, {
     method: 'GET',
