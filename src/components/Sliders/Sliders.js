@@ -25,10 +25,10 @@ export const MySlider = () => {
       onValueChange={onValueChange}
       orientation='horizontal'
       step={1}
-      style={{ width: '90%' }}
-      thumbStyle={{ height: 20, width: 40, backgroundColor: 'transparent' }}
+      style={{ width: '100%' }}
+      thumbStyle={{ height: 24, width: 40, backgroundColor: 'transparent' }}
       thumbProps={{
-        children: <View style={{ backgroundColor: Color.Success_60, borderRadius: 10, flexDirection: 'row', alignItems: 'center',  justifyContent:'center'}}><Heading fontSize={14}>{sliderValue}점</Heading></View>
+        children: <View style={{ height:'100%', backgroundColor: Color.Success_60, borderRadius: 10, flexDirection: 'row', alignItems: 'center',  justifyContent:'center'}}><Heading fontSize={12} color={Color.White_100}>{sliderValue}점</Heading></View>
       }}
       thumbTintColor={Color.Black_20}
       thumbTouchSize={{ width: 30, height: 30 }}
