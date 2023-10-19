@@ -1,4 +1,4 @@
-import { View, StyleSheet, useWindowDimensions } from 'react-native';
+import { View, StyleSheet, useWindowDimensions, Image } from 'react-native';
 import { BackWithLogoHeader } from '../../components/Headers/Headers';
 import * as Color from '../../components/Colors/colors';
 import { Heading } from '../../components/Typography/Typography';
@@ -9,9 +9,17 @@ import { Footer } from '../../components/Footers/Footers';
 import { MyModal } from '../../components/Modals/Modals';
 import { useState } from 'react';
 import { MySlider } from '../../components/Sliders/Sliders';
+import { ImageLoader } from '../../components/Images/ImageLoader';
+import { Caption } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+
 const ReviewScreen = () => {
   const [isVisible, setIsVisible] = useState(false);
   const { width } = useWindowDimensions();
+  const navigation = useNavigation();
+  const tmpdata = [
+    {groupId: 1, }
+  ]
   return (
     <View style={styles.container}>
       <BackWithLogoHeader />
@@ -42,7 +50,28 @@ const ReviewScreen = () => {
         >
           <Heading fontSize={16}>등록하기</Heading>
         </BasicButton>
-        <MyModal height='50%' isVisible={isVisible} setIsVisible={setIsVisible} />
+        <MyModal height='50%' isVisible={isVisible} setIsVisible={setIsVisible} >
+        <View style={{flexDirection: 'column', alignItems: 'center'}}>
+            <Spacer space={30}/>
+            <Image source={require('../../../assets/success.gif')} style={{width: 200, height: 200}}/>
+            <Spacer space={20}/>
+            <Heading fontSize={28}>리뷰 등록 성공!</Heading>
+            <Spacer space={5}/>
+            <Caption>기부자님의 소중한 리뷰를 등록했어요!</Caption>
+        </View>
+        <Footer>
+          <BasicButton
+            onPress={() => {
+              navigation.navigate('GroupDetailScreen');
+            }}
+            width='100%'
+            backgroundColor={Color.Primary_50}
+            borderColor={Color.Primary_50}
+          >
+            <Heading fontSize={16}>등록완료</Heading>
+          </BasicButton>
+        </Footer>
+        </MyModal>
       </Footer>
     </View>
   );

@@ -10,48 +10,50 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 const DATA = [
   {
-    id: '1',
-    groupname: '사회복지법인 굿네이버스dddddddddㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇdddd',
-    info: '사회복지',
-    groupinfo: '지정기부금단체',
-    isBookmarked: false, // 각 항목에 대한 북마크 상태
+    source: 'https://picsum.photos/300',
+    groupId: '1',
+    groupName: '사회복지법인 굿네이버스1',
+    groupTag: '사회복지',
+    groupLabel: '지정기부금단체',
+
   },
   {
-    id: '2',
-    groupname: '사회복지법인 굿네이버스',
-    info: '사회복지',
-    groupinfo: '지정기부금단체',
-    isBookmarked: false,
+    source: 'https://picsum.photos/300',
+    groupId: '2',
+    groupName: '사회복지법인 굿네이버스2',
+    groupTag: '사회복지',
+    groupLabel: '지정기부금단체',
   },
   {
-    id: '3',
-    groupname: '사회복지법인 굿네이버스',
-    info: '사회복지',
-    groupinfo: '지정기부금단체',
-    isBookmarked: false,
+    source: 'https://picsum.photos/300',
+    groupId: '3',
+    groupName: '사회복지법인 굿네이버스3',
+    groupTag: '사회복지',
+    groupLabel: '지정기부금단체',
   },
   {
-    id: '4',
-    groupname: '사회복지법인 굿네이버스',
-    info: '사회복지',
-    groupinfo: '지정기부금단체',
-    isBookmarked: false,
+    source: 'https://picsum.photos/300',
+    groupId: '4',
+    groupName: '사회복지법인 굿네이버스4',
+    groupTag: '사회복지',
+    groupLabel: '지정기부금단체',
   },
 ];
 
-const StarScreen = (props) => {
+const StarScreen = () => {
   const toggleBookmark = (itemId) => {
     const updatedData = DATA.map((item) => {
-      if (item.id === itemId) {
+      if (item.groupId === itemId) {
         return {
           ...item,
-          isBookmarked: !item.isBookmarked,
+          
+          
         };
       }
       return item;
     });
   };
-
+  const [isStar, setStar] = useState(true);
   return (
     <View style={styles.container}>
       <BackWithLogoHeader />
@@ -66,27 +68,30 @@ const StarScreen = (props) => {
           <View style={styles.item}>
             <View style={styles.headbox}>
               <View style={styles.imgbox}>
-                <Icon name={IconName.STAR} iconColor={Color.Primary_50} />
+                <ImageLoader source={item.source} style={{ width: 60, height: 60, borderRadius: 100 }}/>
               </View>
               <View style={styles.textbox}>
-                <Body numberOfLines={1}>{item.groupname}</Body>
+                <Body numberOfLines={1}>{item.groupName}</Body>
                 <View style={styles.textinfo}>
-                  <Caption>{item.info}</Caption>
+                  <Caption>{item.groupTag}</Caption>
                   <Caption>|</Caption>
-                  <Caption>{item.groupinfo}</Caption>
+                  <Caption>{item.groupLabel}</Caption>
                 </View>
               </View>
             </View>
             <View style={styles.footbox}>
-              <TouchableOpacity onPress={() => {
-                props.setIsStar(!props.isStar);
-              }}>
-                <Icon name={props.isStar ? IconName.FILLSTAR : IconName.STAR} size={22} iconColor={Color.Primary_50} />
+              <TouchableOpacity 
+                onPress={() => {
+                  setStar(false);
+                  
+              }}
+              >
+                <Icon name={isStar ? IconName.FILLSTAR : IconName.STAR} size={22} iconColor={Color.Primary_50} />
               </TouchableOpacity>
             </View>
           </View>
         )}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.groupId.toString()}
       />
     </View>
   );
