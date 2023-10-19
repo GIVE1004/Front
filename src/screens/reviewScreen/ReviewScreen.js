@@ -28,6 +28,7 @@ const ReviewScreen = () => {
         </View>
         <Spacer space={10} />
         <SingleLineInput placeholder={'리뷰 제목'} />
+        <Spacer space={10}></Spacer>
         <MultiLineInput placeholder={'내용을 작성해 주세요'} />
       </View>
       <Footer>
