@@ -10,11 +10,14 @@ import * as Color from '../../components/Colors/colors';
 import { useRecoilState } from 'recoil';
 import { goMainPageState } from '../../util/recoil/Atoms';
 import { useNavigation } from '@react-navigation/native';
+import { getAuthRedirectFetch } from '../../util/fetch/fetchUtil';
 
 const SplashScreen = () => {
   const navigation = useNavigation();
   const { width } = useWindowDimensions();
   const [goMainPage, setGoMainPage] = useRecoilState(goMainPageState);
+
+  const onPressStart = () => {};
 
   return (
     <SafeAreaProvider style={{ flex: 1, padding: 14, backgroundColor: Color.White_100 }}>
