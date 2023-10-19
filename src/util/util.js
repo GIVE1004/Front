@@ -14,11 +14,18 @@ export const Scaleing = (number) => {
     return number.toString();
   }
 };
-
-function truncateString(str, maxLength) {
+export const truncateString = (str, maxLength) => {
   if (str.length > maxLength) {
     return str.substring(0, maxLength - 3) + '...';
   } else {
     return str;
   }
-}
+};
+
+export const formatNumberWithSign = (number) => {
+  if (number >= 0) {
+    return `+${number}`;
+  } else {
+    return `${number}`;
+  }
+};

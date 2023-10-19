@@ -5,6 +5,7 @@ import { View, useWindowDimensions, TouchableOpacity } from 'react-native';
 import { ImageLoader } from '../../components/Images/ImageLoader';
 import { useNavigation } from '@react-navigation/native';
 import { Spacer } from '../../components/Basic/Spacer';
+import { formatNumberWithSign } from '../../util/util';
 
 export const SearchGroupCard = (props) => {
   console.log(props);
@@ -24,7 +25,7 @@ export const SearchGroupCard = (props) => {
       groupNumber: '1234',
       groupNumberPm: '12',
       groupStar: '1234',
-      gruopStarPm: '12',
+      gruopStarPm: '-12',
     },
     {
       source: 'https://picsum.photos/300',
@@ -36,7 +37,7 @@ export const SearchGroupCard = (props) => {
       groupNumber: '1234',
       groupNumberPm: '12',
       groupStar: '1234',
-      gruopStarPm: '12',
+      gruopStarPm: '-12',
     },
     {
       source: 'https://picsum.photos/300',
@@ -48,7 +49,7 @@ export const SearchGroupCard = (props) => {
       groupNumber: '1234',
       groupNumberPm: '12',
       groupStar: '1234',
-      gruopStarPm: '12',
+      gruopStarPm: '-12',
     },
     {
       source: 'https://picsum.photos/300',
@@ -133,16 +134,16 @@ export const SearchCard = (props) => {
             {/* 기부자 */}
             <Body fontSize={12}>기부자(월 단위 증감)</Body>
             <Spacer space={4} />
-            <Heading fontSize={12} color={Color.Danger_50}>
-              {data.groupNumber} 명 {data.groupNumberPm}
+            <Heading fontSize={12} color={data.groupNumberPm >= 0 ? Color.Success_50 : Color.Danger_50}>
+              {data.groupNumber} 명 ({formatNumberWithSign(data.groupNumberPm)})
             </Heading>
           </View>
           <View style={{ alignItems: 'center' }}>
             {/* 관심지수 */}
             <Body fontSize={12}>관심지수</Body>
             <Spacer space={4} />
-            <Heading fontSize={12} color={Color.Success_50}>
-              {data.groupStar} 점 {data.gruopStarPm}
+            <Heading fontSize={12} color={data.gruopStarPm >= 0 ? Color.Success_50 : Color.Danger_50}>
+              {data.groupStar} 점 ({formatNumberWithSign(data.gruopStarPm)})
             </Heading>
           </View>
         </View>

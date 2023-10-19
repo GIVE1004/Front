@@ -7,10 +7,10 @@ import { DonationNowGroupCard, HistoryGroupCard, UserHistory } from '../../modul
 const ChartScreen = () => {
   const data = {
     UserNickname: '킹받은 짱구',
-    UserMonthlyDonation: '12,000',
-    UserMonthlyDonationPm: '-3,584',
-    UserTotlaDonation: '212,000',
-    UserTotlaDonationPm: '56,256',
+    UserMonthlyDonation: '12000',
+    UserMonthlyDonationPm: '-3584',
+    UserTotlaDonation: '212000',
+    UserTotlaDonationPm: '56256',
     Badge: '4',
     BadgePm: '1',
   };

@@ -9,6 +9,8 @@ import { Footer } from '../../components/Footers/Footers';
 import { BasicButton } from '../../components/Buttons/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import { Divider } from 'react-native-paper';
+import { AddComma } from '../../util/util';
+
 export const UserHistory = (props) => {
   return (
     <View style={{ paddingHorizontal: 20 }}>
@@ -19,7 +21,7 @@ export const UserHistory = (props) => {
           월 기부금
         </Body>
         <Body fontWeight={'bold'} fontSize={20}>
-          {props.UserMonthlyDonation} 원
+          {AddComma(props.UserMonthlyDonation)} 원
         </Body>
         <Spacer space={3} />
         <View style={{ flexDirection: 'row' }}>
@@ -27,8 +29,8 @@ export const UserHistory = (props) => {
             평균보다
           </Body>
           <Spacer horizontal={true} space={8} />
-          <Body color={Color.Danger_50} fontWeight={'bold'} fontSize={14}>
-            {props.UserMonthlyDonationPm} 원
+          <Body color={props.UserMonthlyDonationPm >= 0 ? Color.Success_50 : Color.Danger_50} fontWeight={'bold'} fontSize={14}>
+            {AddComma(props.UserMonthlyDonationPm)} 원
           </Body>
         </View>
         <Spacer space={16}></Spacer>
@@ -36,7 +38,7 @@ export const UserHistory = (props) => {
           총 기부금
         </Body>
         <Body fontWeight={'bold'} fontSize={20}>
-          {props.UserTotlaDonation} 원
+          {AddComma(props.UserTotlaDonation)} 원
         </Body>
         <Spacer space={3} />
         <View style={{ flexDirection: 'row' }}>
@@ -44,8 +46,8 @@ export const UserHistory = (props) => {
             평균보다
           </Body>
           <Spacer horizontal={true} space={8} />
-          <Body color={Color.Success_50} fontSize={14}>
-            {props.UserTotlaDonationPm} 원
+          <Body color={props.UserTotlaDonationPm >= 0 ? Color.Success_50 : Color.Danger_50} fontWeight={'bold'} fontSize={14}>
+            {AddComma(props.UserTotlaDonationPm)} 원
           </Body>
         </View>
         <Spacer space={15}></Spacer>
@@ -53,7 +55,7 @@ export const UserHistory = (props) => {
           기부횟수
         </Body>
         <Body fontWeight={'bold'} fontSize={20}>
-          {props.Badge} 회
+          {AddComma(props.Badge)} 회
         </Body>
         <Spacer space={3} />
         <View style={{ flexDirection: 'row' }}>
@@ -61,11 +63,8 @@ export const UserHistory = (props) => {
             평균보다
           </Body>
           <Spacer horizontal={true} space={8} />
-          <Body fontSize={14} color={Color.Success_50} fontWeight={'bold'}>
-            {props.BadgePm}
-          </Body>
-          <Body color={Color.Success_50} fontWeight={'bold'} fontSize={14}>
-            회
+          <Body fontSize={14} color={props.BadgePm >= 0 ? Color.Success_50 : Color.Danger_50} fontWeight={'bold'}>
+            {AddComma(props.BadgePm)}회
           </Body>
         </View>
       </View>
