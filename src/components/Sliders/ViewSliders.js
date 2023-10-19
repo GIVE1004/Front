@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import { ViewSlider } from 'react-native-view-slider';
+import ViewSlider from 'react-native-view-slider';
 import * as Color from '../Colors/colors';
 
 export const ViewSliders = (props) => {
