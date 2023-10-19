@@ -12,7 +12,13 @@ import { GroupDetailInfoCard, GroupGraphCard, GroupInfoCard } from '../../module
 
 const GroupDetailScreen = (props) => {
   const [isVisible, setIsVisible] = useState(false);
+
+  // fetch 받을 데이터(내가 관심 등록한 단체인지) + onPress시 관심단체 선택/해제 넣기
   const [isStar, setIsStar] = useState(false);
+  // To-do
+  // fetch 받을 데이터(내가 기부하고 있는 단체인지) -> 기부하기 모달에 띄울 페이지도 다름.
+  const [isGive, setIsGive] = useState(true);
+
   return (
     <View style={styles.container}>
       <StarHeader isStar={isStar} setIsStar={setIsStar} />
@@ -28,8 +34,15 @@ const GroupDetailScreen = (props) => {
       </KeyboardAwareScrollView>
       {/* 그룹 디테일 Footer */}
       <Footer>
-        <BasicButton onPress={() => setIsVisible(true)} width='100%' backgroundColor={Color.Primary_50} borderColor={Color.Primary_50}>
-          <Heading fontSize={16}>기부하기</Heading>
+        <BasicButton
+          onPress={() => setIsVisible(true)}
+          width='100%'
+          backgroundColor={isGive ? Color.Primary_50 : Color.Secondary_50}
+          borderColor={isGive ? Color.Primary_50 : Color.Secondary_50}
+        >
+          <Heading fontSize={16} color={isGive || Color.White_100}>
+            {isGive ? '기부하기' : '기부 그만하기'}
+          </Heading>
         </BasicButton>
       </Footer>
 

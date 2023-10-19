@@ -6,12 +6,14 @@ import { Heading } from '../../components/Typography/Typography';
 import { BasicButton, LoginButton } from '../../components/Buttons/Buttons';
 import * as Color from '../../components/Colors/colors';
 import { useRecoilState } from 'recoil';
-import { goMainPageState } from '../../util/recoil/Atoms';
+import { goMainPageState, goQuestionPageState } from '../../util/recoil/Atoms';
 import { LocalImageLoader } from '../../components/Images/ImageLoader';
+import { useNavigation } from '@react-navigation/native';
 
 const OauthScreen = () => {
   const [goMainPage, setGoMainPage] = useRecoilState(goMainPageState);
   const { width } = useWindowDimensions();
+  const navigation = useNavigation();
 
   return (
     <SafeAreaProvider style={{ backgroundColor: Color.White_100 }}>
@@ -49,6 +51,14 @@ const OauthScreen = () => {
           }}
         >
           <Heading fontSize={16}>임시: 메인화면으로 가기</Heading>
+        </BasicButton>
+        <BasicButton
+          borderColor={Color.Black_20}
+          onPress={() => {
+            navigation.reset({ routes: [{ name: 'QuestionScreen' }] });
+          }}
+        >
+          <Heading fontSize={16}>임시: 질문화면으로 가기</Heading>
         </BasicButton>
       </View>
     </SafeAreaProvider>

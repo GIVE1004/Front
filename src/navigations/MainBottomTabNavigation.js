@@ -4,11 +4,11 @@ import * as Color from '../components/Colors/colors';
 import * as IconName from '../components/Icons/IconName';
 import { Badge } from '../components/Icons/Badge';
 import { Icon } from '../components/Icons/Icons';
-import MainScreen from '../screens/MainBottomTabs/MainScreen';
-import SearchScreen from '../screens/MainBottomTabs/SearchScreen';
-import ChartScreen from '../screens/MainBottomTabs/ChartScreen';
-import UserScreen from '../screens/MainBottomTabs/UserScreen';
-import ChatScreen from '../screens/MainBottomTabs/ChatScreen';
+import MainScreen from '../screens/mainBottomTabs/MainScreen';
+import SearchScreen from '../screens/mainBottomTabs/SearchScreen';
+import ChartScreen from '../screens/mainBottomTabs/ChartScreen';
+import UserScreen from '../screens/mainBottomTabs/UserScreen';
+import ChatScreen from '../screens/mainBottomTabs/ChatScreen';
 const Tabs = createBottomTabNavigator();
 
 const MainBottomTabNavigation = () => {
@@ -35,8 +35,8 @@ const MainBottomTabNavigation = () => {
           };
           const iconName = getIconName();
           return (
-            <Badge badgeBackGroudColor={focused ? Color.Black_60 : Color.White_100}>
-              <Icon name={iconName} size={22} iconColor={focused ? Color.Primary_50 : Color.Black_40} />
+            <Badge badgeBackGroudColor={focused ? Color.Black_80 : Color.White_100}>
+              <Icon name={iconName} size={22} iconColor={focused ? Color.Primary_50 : Color.Black_60} />
             </Badge>
           );
         },
