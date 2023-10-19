@@ -18,7 +18,7 @@ const ReviewScreen = () => {
       <Spacer space={10} />
 
       <View style={{ padding: 8 }}>
-          <Heading >평점 입력</Heading>
+        <Heading>평점 입력</Heading>
         <View style={{ paddingVertical: 10, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20 }}>
           <Spacer space={4} horizontal={true} />
           <MySlider />
@@ -30,7 +30,6 @@ const ReviewScreen = () => {
         <SingleLineInput placeholder={'리뷰 제목'} />
         <MultiLineInput placeholder={'내용을 작성해 주세요'} />
       </View>
-
       <Footer>
         <BasicButton
           onPress={() => {
@@ -42,6 +41,7 @@ const ReviewScreen = () => {
         >
           <Heading fontSize={16}>등록하기</Heading>
         </BasicButton>
+        <MyModal height='50%' isVisible={isVisible} setIsVisible={setIsVisible} />
       </Footer>
     </View>
   );
