@@ -10,7 +10,7 @@ import { useRecoilState } from 'recoil';
 import { goMainPageState, goQuestionPageState } from '../../util/recoil/Atoms';
 import { LocalImageLoader } from '../../components/Images/ImageLoader';
 import { useNavigation } from '@react-navigation/native';
-import { getAuthRedirectFetch } from '../../util/fetch/fetchUtil';
+import { getAuthRedirectFetch, getLoginFetch } from '../../util/fetch/fetchUtil';
 import WebView from 'react-native-webview';
 
 const OauthScreen = () => {
@@ -20,13 +20,19 @@ const OauthScreen = () => {
   const [oAuthServerType, setOAuthServerType] = useState('');
   const [url, setUrl] = useState('');
   const [webViewState, setWebViewState] = useState({ url: '' });
+  const [code, setCode] = useState('');
 
   const handleNavigationStateChange = (newState) => {
     // 여기에서 newState.url을 기반으로 리다이렉트 여부를 판단하고 처리
-    // http://localhost:8081/oauth/redirected/kakao?code=GTMV7uRrS-R3xDfTMcOoyFiLmXJCnVdaawjh-OpRLv8Bv6ZkqnfAeYrGv3YKPXUaAAABi0gwHM3Nsk3jZ7dWzg
-    if (newState.url.includes('/oauth/redirected/' + oAuthServerType)) {
+    if (newState.url.includes('/oauth/redirected/' + oAuthServerType + '?code')) {
+      const match = newState.url.match(/[?&]code=([^&]+)/);
+      if (match) {
+        const code = match[1];
+        setCode(code);
+      } else {
+        Alert.alert('로그인 실패!!!');
+      }
       setUrl('');
-      console.log('Redirected to:', newState.url);
     }
 
     setWebViewState(newState);
@@ -42,10 +48,25 @@ const OauthScreen = () => {
     }
   };
 
+  const getLoginData = async () => {
+    try {
+      const response = await getLoginFetch(oAuthServerType, code);
+      const data = await response.json();
+      console.log(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    if (code != '') {
+      getLoginData();
+    }
+  }, [code]);
+
   useEffect(() => {
     if (oAuthServerType != '') {
       getServerRedirectUrlData();
-      setOAuthServerType('');
     }
   }, [oAuthServerType]);
 
