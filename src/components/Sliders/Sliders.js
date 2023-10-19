@@ -1,31 +1,38 @@
-import Slider from '@react-native-community/slider';
-import { View } from 'react-native';
+import { Slider } from '@rneui/themed';
 import * as Color from '../Colors/colors';
-import { Body } from '../Typography/Typography';
-import { Icon } from '../../components/Icons/Icons';
-import * as IconName from '../../components/Icons/IconName';
+import {Heading} from '../Typography/Typography';
+import React, {value, onValueChange, useState} from "react";
+import { View} from 'react-native';
 export const MySlider = () => {
+
+  const [sliderValue, setSliderValue] = useState(50);
+
+  const onValueChange = (value) => {
+    console.log('onValueChange()', value);
+    setSliderValue(value); // 상태 값을 업데이트합니다.
+  };
+
   return (
     <Slider
       animateTransitions
       animationType='timing'
-      maximumTrackTintColor='#ccc'
+      maximumTrackTintColor={Color.Black_40}
       maximumValue={100}
-      minimumTrackTintColor='#222'
+      minimumTrackTintColor={Color.Success_60}
       minimumValue={0}
       onSlidingComplete={() => console.log('onSlidingComplete()')}
       onSlidingStart={() => console.log('onSlidingStart()')}
-      onValueChange={(value) => console.log('onValueChange()', value)}
+      onValueChange={onValueChange}
       orientation='horizontal'
       step={1}
       style={{ width: '90%' }}
-      thumbStyle={{ height: 20, width: 20, backgroundColor: 'transparent' }}
+      thumbStyle={{ height: 20, width: 40, backgroundColor: 'transparent' }}
       thumbProps={{
-        children: <Icon name={IconName.FILLSTAR} size={20} color={Color.Black_20} />,
+        children: <View style={{ backgroundColor: Color.Success_60, borderRadius: 10, flexDirection: 'row', alignItems: 'center',  justifyContent:'center'}}><Heading fontSize={14}>{sliderValue}점</Heading></View>
       }}
-      thumbTintColor='#0c0'
-      thumbTouchSize={{ width: 40, height: 40 }}
-      trackStyle={{ height: 20, borderRadius: 20 }}
+      thumbTintColor={Color.Black_20}
+      thumbTouchSize={{ width: 30, height: 30 }}
+      trackStyle={{ height: 10, borderRadius: 10 }}
       value={50}
     />
   );

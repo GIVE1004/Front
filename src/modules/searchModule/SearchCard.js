@@ -4,7 +4,6 @@ import * as Color from '../../components/Colors/colors';
 import { View, useWindowDimensions, TouchableOpacity } from 'react-native';
 import { ImageLoader } from '../../components/Images/ImageLoader';
 import { useNavigation } from '@react-navigation/native';
-import { Spacer } from '../../components/Basic/Spacer';
 
 export const SearchGroupCard = (props) => {
   console.log(props);
@@ -87,38 +86,30 @@ export const SearchGroupCard = (props) => {
 export const SearchCard = (props) => {
   const data = props.data;
   const navigation = useNavigation();
-  const { width } = useWindowDimensions();
-  return (
-    <View
-      style={{
-        backgroundColor: Color.White_100,
-        borderColor: Color.Black_40,
-        borderBottomWidth: 2,
-        borderWidth: 1,
-        borderRadius: 8,
-        flexDirection: 'column',
-        marginVertical: 4,
-        width: width * 0.94,
-        padding: 10,
-      }}
-    >
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('GroupDetailScreen', { groupId: data.groupId });
-        }}
-      >
-        <View style={{ flexDirection: 'row', alignItems: 'center', flexGrow: 4, paddingHorizontal: 6 }}>
-          <ImageLoader source={data.source} style={{ width: 40, height: 40, borderRadius: 100 }} />
-          <Spacer space={16} horizontal={true} />
-          <View>
-            <Heading fontSize={14} color={Color.Black_80}>
-              {data.groupName}
-            </Heading>
-            <Spacer space={4}></Spacer>
-            <Caption fontSize={12}>
-              {data.groupTag}|{data.groupLabel}
-            </Caption>
-          </View>
+    return (
+      <View style={{ backgroundColor: Color.White_100, borderColor: Color.Black_20, borderWidth:1, borderRadius: 8, flexDirection: 'column', paddingBottom:10,  marginVertical:6, width:375}}>
+        <TouchableOpacity>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View style={{flexDirection: 'row', alignItems:'center'}}>
+                <View style={{paddingLeft:10, paddingRight:15}}>
+                  {/* 이미지위치 */}
+                  <ImageLoader source={props.source} style={{ width: 45, height: 45, borderRadius: 100 }} />
+                </View>
+                <View>
+                  {/* 이름 */}
+                  <Caption fontWeight={'bold'} fontSize={16} color={Color.Black_80}>{props.groupName}</Caption>
+                  {/*  기부단체 종류*/}
+                  <Spacer space={3}></Spacer>
+                  <Caption color={Color.Black_80}>{props.groupTag}|{props.groupLabel}</Caption>
+                </View>
+            </View>
+            {/* 상세페이지이동버튼 */}
+            <BasicButton 
+            onPress={() => {
+              navigation.navigate('GroupDetailScreen', { groupId: props.groupId });
+            }}>
+              <Caption color={Color.Black_60}>상세보기</Caption>
+            </BasicButton>
         </View>
         <Spacer space={14} />
 
