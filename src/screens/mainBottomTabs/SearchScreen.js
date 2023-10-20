@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Spacer } from '../../components/Basic/Spacer';
 import { SearchHeader } from '../../components/Headers/Headers';
 import * as Color from '../../components/Colors/colors';
 import { Body } from '../../components/Typography/Typography';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { SwiftLabel } from '../../components/Labels/Labels';
-import { SearchCard, SearchGroupCard } from '../../modules/searchModule/SearchCard';
+import { SearchGroupCard } from '../../modules/searchModule/SearchCard';
 
 const SearchScreen = () => {
   const labels = ['지금 뜨는', '높은 신뢰도', '작은 기부단위', '활발한 활동'];
