@@ -73,8 +73,7 @@ export const UserHistory = (props) => {
   );
 };
 
-export const DonationNowGroupCard = () => {
-  const [isVisible, setIsVisible] = useState(false);
+export const DonationNowGroupCard = (props) => {
   const tmpdata = [
     {
       source: 'https://picsum.photos/300',
@@ -101,22 +100,8 @@ export const DonationNowGroupCard = () => {
       <Heading fontSize={20}>기부 중</Heading>
       <Spacer space={12} />
       <ScrollView horizontal={true} style={{ paddingVertical: 10 }}>
-        {tmpdata.map((data, index) => (
-          <GroupCard
-            source={data.source}
-            groupId={data.groupId}
-            groupName={data.groupName}
-            groupTag={data.groupTag}
-            groupLabel={data.groupLabel}
-            userEmail={data.userEmail}
-            donatorName={data.donatorName}
-            donnationStartdate={data.donnationStartdate}
-            monthlyDonationbudget={data.monthlyDonationbudget}
-            donnationCount={data.donnationCount}
-            groupDonationTotal={data.groupDonationTotal}
-            goalDonationCount={data.goalDonationCount}
-            goalBudgetTotal={data.goalBudgetTotal}
-          />
+        {tmpdata.map((values, index) => (
+          <GroupCard data={values} index={index} />
         ))}
       </ScrollView>
     </View>
@@ -124,7 +109,6 @@ export const DonationNowGroupCard = () => {
 };
 
 export const HistoryGroupCard = () => {
-  const [isVisible, setIsVisible] = useState(false);
   const tmpdata = [
     {
       source: 'https://picsum.photos/300',
@@ -151,36 +135,23 @@ export const HistoryGroupCard = () => {
       <Heading fontSize={20}>기부 기록</Heading>
       <Spacer space={12} />
       <ScrollView horizontal={true} style={{ paddingVertical: 10 }}>
-        {tmpdata.map((data, index) => (
-          <GroupCard
-            source={data.source}
-            groupId={data.groupId}
-            groupName={data.groupName}
-            groupTag={data.groupTag}
-            groupLabel={data.groupLabel}
-            userEmail={data.userEmail}
-            donatorName={data.donatorName}
-            donnationStartdate={data.donnationStartdate}
-            monthlyDonationbudget={data.monthlyDonationbudget}
-            donnationCount={data.donnationCount}
-            groupDonationTotal={data.groupDonationTotal}
-            goalDonationCount={data.goalDonationCount}
-            goalBudgetTotal={data.goalBudgetTotal}
-          />
+        {tmpdata.map((values, index) => (
+          <GroupCard data={values} />
         ))}
       </ScrollView>
     </View>
   );
 };
 
-export const GroupCard = (props) => {
+export const GroupCard = ({ data, color }) => {
   const [isVisible, setIsVisible] = useState(false);
   const navigation = useNavigation();
+
   return (
     <TouchableOpacity
       style={{
         backgroundColor: Color.White_100,
-        borderColor: props.color || Color.Black_40,
+        borderColor: color || Color.Black_40,
         borderWidth: 0.5,
         borderBottomWidth: 4,
         borderRadius: 12,
@@ -196,88 +167,16 @@ export const GroupCard = (props) => {
         setIsVisible(true);
       }}
     >
-      <ImageLoader source={props.source} style={{ width: 60, height: 60, borderRadius: 100 }} />
+      <ImageLoader source={data.source} style={{ width: 60, height: 60, borderRadius: 100 }} />
 
       <Spacer space={10} />
-      <Heading fontSize={18}>{props.groupName}</Heading>
+      <Heading fontSize={18}>{data.groupName}</Heading>
       <Caption fontSize={16}>
-        {props.groupTag} | {props.groupLabel}
+        {data.groupTag} | {data.groupLabel}
       </Caption>
 
       <MyModal height='70%' isVisible={isVisible} setIsVisible={setIsVisible}>
-        <View style={{ height: 70, alignItems: 'center', flexDirection: 'row', paddingHorizontal: 20 }}>
-          <Heading fontSize={20}>확인 할게요</Heading>
-        </View>
-        <View style={{ marginHorizontal: 20, padding: 10, backgroundColor: Color.Black_20, borderRadius: 10, paddingBottom: 30 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <ImageLoader source={props.source} style={{ width: 50, height: 50, borderRadius: 100 }} />
-            <View style={{ marginHorizontal: 15 }}>
-              <Heading fontSize={16}>{props.groupName}</Heading>
-
-              <Spacer space={4} />
-              <Caption fontSize={14}>
-                {props.groupTag} | {props.groupLabel}
-              </Caption>
-            </View>
-          </View>
-          <Spacer space={16} />
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Body fontSize={14}>이메일</Body>
-            <Body fontSize={14}>{props.userEmail}</Body>
-          </View>
-          <Spacer space={16}></Spacer>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Body fontSize={14}>기부자 명</Body>
-            <Body fontSize={14}>{props.donatorName}</Body>
-          </View>
-          <Spacer space={16}></Spacer>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Body fontSize={14}>기부시작일</Body>
-            <Body fontSize={14}>{props.donnationStartdate}</Body>
-          </View>
-          <Spacer space={16}></Spacer>
-          <Divider />
-          <Spacer space={16} />
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Body fontSize={14}>월 기부 금액</Body>
-            <Body fontSize={14}>{props.monthlyDonationbudget}</Body>
-          </View>
-          <Spacer space={16}></Spacer>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Body fontSize={14}>현재 기부 횟수</Body>
-            <Body fontSize={14}>{props.donnationCount} 회</Body>
-          </View>
-          <Spacer space={16}></Spacer>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Body fontWeight={'bold'} fontSize={16} color={Color.Secondary_50}>
-              현재 기부금 합계
-            </Body>
-            <Body fontWeight={'bold'} fontSize={16} color={Color.Secondary_50}>
-              {props.groupDonationTotal} 원
-            </Body>
-          </View>
-          <Spacer space={16}></Spacer>
-          <Divider />
-          <Spacer space={16} />
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Body></Body>
-          </View>
-          <Spacer space={16}></Spacer>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Body fontSize={14}>목표 기부 횟수</Body>
-            <Body fontSize={14}>{props.goalDonationCount} 회</Body>
-          </View>
-          <Spacer space={16}></Spacer>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Body fontWeight={'bold'} fontSize={16} color={Color.Secondary_50}>
-              목표 기부금 합계
-            </Body>
-            <Body fontWeight={'bold'} fontSize={16} color={Color.Secondary_50}>
-              {props.goalBudgetTotal} 원
-            </Body>
-          </View>
-          <Spacer space={16}></Spacer>
-        </View>
+        <DonationNow data={data} />
         <Footer>
           <BasicButton width='50%' backgroundColor={Color.Danger_50} borderColor={Color.Danger_50}>
             <Heading fontSize={16} color={Color.White_100}>
@@ -297,5 +196,87 @@ export const GroupCard = (props) => {
         </Footer>
       </MyModal>
     </TouchableOpacity>
+  );
+};
+
+export const DonationNow = ({ data }) => {
+  // console.log(data)
+
+  return (
+    <ScrollView>
+      <View style={{ height: 70, alignItems: 'center', flexDirection: 'row', paddingHorizontal: 20 }}>
+        <Heading fontSize={20}>확인 할게요</Heading>
+      </View>
+      <View style={{ marginHorizontal: 20, padding: 10, backgroundColor: Color.Black_20, borderRadius: 10, paddingBottom: 30 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <ImageLoader source={data.source} style={{ width: 50, height: 50, borderRadius: 100 }} />
+          <View style={{ marginHorizontal: 15 }}>
+            <Heading fontSize={16}>{data.groupName}</Heading>
+
+            <Spacer space={4} />
+            <Caption fontSize={14}>
+              {data.groupTag} | {data.groupLabel}
+            </Caption>
+          </View>
+        </View>
+        <Spacer space={16} />
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Body fontSize={14}>이메일</Body>
+          <Body fontSize={14}>{data.userEmail}</Body>
+        </View>
+        <Spacer space={16}></Spacer>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Body fontSize={14}>기부자 명</Body>
+          <Body fontSize={14}>{data.donatorName}</Body>
+        </View>
+        <Spacer space={16}></Spacer>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Body fontSize={14}>기부시작일</Body>
+          <Body fontSize={14}>{data.donnationStartdate}</Body>
+        </View>
+        <Spacer space={16}></Spacer>
+        <Divider />
+        <Spacer space={16} />
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Body fontSize={14}>월 기부 금액</Body>
+          <Body fontSize={14}>{data.monthlyDonationbudget}</Body>
+        </View>
+        <Spacer space={16}></Spacer>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Body fontSize={14}>현재 기부 횟수</Body>
+          <Body fontSize={14}>{data.donnationCount} 회</Body>
+        </View>
+        <Spacer space={16}></Spacer>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Body fontWeight={'bold'} fontSize={16} color={Color.Secondary_50}>
+            현재 기부금 합계
+          </Body>
+          <Body fontWeight={'bold'} fontSize={16} color={Color.Secondary_50}>
+            {data.groupDonationTotal} 원
+          </Body>
+        </View>
+        <Spacer space={16}></Spacer>
+        <Divider />
+        <Spacer space={16} />
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Body></Body>
+        </View>
+        <Spacer space={16}></Spacer>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Body fontSize={14}>목표 기부 횟수</Body>
+          <Body fontSize={14}>{data.goalDonationCount} 회</Body>
+        </View>
+        <Spacer space={16}></Spacer>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Body fontWeight={'bold'} fontSize={16} color={Color.Secondary_50}>
+            목표 기부금 합계
+          </Body>
+          <Body fontWeight={'bold'} fontSize={16} color={Color.Secondary_50}>
+            {data.goalBudgetTotal} 원
+          </Body>
+        </View>
+        <Spacer space={16}></Spacer>
+      </View>
+    </ScrollView>
   );
 };
