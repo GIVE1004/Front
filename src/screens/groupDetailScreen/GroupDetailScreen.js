@@ -13,6 +13,7 @@ import { GroupDetailInfoCard, GroupGraphCard, GroupInfoCard } from '../../module
 import { SingleLineInput } from '../../components/Inputs/Inputs';
 import { MyRadioButton } from '../../components/Buttons/RadioButtons';
 import { SwiftLabel } from '../../components/Labels/Labels';
+import { HelpTooltip } from '../../components/Tooltip/MyTooltip';
 
 const GroupDetailScreen = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -114,12 +115,18 @@ export const DoDonation = ({ data }) => {
         <Spacer space={13} />
         <SingleLineInput placeholde={'원하시는 성함을 입력하세요'} />
         <Spacer space={13} />
-        <Heading fontSize={20}>기간 선택</Heading>
+        <View style={{ flexDirection: 'row' }}>
+          <Heading fontSize={20}>기간 선택 </Heading>
+          <HelpTooltip content={'기부금은 매달 1일에 기부됩니다.'} />
+        </View>
         <Spacer space={13} />
         <View style={{ width: '100%', paddingHorizontal: 15 }}>
           <SwiftLabel isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} width={90} />
         </View>
-        <Heading fontSize={20}>증명서가 필요한가요?</Heading>
+        <View style={{ flexDirection: 'row' }}>
+          <Heading fontSize={20}>증명서가 필요한가요? </Heading>
+          <HelpTooltip content={'증명서는 가입한 메일로 갑니다.'} />
+        </View>
         <Spacer space={13} />
 
         <MyRadioButton values={values} setChecked={setChecked} color={Color.Secondary_50} />
