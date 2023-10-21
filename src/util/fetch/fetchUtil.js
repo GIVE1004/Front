@@ -28,6 +28,7 @@ export const makeQueryStringForGet = (baseUrl, queryParams) => {
 // oauth 페이지 호출
 export const getAuthRedirectFetch = async (oAuthServerType) => {
   const baseUrl = `${url}/oauth/${oAuthServerType}`;
+  console.log(baseUrl);
 
   return await fetch(baseUrl, {
     method: 'GET',
@@ -39,6 +40,7 @@ export const getAuthRedirectFetch = async (oAuthServerType) => {
 };
 
 // /login/{kakao}?code=인증코드
+// token + memberInfo 받아오기
 export const getLoginFetch = async (oAuthServerType, code) => {
   const baseUrl = `${url}/oauth/login/${oAuthServerType}?code=${code}`;
 
@@ -48,5 +50,28 @@ export const getLoginFetch = async (oAuthServerType, code) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+  });
+};
+
+// /oauth/refresh
+// token 상태 확인 및 memberInfo 받아오기
+export const getRefreshFetch = async (accessToken, refreshToken) => {
+  const baseUrl = `${url}/oauth/refresh`;
+
+  if (accessToken != null && refreshToken != null) {
+    accessToken = accessToken.slice(1, -1);
+    refreshToken = refreshToken.slice(1, -1);
+  }
+
+  return await fetch(baseUrl, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    }),
   });
 };
