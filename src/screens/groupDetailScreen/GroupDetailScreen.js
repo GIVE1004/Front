@@ -16,6 +16,7 @@ import { SwiftLabel } from '../../components/Labels/Labels';
 
 const GroupDetailScreen = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isVisibleSucess, setIsVisibleSucess] = useState(false);
 
   // fetch 받을 데이터(내가 관심 등록한 단체인지) + onPress시 관심단체 선택/해제 넣기
   const [isStar, setIsStar] = useState(false);
@@ -68,7 +69,7 @@ const GroupDetailScreen = () => {
           <BasicButton
             onPress={() => {
               setIsVisible(false);
-              donnationSuccess;
+              setIsVisibleSucess(true);
             }}
             width='100%'
             backgroundColor={Color.Primary_50}
@@ -116,7 +117,7 @@ export const DoDonation = ({ data }) => {
         <Heading fontSize={20}>기간 선택</Heading>
         <Spacer space={13} />
         <View style={{ width: '100%', paddingHorizontal: 15 }}>
-          <SwiftLabel isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} />
+          <SwiftLabel isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} width={90} />
         </View>
         <Heading fontSize={20}>증명서가 필요한가요?</Heading>
         <Spacer space={13} />

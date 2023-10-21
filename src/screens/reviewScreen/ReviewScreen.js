@@ -62,7 +62,7 @@ const ReviewScreen = ({ groupId }) => {
             <BasicButton
               onPress={() => {
                 setIsVisible(false);
-                navigation.reset({ routes: [{ name: 'ChartScreen' }] });
+                navigation.goBack();
               }}
               width='100%'
               backgroundColor={Color.Primary_50}
