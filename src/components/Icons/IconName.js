@@ -15,3 +15,4 @@ export const DOWNALLOW = 'chevron-down-outline';
 export const DUPLICATE = 'duplicate-outline';
 export const CALCULATOR = 'calculator-outline';
 export const EXIT = 'exit-outline';
+export const HELP = 'help-circle-outline';
