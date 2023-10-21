@@ -5,9 +5,13 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { MainGraphCard, MainIncreaseGroupCard, MainRecomentGroupCard } from '../../modules/mainModule/MainCard';
 import { Spacer } from '../../components/Basic/Spacer';
 import { useCallback, useState } from 'react';
+import { memberInfoState } from '../../util/recoil/Atoms';
+import { useRecoilValue } from 'recoil';
 
 const MainScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
+  const memberInfo = useRecoilValue(memberInfoState);
+  console.log(memberInfo);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);

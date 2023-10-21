@@ -28,6 +28,7 @@ export const makeQueryStringForGet = (baseUrl, queryParams) => {
 // oauth 페이지 호출
 export const getAuthRedirectFetch = async (oAuthServerType) => {
   const baseUrl = `${url}/oauth/${oAuthServerType}`;
+  console.log(baseUrl);
 
   return await fetch(baseUrl, {
     method: 'GET',

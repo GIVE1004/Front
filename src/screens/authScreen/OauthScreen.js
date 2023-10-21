@@ -1,20 +1,22 @@
 import { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Alert, useWindowDimensions, View } from 'react-native';
-import { MainHeader } from '../../components/Headers/Headers';
+import { BackHeader, BackWithLogoHeader, MainHeader } from '../../components/Headers/Headers';
 import { Spacer } from '../../components/Basic/Spacer';
 import { Heading } from '../../components/Typography/Typography';
 import { BasicButton, LoginButton } from '../../components/Buttons/Buttons';
 import * as Color from '../../components/Colors/colors';
 import { useRecoilState } from 'recoil';
-import { goMainPageState, goQuestionPageState } from '../../util/recoil/Atoms';
+import { goMainPageState, memberInfoState } from '../../util/recoil/Atoms';
 import { LocalImageLoader } from '../../components/Images/ImageLoader';
 import { useNavigation } from '@react-navigation/native';
 import { getAuthRedirectFetch, getLoginFetch } from '../../util/fetch/fetchUtil';
 import WebView from 'react-native-webview';
+import { setTokens } from '../../util/token/tokenUtil';
 
 const OauthScreen = () => {
   const [goMainPage, setGoMainPage] = useRecoilState(goMainPageState);
+  const [memberInfo, setMemberInfo] = useRecoilState(memberInfoState);
   const { width } = useWindowDimensions();
   const navigation = useNavigation();
   const [oAuthServerType, setOAuthServerType] = useState('');
@@ -30,19 +32,32 @@ const OauthScreen = () => {
         const code = match[1];
         setCode(code);
       } else {
-        Alert.alert('로그인 실패!!!');
+        Alert.alert('로그인 실패', '다시 시도해주세요.');
+        setOAuthServerType('');
       }
       setUrl('');
     }
-
     setWebViewState(newState);
   };
 
   const getServerRedirectUrlData = async () => {
     try {
       const response = await getAuthRedirectFetch(oAuthServerType);
-      if (response.status == 200) setUrl(response.url);
-      else Alert.alert('실패');
+      if (response.status === 200) {
+        setUrl(response.url);
+      } else if (oAuthServerType === 'kakao' && response.status === 404 && response.url.includes('/oauth/redirected/' + oAuthServerType + '?code')) {
+        const match = response.url.match(/[?&]code=([^&]+)/);
+        if (match) {
+          const code = match[1];
+          setCode(code);
+        } else {
+          Alert.alert('로그인 실패', '다시 시도해주세요.');
+          setOAuthServerType('');
+        }
+      } else {
+        Alert.alert('로그인 실패', '다시 시도해주세요.');
+        setOAuthServerType('');
+      }
     } catch (e) {
       console.log(e);
     }
@@ -52,7 +67,21 @@ const OauthScreen = () => {
     try {
       const response = await getLoginFetch(oAuthServerType, code);
       const data = await response.json();
-      console.log(data);
+      if (data != undefined && data.dataHeader != undefined) {
+        if (data.dataHeader.successCode == 0) {
+          // Token 저장
+          setTokens(data.dataBody.tokens.accessToken, data.dataBody.tokens.refreshToken);
+          // memberInfo 저장
+          setMemberInfo(data.dataBody.memberInfo);
+          setGoMainPage(true);
+        } else if (data.dataHeader.successCode == 1) {
+          if (data.dataHeader.resultCode == 'UNAUTHORIZED') {
+          } else if (data.dataHeader.resultCode == 'EXPIRED_TOKEN') {
+          }
+        }
+      } else {
+        Alert.alert('로그인 실패', '다시 시도해주세요.');
+      }
     } catch (e) {
       console.log(e);
     }
@@ -61,6 +90,8 @@ const OauthScreen = () => {
   useEffect(() => {
     if (code != '') {
       getLoginData();
+      setOAuthServerType('');
+      setCode('');
     }
   }, [code]);
 
@@ -72,7 +103,7 @@ const OauthScreen = () => {
 
   return (
     <SafeAreaProvider style={{ backgroundColor: Color.White_100 }}>
-      <MainHeader width={140} height={28} />
+      <BackWithLogoHeader width={140} height={28} />
       {url != '' ? (
         <WebView source={{ uri: url }} onNavigationStateChange={handleNavigationStateChange} />
       ) : (
@@ -83,15 +114,15 @@ const OauthScreen = () => {
           <LocalImageLoader source={require('../../../assets/giveSplash.png')} style={{ width, height: undefined, aspectRatio: 4 / 3 }} resizeMode='contain' />
           <View style={{ padding: 14 }}>
             <LoginButton
-              backgroundColor={Color.logo_google}
+              backgroundColor={Color.logo_naver}
               onPress={() => {
-                setOAuthServerType('google');
+                setOAuthServerType('naver');
               }}
-              source={require('../../../assets/google_logo.png')}
+              source={require('../../../assets/naver_logo.png')}
             >
               <Heading color={Color.White_100} fontSize={16}>
                 {' '}
-                구글로 로그인
+                네이버로 로그인
               </Heading>
             </LoginButton>
 
@@ -105,16 +136,10 @@ const OauthScreen = () => {
               <Heading fontSize={16}> 카카오로 로그인</Heading>
             </LoginButton>
 
-            <LoginButton
-              backgroundColor={Color.logo_naver}
-              onPress={() => {
-                setOAuthServerType('naver');
-              }}
-              source={require('../../../assets/naver_logo.png')}
-            >
+            <LoginButton backgroundColor={Color.logo_google} onPress={() => {}} source={require('../../../assets/google_logo.png')}>
               <Heading color={Color.White_100} fontSize={16}>
                 {' '}
-                네이버로 로그인
+                구글로 로그인
               </Heading>
             </LoginButton>
 
