@@ -2,7 +2,7 @@ import { View, StyleSheet } from 'react-native';
 import { MainHeader } from '../../components/Headers/Headers';
 import * as Color from '../../components/Colors/colors';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { DonationNowGroupCard, HistoryGroupCard, UserHistory } from '../../modules/MyHistoryModule/MyHistoryCard';
+import { DonationNowGroupCard, HistoryGroupCard, UserHistory } from '../../modules/myHistoryModule/MyHistoryCard';
 
 const ChartScreen = () => {
   const data = {

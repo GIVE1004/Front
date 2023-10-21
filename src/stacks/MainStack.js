@@ -6,6 +6,7 @@ import UserInfoScreen from '../screens/settingScreen/UserInfoScreen';
 import CalScreen from '../screens/settingScreen/CalScreen';
 import PlusScreen from '../screens/settingScreen/PlusScreen';
 import ReviewScreen from '../screens/reviewScreen/ReviewScreen';
+import ChartScreen from '../screens/mainBottomTabs/ChartScreen';
 const Stack = createNativeStackNavigator();
 
 const MainStack = () => {
@@ -22,6 +23,7 @@ const MainStack = () => {
       <Stack.Screen name='CalScreen' component={CalScreen} />
       <Stack.Screen name='PlusScreen' component={PlusScreen} />
       <Stack.Screen name='ReviewScreen' component={ReviewScreen} />
+      <Stack.Screen name='ChartScreen' component={ChartScreen} />
     </Stack.Navigator>
   );
 };

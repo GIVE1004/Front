@@ -3,6 +3,7 @@ import { Pressable } from 'react-native';
 import * as Color from '../Colors/colors';
 import { Body } from '../Typography/Typography';
 import { Icon } from '../Icons/Icons';
+import { View } from 'react-native';
 
 export const MyRadioButton = (props) => {
   const [checked, setChecked] = useState();

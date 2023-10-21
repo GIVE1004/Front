@@ -12,20 +12,19 @@ import { MySlider } from '../../components/Sliders/Sliders';
 import { ImageLoader } from '../../components/Images/ImageLoader';
 import { Caption } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-const ReviewScreen = () => {
+const ReviewScreen = ({ groupId }) => {
   const [isVisible, setIsVisible] = useState(false);
   const { width } = useWindowDimensions();
   const navigation = useNavigation();
-  const tmpdata = [
-    {groupId: 1, }
-  ]
+  const tmpdata = [{ groupId: 1 }];
   return (
     <View style={styles.container}>
       <BackWithLogoHeader />
       <Spacer space={10} />
 
-      <View style={{ padding: 8 }}>
+      <KeyboardAwareScrollView style={{ padding: 8 }}>
         <Heading>평점 입력</Heading>
         <View style={{ paddingVertical: 10, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20 }}>
           <Spacer space={4} horizontal={true} />
@@ -38,7 +37,7 @@ const ReviewScreen = () => {
         <SingleLineInput placeholder={'리뷰 제목'} />
         <Spacer space={10}></Spacer>
         <MultiLineInput placeholder={'내용을 작성해 주세요'} />
-      </View>
+      </KeyboardAwareScrollView>
       <Footer>
         <BasicButton
           onPress={() => {
@@ -50,27 +49,28 @@ const ReviewScreen = () => {
         >
           <Heading fontSize={16}>등록하기</Heading>
         </BasicButton>
-        <MyModal height='50%' isVisible={isVisible} setIsVisible={setIsVisible} >
-        <View style={{flexDirection: 'column', alignItems: 'center'}}>
-            <Spacer space={30}/>
-            <Image source={require('../../../assets/success.gif')} style={{width: 200, height: 200}}/>
-            <Spacer space={20}/>
+        <MyModal height='50%' isVisible={isVisible} setIsVisible={setIsVisible}>
+          <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+            <Spacer space={30} />
+            <Image source={require('../../../assets/success.gif')} style={{ width: 200, height: 200 }} />
+            <Spacer space={20} />
             <Heading fontSize={28}>리뷰 등록 성공!</Heading>
-            <Spacer space={5}/>
+            <Spacer space={5} />
             <Caption>기부자님의 소중한 리뷰를 등록했어요!</Caption>
-        </View>
-        <Footer>
-          <BasicButton
-            onPress={() => {
-              navigation.navigate('GroupDetailScreen');
-            }}
-            width='100%'
-            backgroundColor={Color.Primary_50}
-            borderColor={Color.Primary_50}
-          >
-            <Heading fontSize={16}>등록완료</Heading>
-          </BasicButton>
-        </Footer>
+          </View>
+          <Footer>
+            <BasicButton
+              onPress={() => {
+                setIsVisible(false);
+                navigation.goBack();
+              }}
+              width='100%'
+              backgroundColor={Color.Primary_50}
+              borderColor={Color.Primary_50}
+            >
+              <Heading fontSize={16}>등록완료</Heading>
+            </BasicButton>
+          </Footer>
         </MyModal>
       </Footer>
     </View>
