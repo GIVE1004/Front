@@ -29,6 +29,7 @@ export const HelpTooltip = (props) => {
         }
         containerStyle={{ width: 200, height: 40 }}
         backgroundColor={Color.Success_50}
+        skipAndroidStatusBar={true}
       >
         <Icon name={IconName.HELP} size={25} />
       </Tooltip>
