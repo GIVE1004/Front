@@ -73,11 +73,10 @@ const OauthScreen = () => {
           setTokens(data.dataBody.tokens.accessToken, data.dataBody.tokens.refreshToken);
           // memberInfo 저장
           setMemberInfo(data.dataBody.memberInfo);
+          // 메인 페이지로 가기
           setGoMainPage(true);
-        } else if (data.dataHeader.successCode == 1) {
-          if (data.dataHeader.resultCode == 'UNAUTHORIZED') {
-          } else if (data.dataHeader.resultCode == 'EXPIRED_TOKEN') {
-          }
+        } else {
+          Alert.alert('로그인 실패', '다시 시도해주세요.');
         }
       } else {
         Alert.alert('로그인 실패', '다시 시도해주세요.');
