@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, StyleSheet, Platform, ScrollView,  Image } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { BasicButton } from '../../components/Buttons/Buttons';
 import * as Color from '../../components/Colors/colors';
@@ -8,16 +8,8 @@ import { StarHeader } from '../../components/Headers/Headers';
 import { MyModal } from '../../components/Modals/Modals';
 import { Heading, Caption, Body } from '../../components/Typography/Typography';
 import { Spacer } from '../../components/Basic/Spacer';
-import { ImageLoader, LocalImageLoader } from '../../components/Images/ImageLoader';
 import { GroupDetailInfoCard, GroupGraphCard, GroupInfoCard } from '../../modules/groupDetailModule/GroupBasicCard';
-import { SingleLineInput } from '../../components/Inputs/Inputs';
-import { MyRadioButton } from '../../components/Buttons/RadioButtons';
-import { SwiftLabel } from '../../components/Labels/Labels';
-import { AddComma } from '../../util/util';
-import { Divider } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
-import { HelpTooltip } from '../../components/Tooltip/MyTooltip';
-import { useNavigation } from '@react-navigation/native';
+import { DoDonation, DonationCheck, DonationStopCheck, DonnationStopSuccess, DonnationSuccess } from '../../modules/groupDetailModule/GroupModalView';
 
 const GroupDetailScreen = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -31,8 +23,6 @@ const GroupDetailScreen = () => {
   // To-do
   // fetch 받을 데이터(내가 기부하고 있는 단체인지) -> 기부하기 모달에 띄울 페이지도 다름.
   const [isGive, setIsGive] = useState(true);
-  
-  const navigation = useNavigation();
 
   const tmpdata = {
     source: 'https://picsum.photos/300',
@@ -63,8 +53,7 @@ const GroupDetailScreen = () => {
       <Footer>
         <BasicButton
           onPress={() => {
-            setIsVisible(true);
-            // setIsVisibleStopCheck(true);
+            isGive ? setIsVisible(true) : setIsVisibleStopCheck(true);
           }}
           width='100%'
           backgroundColor={isGive ? Color.Primary_50 : Color.Secondary_50}
@@ -78,312 +67,28 @@ const GroupDetailScreen = () => {
 
       {/* 기부하기 모달 */}
       <MyModal height='80%' isVisible={isVisible} setIsVisible={setIsVisible}>
-        <View style={{ height: 70, alignItems: 'center', flexDirection: 'row', paddingHorizontal: 20 }}>
-          <Heading>기부하기</Heading>
-        </View>
-        <Spacer space={10} />
-        <DoDonation data={tmpdata} />
-        <Footer>
-          <BasicButton
-            onPress={() => {
-              setIsVisible(false);
-              setIsVisibleCheck(true);
-            }}
-            width='100%'
-            backgroundColor={Color.Primary_50}
-            borderColor={Color.Primary_50}
-          >
-            <Heading fontSize={16}>기부하기</Heading>
-          </BasicButton>
-        </Footer>
+        <DoDonation data={tmpdata} setIsVisible={setIsVisible} setIsVisibleCheck={setIsVisibleCheck} />
       </MyModal>
+
       {/* 확인 모달(기부하기->기부확인) */}
       <MyModal height='60%' isVisible={isVisibleCheck} setIsVisible={setIsVisibleCheck}>
-        <View style={{height: 70, alignItems: 'center', flexDirection: 'row', paddingHorizontal: 20}}>
-          <Heading>확인할게요</Heading>
-        </View>
-        <Spacer space={10}/>
-        <DonationCheck data={tmpdata}/>
-        <Footer>
-          <BasicButton
-            onPress={() => setIsVisibleCheck(false)}
-            width='50%'
-            borderColor={Color.Primary_50}
-          >
-            <Heading fontSize={16}>뒤로가기</Heading>
-            
-          </BasicButton>
-          <BasicButton
-            onPress={() => {
-              setIsVisibleCheck(false);
-              setIsVisibleSucess(true);
-            }}
-            width='50%'
-            backgroundColor={Color.Primary_50}
-            borderColor={Color.Primary_50}
-          >
-            <Heading fontSize={16}>확인</Heading>
-          </BasicButton>
-        </Footer>
+        <DonationCheck data={tmpdata} setIsVisibleCheck={setIsVisibleCheck} setIsVisibleSucess={setIsVisibleSucess} />
       </MyModal>
 
       {/* 성공 모달 */}
       <MyModal height='50%' isVisible={isVisibleSucess} setIsVisible={setIsVisibleSucess}>
-        <DonnationSuccess />
-        <Footer>
-        <BasicButton
-          onPress={() => {
-            setIsVisibleSucess(false);
-            navigation.goBack();
-          }}
-          width='100%'
-          backgroundColor={Color.Primary_50}
-          borderColor={Color.Primary_50}
-        >
-          <Heading fontSize={16}>등록완료</Heading>
-        </BasicButton>
-      </Footer>
+        <DonnationSuccess setIsVisibleSucess={setIsVisibleSucess} />
       </MyModal>
 
       {/* 기부 멈추기 확인 모달 */}
       <MyModal height='60%' isVisible={isVisibleStopCheck} setIsVisible={setIsVisibleStopCheck}>
-        <View style={{height: 70, alignItems: 'center', flexDirection: 'row', paddingHorizontal: 20}}>
-          <Heading>확인할게요</Heading>
-        </View>
-        <Spacer space={10}/>
-        <DonationStopCheck data={tmpdata}/>
-        <Footer>
-          <BasicButton
-            onPress={() => {
-              setIsVisibleStopCheck(false);
-              setIsVisibleStopSucess(true);
-            }}
-            width='100%'
-            backgroundColor={Color.Secondary_50}
-            borderColor={Color.Secondary_50}
-            
-          >
-            <Heading fontSize={16} color={Color.White_100}>확인</Heading>
-          </BasicButton>
-        </Footer>
+        <DonationStopCheck data={tmpdata} setIsVisibleStopCheck={setIsVisibleStopCheck} setIsVisibleStopSucess={setIsVisibleStopSucess} />
       </MyModal>
 
       {/* 기부 멈추기 성공 모달 */}
       <MyModal height='50%' isVisible={isVisibleStopSucess} setIsVisible={setIsVisibleStopSucess}>
-        <DonnationStopSuccess />
-        <Footer>
-        <BasicButton
-          onPress={() => {
-            setIsVisibleStopSucess(false);
-            navigation.goBack();
-          }}
-          width='100%'
-          backgroundColor={Color.Secondary_50}
-          borderColor={Color.Secondary_50}
-        >
-          <Heading fontSize={16} color={Color.White_100}>완료</Heading>
-        </BasicButton>
-      </Footer>
+        <DonnationStopSuccess setIsVisibleStopSucess={setIsVisibleStopSucess} />
       </MyModal>
-    </View>
-  );
-};
-
-export const DoDonation = ({ data }) => {
-  const labels = ['1개월', '3개월', '6개월', '1년'];
-  const [isFocus, setIsFocus] = useState([true, false]);
-  const selectedLabel = labels[isFocus.indexOf(true)];
-  const values = ['네', '아니오'];
-  const [checked, setChecked] = useState();
-  return (
-    <ScrollView>
-      <View style={{ flexDirection: 'col', paddingHorizontal: 30 }}>
-        <View style={{ flexDirection: 'row' }}>
-          <View>
-            <ImageLoader source={data.source} style={{ width: 60, height: 60, borderRadius: 100 }} />
-          </View>
-          <Spacer space={10} />
-          <View style={{ marginLeft: 15 }}>
-            <Heading fontSize={18}>{data.groupName}</Heading>
-            <Caption fontSize={16}>
-              {data.groupTag} | {data.groupLabel}
-            </Caption>
-          </View>
-        </View>
-        <Spacer space={13} />
-        <Heading fontSize={20}>기부액(월단위)</Heading>
-        <Spacer space={13} />
-        <SingleLineInput placeholder={'금액을 입력하세요'} />
-        <Spacer space={13} />
-        <Heading fontSize={20}>기부자</Heading>
-        <Spacer space={13} />
-        <SingleLineInput placeholder={'원하시는 성함을 입력하세요'} />
-        <Spacer space={13} />
-        <View style={{ flexDirection: 'row' }}>
-          <Heading fontSize={20}>기간 선택 </Heading>
-          <HelpTooltip content={'기부금은 매달 1일에 기부됩니다.'} />
-        </View>
-        <Spacer space={13} />
-        <View style={{ width: '100%', paddingHorizontal: 15 }}>
-          <SwiftLabel isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} width={90} />
-        </View>
-        <View style={{ flexDirection: 'row' }}>
-          <Heading fontSize={20}>증명서가 필요한가요? </Heading>
-          <HelpTooltip content={'증명서는 가입한 메일로 갑니다.'} />
-        </View>
-        <Spacer space={13} />
-        <MyRadioButton values={values} setChecked={setChecked} color={Color.Secondary_50} />
-      </View>
-      
-    </ScrollView>
-  );
-};
-
-export const DonationCheck = ({ data }) => {
-  return(
-    <ScrollView>
-      <View style={{ marginHorizontal: 20, padding: 10, backgroundColor: Color.Black_20, borderRadius: 10, paddingBottom: 30 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <ImageLoader source={data.source} style={{ width: 50, height: 50, borderRadius: 100 }} />
-          <View style={{ marginHorizontal: 15 }}>
-            <Heading fontSize={16}>{data.groupName}</Heading>
-
-            <Spacer space={4} />
-            <Caption fontSize={14}>
-              {data.groupTag} | {data.groupLabel}
-            </Caption>
-          </View>
-        </View>
-        <Spacer space={16} />
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>이메일</Body>
-          <Body fontSize={14}>{data.userEmail}</Body>
-        </View>
-        <Spacer space={16}></Spacer>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>기부자 명</Body>
-          <Body fontSize={14}>{data.donatorName}</Body>
-        </View>
-        <Spacer space={16}></Spacer>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>기부시작일</Body>
-          <Body fontSize={14}>{data.donnationStartdate}</Body>
-        </View>
-        <Spacer space={16}></Spacer>
-        <Divider />
-        <Spacer space={16} />
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>월 기부 금액</Body>
-          <Body fontSize={14}>{AddComma(data.monthlyDonationbudget)} 원</Body>
-        </View>
-        <Spacer space={16}></Spacer>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>예상 기부 횟수</Body>
-          <Body fontSize={14}>{data.expectedDonationCount} 회</Body>
-        </View>
-        <Spacer space={16}></Spacer>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Body fontWeight={'bold'} fontSize={16} color={Color.Secondary_50}>
-            예상 기부금 합계
-          </Body>
-          <Body fontWeight={'bold'} fontSize={16} color={Color.Secondary_50}>
-            {AddComma(data.expectedDonationTotal)} 원
-          </Body>
-        </View>
-      </View>
-      
-
-    </ScrollView>
-  )
-}
-
-export const DonnationSuccess = () => {
-  
-  return (
-    <View>
-      <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-        <Spacer space={30} />
-        <Image source={require('../../../assets/success.gif')} style={{ width: 200, height: 200 }} />
-        <Spacer space={20} />
-        <Heading fontSize={28}>기부 성공!</Heading>
-        <Spacer space={5} />
-        <Caption fontSize={14}>기부자님의 소중한 마음으로 놀라운 변화가 일어났어요.</Caption>
-      </View>
-      
-    </View>
-  );
-};
-
-export const DonationStopCheck = ({ data }) => {
-  return (
-    <ScrollView>
-      <View style={{ marginHorizontal: 20, padding: 10, backgroundColor: Color.Black_20, borderRadius: 10, paddingBottom: 30 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <ImageLoader source={data.source} style={{ width: 50, height: 50, borderRadius: 100 }} />
-          <View style={{ marginHorizontal: 15 }}>
-            <Heading fontSize={16}>{data.groupName}</Heading>
-
-            <Spacer space={4} />
-            <Caption fontSize={14}>
-              {data.groupTag} | {data.groupLabel}
-            </Caption>
-          </View>
-        </View>
-        <Spacer space={16} />
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>이메일</Body>
-          <Body fontSize={14}>{data.userEmail}</Body>
-        </View>
-        <Spacer space={16}></Spacer>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>기부자 명</Body>
-          <Body fontSize={14}>{data.donatorName}</Body>
-        </View>
-        <Spacer space={16}></Spacer>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>기부시작일</Body>
-          <Body fontSize={14}>{data.donnationStartdate}</Body>
-        </View>
-        <Spacer space={16}></Spacer>
-        <Divider />
-        <Spacer space={16} />
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>월 기부 금액</Body>
-          <Body fontSize={14}>{AddComma(data.monthlyDonationbudget)} 원</Body>
-        </View>
-        <Spacer space={16}></Spacer>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>예상 기부 횟수</Body>
-          <Body fontSize={14}>{data.expectedDonationCount} 회</Body>
-        </View>
-        <Spacer space={16}></Spacer>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Body fontWeight={'bold'} fontSize={16} color={Color.Secondary_50}>
-            예상 기부금 합계
-          </Body>
-          <Body fontWeight={'bold'} fontSize={16} color={Color.Secondary_50}>
-            {AddComma(data.expectedDonationTotal)} 원
-          </Body>
-        </View>
-      </View>
-      
-
-    </ScrollView>
-  );
-};
-
-export const DonnationStopSuccess = () => {
-  
-  return (
-    <View>
-      <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-        <Spacer space={30} />
-        <Image source={require('../../../assets/success.gif')} style={{ width: 200, height: 200 }} />
-        <Spacer space={20} />
-        <Heading fontSize={28}>감사합니다.</Heading>
-        <Spacer space={5} />
-        <Caption fontSize={14}>지금까지 기부자님의 도움으로 세상이 더 밝아졌습니다.</Caption>
-      </View>
     </View>
   );
 };
