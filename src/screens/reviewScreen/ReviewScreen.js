@@ -62,16 +62,14 @@ const ReviewScreen = ({ groupId }) => {
       </Footer>
 
       <MyModal height='50%' isVisible={isVisible} setIsVisible={setIsVisible}>
-        <ScrollView>
-          <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-            <Spacer space={30} />
-            <Image source={require('../../../assets/success.gif')} style={{ width: 200, height: 200 }} />
-            <Spacer space={20} />
-            <Heading fontSize={28}>리뷰 등록 성공!</Heading>
-            <Spacer space={5} />
-            <Caption>기부자님의 소중한 리뷰를 등록했어요!</Caption>
-          </View>
-        </ScrollView>
+        <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}>
+          <Spacer space={30} />
+          <Image source={require('../../../assets/success.gif')} style={{ width: 200, height: 200 }} />
+          <Spacer space={20} />
+          <Heading fontSize={28}>리뷰 등록 성공!</Heading>
+          <Spacer space={5} />
+          <Caption>기부자님의 소중한 리뷰를 등록했어요!</Caption>
+        </View>
         <Footer>
           <BasicButton
             onPress={() => {
