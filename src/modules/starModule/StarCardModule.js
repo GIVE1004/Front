@@ -1,4 +1,4 @@
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, useWindowDimensions } from 'react-native';
 import * as Color from '../../components/Colors/colors';
 import { Body, Caption, Heading } from '../../components/Typography/Typography';
 import { Icon } from '../../components/Icons/Icons';
@@ -6,14 +6,9 @@ import * as IconName from '../../components/Icons/IconName';
 import { ImageLoader } from '../../components/Images/ImageLoader';
 import React, { useState } from 'react';
 import { Spacer } from '../../components/Basic/Spacer';
+import { Divider } from 'react-native-paper';
 
-export const StarGroupCard = (props) => {
-  console.log(props);
-  if (props.selectedLabel == '지금뜨는') {
-    //fetch(주소)
-  } else {
-    // fetch(다른 주소)
-  }
+export const StarGroupCard = () => {
   const tmpdata = [
     {
       source: 'https://picsum.photos/300',
@@ -46,6 +41,7 @@ export const StarGroupCard = (props) => {
   ];
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
+      <Spacer space={12} />
       {tmpdata.map((values, index) => (
         <StarCard data={values} />
       ))}
@@ -55,20 +51,34 @@ export const StarGroupCard = (props) => {
 
 export const StarCard = ({ data }) => {
   const [isStar, setStar] = useState(true);
+  const { width } = useWindowDimensions();
   return (
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', paddingHorizontal: 30, marginVertical: 20 }}>
-      <View>
+    <TouchableOpacity
+      style={{
+        borderWidth: 0.2,
+        borderBottomWidth: 3,
+        borderColor: Color.Black_40,
+        padding: 14,
+        borderRadius: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        margin: 4,
+        width: width * 0.94,
+        justifyContent: 'space-between',
+      }}
+    >
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <ImageLoader source={data.source} style={{ width: 50, height: 50, borderRadius: 100 }} />
-      </View>
-      <View>
-        <View style={{ marginRight: 30 }}>
-          <Heading fontSize={18}>{data.groupName}</Heading>
-          <Spacer space={5}></Spacer>
+        <Spacer space={16} horizontal={true} />
+        <View>
+          <Heading fontSize={16}>{data.groupName}</Heading>
+          <Spacer space={6} />
           <Caption fontSize={14}>
             {data.groupTag} | {data.groupLabel}
           </Caption>
         </View>
       </View>
+
       <View>
         <TouchableOpacity
           onPress={() => {
@@ -82,6 +92,6 @@ export const StarCard = ({ data }) => {
           <Icon name={isStar ? IconName.FILLSTAR : IconName.STAR} size={22} iconColor={Color.Primary_50} />
         </TouchableOpacity>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };

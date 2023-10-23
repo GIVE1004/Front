@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, StyleSheet, Platform, ScrollView } from 'react-native';
+import { View, StyleSheet, Platform, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { BasicButton } from '../../components/Buttons/Buttons';
 import * as Color from '../../components/Colors/colors';
@@ -8,16 +8,17 @@ import { StarHeader } from '../../components/Headers/Headers';
 import { MyModal } from '../../components/Modals/Modals';
 import { Heading, Caption } from '../../components/Typography/Typography';
 import { Spacer } from '../../components/Basic/Spacer';
-import { ImageLoader } from '../../components/Images/ImageLoader';
+import { ImageLoader, LocalImageLoader } from '../../components/Images/ImageLoader';
 import { GroupDetailInfoCard, GroupGraphCard, GroupInfoCard } from '../../modules/groupDetailModule/GroupBasicCard';
 import { SingleLineInput } from '../../components/Inputs/Inputs';
 import { MyRadioButton } from '../../components/Buttons/RadioButtons';
 import { SwiftLabel } from '../../components/Labels/Labels';
 import { HelpTooltip } from '../../components/Tooltip/MyTooltip';
+import { useNavigation } from '@react-navigation/native';
 
 const GroupDetailScreen = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [isVisibleSucess, setIsVisibleSucess] = useState(false);
+  const [isVisibleSuccess, setIsVisibleSuccess] = useState(false);
 
   // fetch 받을 데이터(내가 관심 등록한 단체인지) + onPress시 관심단체 선택/해제 넣기
   const [isStar, setIsStar] = useState(false);
@@ -41,9 +42,7 @@ const GroupDetailScreen = () => {
         <GroupGraphCard />
         <Spacer space={10} />
         <GroupDetailInfoCard />
-
-        {/* footer만큼의 크기를 임의로 넣었다. */}
-        <Spacer space={Platform.OS == 'android' ? 100 : 120} />
+        <Spacer space={6} />
       </KeyboardAwareScrollView>
       {/* 그룹 디테일 Footer */}
       <Footer>
@@ -64,19 +63,40 @@ const GroupDetailScreen = () => {
         <View style={{ height: 70, alignItems: 'center', flexDirection: 'row', paddingHorizontal: 20 }}>
           <Heading fontSize={20}>기부하기</Heading>
         </View>
-        <Spacer space={20} />
-        <DoDonation data={tmpdata} />
+        <KeyboardAwareScrollView>
+          <Spacer space={20} />
+          <DoDonation data={tmpdata} />
+        </KeyboardAwareScrollView>
         <Footer>
           <BasicButton
             onPress={() => {
               setIsVisible(false);
-              setIsVisibleSucess(true);
+              setIsVisibleSuccess(true);
             }}
             width='100%'
             backgroundColor={Color.Primary_50}
             borderColor={Color.Primary_50}
           >
             <Heading fontSize={16}>기부하기</Heading>
+          </BasicButton>
+        </Footer>
+      </MyModal>
+
+      <MyModal height='50%' isVisible={isVisibleSuccess} setIsVisible={setIsVisibleSuccess}>
+        <ScrollView>
+          <DonnationSuccess />
+        </ScrollView>
+
+        <Footer>
+          <BasicButton
+            onPress={() => {
+              setIsVisibleSuccess(false);
+            }}
+            width='100%'
+            backgroundColor={Color.Primary_50}
+            borderColor={Color.Primary_50}
+          >
+            <Heading fontSize={16}>기부완료</Heading>
           </BasicButton>
         </Footer>
       </MyModal>
@@ -90,7 +110,6 @@ export const DoDonation = ({ data }) => {
   const selectedLabel = labels[isFocus.indexOf(true)];
   const values = ['네', '아니오'];
   const [checked, setChecked] = useState();
-  console.log(data);
   return (
     <ScrollView>
       <View style={{ flexDirection: 'col', paddingHorizontal: 30 }}>
@@ -109,11 +128,11 @@ export const DoDonation = ({ data }) => {
         <Spacer space={13} />
         <Heading fontSize={20}>기부액(월단위)</Heading>
         <Spacer space={13} />
-        <SingleLineInput placeholde={'금액을 입력하세요'} />
+        <SingleLineInput placeholder={'금액을 입력하세요'} />
         <Spacer space={13} />
         <Heading fontSize={20}>기부자</Heading>
         <Spacer space={13} />
-        <SingleLineInput placeholde={'원하시는 성함을 입력하세요'} />
+        <SingleLineInput placeholder={'원하시는 성함을 입력하세요'} />
         <Spacer space={13} />
         <View style={{ flexDirection: 'row' }}>
           <Heading fontSize={20}>기간 선택 </Heading>
@@ -128,37 +147,21 @@ export const DoDonation = ({ data }) => {
           <HelpTooltip content={'증명서는 가입한 메일로 갑니다.'} />
         </View>
         <Spacer space={13} />
-
         <MyRadioButton values={values} setChecked={setChecked} color={Color.Secondary_50} />
       </View>
     </ScrollView>
   );
 };
 
-export const donnationSuccess = () => {
+export const DonnationSuccess = (props) => {
   return (
-    <View>
-      <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-        <Spacer space={30} />
-        <Image source={require('../../../assets/success.gif')} style={{ width: 200, height: 200 }} />
-        <Spacer space={20} />
-        <Heading fontSize={28}>리뷰 등록 성공!</Heading>
-        <Spacer space={5} />
-        <Caption>기부자님의 소중한 리뷰를 등록했어요!</Caption>
-      </View>
-      <Footer>
-        <BasicButton
-          onPress={() => {
-            setIsVisible(false);
-            navigation.reset({ routes: [{ name: 'ChartScreen' }] });
-          }}
-          width='100%'
-          backgroundColor={Color.Primary_50}
-          borderColor={Color.Primary_50}
-        >
-          <Heading fontSize={16}>등록완료</Heading>
-        </BasicButton>
-      </Footer>
+    <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+      <Spacer space={30} />
+      <LocalImageLoader source={require('../../../assets/success.gif')} style={{ width: 200, height: 200 }} />
+      <Spacer space={20} />
+      <Heading fontSize={28}>기부 성공!</Heading>
+      <Spacer space={5} />
+      <Caption>기부자님의 소중한 기부가 완료되었어요!</Caption>
     </View>
   );
 };

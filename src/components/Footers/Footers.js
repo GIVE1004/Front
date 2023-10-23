@@ -6,7 +6,7 @@ export const Footer = (props) => {
   const { width } = useWindowDimensions();
   const insets = useSafeAreaInsets();
   return (
-    <View style={{ backgroundColor: props.backgroundColor || Color.Black_20, paddingBottom: insets.bottom, position: 'absolute', bottom: 0 }}>
+    <View style={{ backgroundColor: props.backgroundColor || Color.Black_20, paddingBottom: props.bottom || insets.bottom, alignItems: 'center' }}>
       <View
         style={{
           width: width,

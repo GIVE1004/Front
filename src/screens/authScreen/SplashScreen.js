@@ -70,6 +70,23 @@ const SplashScreen = () => {
       >
         <Heading fontSize={16}>시작하기</Heading>
       </BasicButton>
+
+      <BasicButton
+        borderColor={Color.Black_20}
+        onPress={() => {
+          setGoMainPage(true);
+        }}
+      >
+        <Heading fontSize={16}>임시: 메인화면으로 가기</Heading>
+      </BasicButton>
+      <BasicButton
+        borderColor={Color.Black_20}
+        onPress={() => {
+          navigation.reset({ routes: [{ name: 'QuestionScreen' }] });
+        }}
+      >
+        <Heading fontSize={16}>임시: 질문화면으로 가기</Heading>
+      </BasicButton>
     </SafeAreaProvider>
   );
 };

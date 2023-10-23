@@ -4,6 +4,7 @@ import * as Color from '../../components/Colors/colors';
 import { Heading } from '../../components/Typography/Typography';
 import React from 'react';
 import { StarGroupCard } from '../../modules/starModule/StarCardModule';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const StarScreen = () => {
   return (
@@ -12,7 +13,9 @@ const StarScreen = () => {
       <View style={{ paddingHorizontal: 30 }}>
         <Heading>응원하는단체</Heading>
       </View>
-      <StarGroupCard />
+      <KeyboardAwareScrollView>
+        <StarGroupCard />
+      </KeyboardAwareScrollView>
     </View>
   );
 };
