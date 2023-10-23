@@ -8,7 +8,7 @@ import { StarHeader } from '../../components/Headers/Headers';
 import { MyModal } from '../../components/Modals/Modals';
 import { Heading, Caption, Body } from '../../components/Typography/Typography';
 import { Spacer } from '../../components/Basic/Spacer';
-import { ImageLoader } from '../../components/Images/ImageLoader';
+import { ImageLoader, LocalImageLoader } from '../../components/Images/ImageLoader';
 import { GroupDetailInfoCard, GroupGraphCard, GroupInfoCard } from '../../modules/groupDetailModule/GroupBasicCard';
 import { SingleLineInput } from '../../components/Inputs/Inputs';
 import { MyRadioButton } from '../../components/Buttons/RadioButtons';
@@ -17,6 +17,7 @@ import { AddComma } from '../../util/util';
 import { Divider } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { HelpTooltip } from '../../components/Tooltip/MyTooltip';
+import { useNavigation } from '@react-navigation/native';
 
 const GroupDetailScreen = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -56,9 +57,7 @@ const GroupDetailScreen = () => {
         <GroupGraphCard />
         <Spacer space={10} />
         <GroupDetailInfoCard />
-
-        {/* footer만큼의 크기를 임의로 넣었다. */}
-        <Spacer space={Platform.OS == 'android' ? 100 : 120} />
+        <Spacer space={6} />
       </KeyboardAwareScrollView>
       {/* 그룹 디테일 Footer */}
       <Footer>
@@ -89,7 +88,6 @@ const GroupDetailScreen = () => {
             onPress={() => {
               setIsVisible(false);
               setIsVisibleCheck(true);
-
             }}
             width='100%'
             backgroundColor={Color.Primary_50}
@@ -99,7 +97,6 @@ const GroupDetailScreen = () => {
           </BasicButton>
         </Footer>
       </MyModal>
-
       {/* 확인 모달(기부하기->기부확인) */}
       <MyModal height='60%' isVisible={isVisibleCheck} setIsVisible={setIsVisibleCheck}>
         <View style={{height: 70, alignItems: 'center', flexDirection: 'row', paddingHorizontal: 20}}>
@@ -188,7 +185,6 @@ const GroupDetailScreen = () => {
         </BasicButton>
       </Footer>
       </MyModal>
-          
     </View>
   );
 };
@@ -199,7 +195,6 @@ export const DoDonation = ({ data }) => {
   const selectedLabel = labels[isFocus.indexOf(true)];
   const values = ['네', '아니오'];
   const [checked, setChecked] = useState();
-  console.log(data);
   return (
     <ScrollView>
       <View style={{ flexDirection: 'col', paddingHorizontal: 30 }}>
@@ -237,7 +232,6 @@ export const DoDonation = ({ data }) => {
           <HelpTooltip content={'증명서는 가입한 메일로 갑니다.'} />
         </View>
         <Spacer space={13} />
-
         <MyRadioButton values={values} setChecked={setChecked} color={Color.Secondary_50} />
       </View>
       
@@ -390,7 +384,6 @@ export const DonnationStopSuccess = () => {
         <Spacer space={5} />
         <Caption fontSize={14}>지금까지 기부자님의 도움으로 세상이 더 밝아졌습니다.</Caption>
       </View>
-      
     </View>
   );
 };
