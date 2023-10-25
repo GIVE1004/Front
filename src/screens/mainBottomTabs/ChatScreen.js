@@ -1,4 +1,4 @@
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { MainHeader } from '../../components/Headers/Headers';
 import { Body } from '../../components/Typography/Typography';
 import * as Color from '../../components/Colors/colors';
@@ -10,6 +10,16 @@ import { Badge } from '../../components/Icons/Badge';
 import { createRef } from 'react';
 import { ChatFinCard } from '../../modules/chatModule/ChatCard';
 
+/*
+  생각 중인 방향
+  
+  recoil에 이전 대화들 모두 가져다 놓기.
+  recoil의 형식은 배열 내에 key, value
+  key값이 bot이면 isBot = true, value는 그냥 띄우기
+
+  onChangeText를 이용하고 badgeIcon을 클릭 시 api쏘기 + recoil에 저장 => 리랜더링으로 화면 갈아끼우기
+  api쏘면 fetch 기다리는 시간 동안 ... 띄워주기
+*/
 const ChatScreen = () => {
   const scrollViewRef = createRef();
 
