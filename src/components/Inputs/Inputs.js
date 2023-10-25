@@ -29,7 +29,7 @@ export const SingleLineInput = (props) => {
         value={props.value}
         onChangeText={props.onChangeText}
         placeholder={props.placeholder ?? 'input'}
-        style={[props.style, { flex: 1, margin: 6, fontSize: props.fontSize ?? 16 }]}
+        style={[props.style, { width: props.width || '100%', margin: 6, fontSize: props.fontSize ?? 16 }]}
         onFocus={() => {
           setFocused(true);
         }}

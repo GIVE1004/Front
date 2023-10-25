@@ -16,3 +16,4 @@ export const DUPLICATE = 'duplicate-outline';
 export const CALCULATOR = 'calculator-outline';
 export const EXIT = 'exit-outline';
 export const HELP = 'help-circle-outline';
+export const SEND = 'arrow-up';
