@@ -1,4 +1,4 @@
-import { View, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { MainHeader } from '../../components/Headers/Headers';
 import * as Color from '../../components/Colors/colors';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -12,6 +12,7 @@ import { chatbotState } from '../../util/recoil/Atoms';
 import { useRecoilState } from 'recoil';
 
 const ChatScreen = () => {
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [chatbot, setChatbot] = useRecoilState(chatbotState);
   const scrollViewRef = createRef();
 
@@ -41,7 +42,11 @@ const ChatScreen = () => {
   }, [botChatting]);
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? (keyboardHeight == 0 ? 'padding' : 'height') : keyboardHeight == 0 ? 'padding' : ''}
+      keyboardVerticalOffset={keyboardHeight}
+    >
       <MainHeader />
       <KeyboardAwareScrollView
         ref={scrollViewRef}
@@ -67,14 +72,18 @@ const ChatScreen = () => {
       >
         <SingleLineInput
           width='80%'
-          placeholder={waitTime ? '잠시 기다려주세요' : '입력해주세요.'}
+          placeholder={userChatting == '' ? '입력 후 사용가능합니다.' : ''}
           value={userChatting}
-          onChangeText={(text) => setUserChatting(text)}
-          editable={!waitTime}
+          onChangeText={(text) => {
+            setUserChatting(text);
+            setKeyboardHeight(1);
+          }}
+          onFocus={() => setKeyboardHeight(1)}
+          onBlur={() => setKeyboardHeight()}
         />
         <TouchableOpacity
           onPress={() => {
-            if (userChatting != '') {
+            if (userChatting != '' && !waitTime) {
               setChatbot([...chatbot, ['user', userChatting]]);
               setUserChatting('');
               scrollToBottom();
@@ -82,13 +91,14 @@ const ChatScreen = () => {
               getData();
             }
           }}
+          disabled={userChatting == '' || waitTime}
         >
-          <Badge badgeBackGroudColor={Color.Primary_50}>
-            <Icon name={IconName.SEND} size={22} iconColor={Color.Black_40} />
+          <Badge badgeBackGroudColor={userChatting == '' || waitTime ? Color.Black_40 : Color.Primary_50}>
+            <Icon name={IconName.SEND} size={22} iconColor={userChatting == '' || waitTime ? Color.White_100 : Color.Black_40} />
           </Badge>
         </TouchableOpacity>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

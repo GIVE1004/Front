@@ -21,7 +21,7 @@ const MainBottomTabNavigation = () => {
         unmountOnBlur: true,
         tabBarIcon: ({ focused }) => {
           const getIconName = () => {
-            if (route.name === 'Main') {
+            if (route.name === 'main') {
               return IconName.HOME;
             } else if (route.name === 'chat') {
               return IconName.CHAT;
@@ -42,7 +42,7 @@ const MainBottomTabNavigation = () => {
         },
       })}
     >
-      <Tabs.Screen name='Main' component={MainScreen}></Tabs.Screen>
+      <Tabs.Screen name='main' component={MainScreen}></Tabs.Screen>
       <Tabs.Screen name='chat' component={ChatScreen}></Tabs.Screen>
       <Tabs.Screen name='chart' component={ChartScreen}></Tabs.Screen>
       <Tabs.Screen name='search' component={SearchScreen}></Tabs.Screen>

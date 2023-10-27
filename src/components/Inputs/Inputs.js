@@ -32,9 +32,11 @@ export const SingleLineInput = (props) => {
         style={[props.style, { width: props.width || '100%', margin: 6, fontSize: props.fontSize ?? 16 }]}
         onFocus={() => {
           setFocused(true);
+          props.onFocus && props.onFocus();
         }}
         onBlur={() => {
           setFocused(false);
+          props.onBlur && props.onBlur();
         }}
         editable={props.editable}
         // 페스워드일 시에만 secureTextEntry를 true로 줄 것
