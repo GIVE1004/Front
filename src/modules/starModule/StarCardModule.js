@@ -43,7 +43,10 @@ export const StarGroupCard = () => {
     <View style={{ flex: 1, alignItems: 'center' }}>
       <Spacer space={12} />
       {tmpdata.map((values, index) => (
-        <StarCard data={values} />
+        <View>
+          <StarCard data={values} />
+          <Divider />
+        </View>
       ))}
     </View>
   );
@@ -55,10 +58,8 @@ export const StarCard = ({ data }) => {
   return (
     <TouchableOpacity
       style={{
-        borderWidth: 0.2,
-        borderBottomWidth: 3,
         borderColor: Color.Black_40,
-        padding: 14,
+        padding: 12,
         borderRadius: 10,
         flexDirection: 'row',
         alignItems: 'center',
@@ -72,7 +73,7 @@ export const StarCard = ({ data }) => {
         <Spacer space={16} horizontal={true} />
         <View>
           <Heading fontSize={16}>{data.groupName}</Heading>
-          <Spacer space={6} />
+          <Spacer space={8} />
           <Caption fontSize={14}>
             {data.groupTag} | {data.groupLabel}
           </Caption>

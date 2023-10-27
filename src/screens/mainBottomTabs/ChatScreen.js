@@ -1,27 +1,23 @@
 import { View, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { MainHeader } from '../../components/Headers/Headers';
-import { Body } from '../../components/Typography/Typography';
 import * as Color from '../../components/Colors/colors';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { SingleLineInput } from '../../components/Inputs/Inputs';
 import { Icon } from '../../components/Icons/Icons';
 import * as IconName from '../../components/Icons/IconName';
 import { Badge } from '../../components/Icons/Badge';
-import { createRef } from 'react';
-import { ChatFinCard } from '../../modules/chatModule/ChatCard';
+import { createRef, useEffect, useState } from 'react';
+import { ChatFinCard, ChatWaitCard } from '../../modules/chatModule/ChatCard';
+import { chatbotState } from '../../util/recoil/Atoms';
+import { useRecoilState } from 'recoil';
 
-/*
-  생각 중인 방향
-  
-  recoil에 이전 대화들 모두 가져다 놓기.
-  recoil의 형식은 배열 내에 key, value
-  key값이 bot이면 isBot = true, value는 그냥 띄우기
-
-  onChangeText를 이용하고 badgeIcon을 클릭 시 api쏘기 + recoil에 저장 => 리랜더링으로 화면 갈아끼우기
-  api쏘면 fetch 기다리는 시간 동안 ... 띄워주기
-*/
 const ChatScreen = () => {
+  const [chatbot, setChatbot] = useRecoilState(chatbotState);
   const scrollViewRef = createRef();
+
+  const [userChatting, setUserChatting] = useState('');
+  const [botChatting, setBotChatting] = useState('');
+  const [waitTime, setWaitTime] = useState(false);
 
   // 함수를 호출하여 스크롤 위치를 맨 아래로 설정
   const scrollToBottom = () => {
@@ -30,14 +26,19 @@ const ChatScreen = () => {
     }
   };
 
-  // 메시지를 추가할 때 스크롤을 맨 아래로 이동
-  const addMessage = (message) => {
-    // 메시지를 추가하는 로직 구현
-    // ...
-
-    // 스크롤을 맨 아래로 이동
-    scrollToBottom();
+  const getData = () => {
+    setTimeout(() => {
+      setBotChatting('hello!');
+      setWaitTime(false);
+    }, 2000);
   };
+
+  useEffect(() => {
+    if (botChatting != '') {
+      setChatbot([...chatbot, ['bot', botChatting]]);
+      setBotChatting('');
+    }
+  }, [botChatting]);
 
   return (
     <View style={styles.container}>
@@ -47,7 +48,10 @@ const ChatScreen = () => {
         onContentSizeChange={scrollToBottom} // 콘텐츠 크기가 변경될 때 스크롤을 맨 아래로 이동
         style={{ flex: 1 }}
       >
-        <ChatFinCard isBot={true} text='안녕하세요 GIVE천사 봇입니다. 궁금한 점을 도와드리겠습니다.' />
+        {chatbot.map((chat, index) => (
+          <ChatFinCard isBot={chat[0] == 'bot'} text={chat[1]} key={index} />
+        ))}
+        {waitTime && <ChatWaitCard />}
       </KeyboardAwareScrollView>
       <View
         style={{
@@ -61,8 +65,24 @@ const ChatScreen = () => {
           flexWrap: 'wrap',
         }}
       >
-        <SingleLineInput width='80%' placeholder='입력해주세요.' />
-        <TouchableOpacity>
+        <SingleLineInput
+          width='80%'
+          placeholder={waitTime ? '잠시 기다려주세요' : '입력해주세요.'}
+          value={userChatting}
+          onChangeText={(text) => setUserChatting(text)}
+          editable={!waitTime}
+        />
+        <TouchableOpacity
+          onPress={() => {
+            if (userChatting != '') {
+              setChatbot([...chatbot, ['user', userChatting]]);
+              setUserChatting('');
+              scrollToBottom();
+              setWaitTime(true);
+              getData();
+            }
+          }}
+        >
           <Badge badgeBackGroudColor={Color.Primary_50}>
             <Icon name={IconName.SEND} size={22} iconColor={Color.Black_40} />
           </Badge>

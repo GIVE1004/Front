@@ -96,7 +96,7 @@ export const MainRecomentGroupCard = () => {
       <Spacer space={12} />
       <ScrollView horizontal={true} style={{ paddingVertical: 10 }}>
         {tmpdata.map((data, index) => (
-          <GroupCard source={data.source} groupId={data.groupId} groupName={data.groupName} groupTag={data.groupTag} groupLabel={data.groupLabel} />
+          <GroupCard source={data.source} groupId={data.groupId} groupName={data.groupName} groupTag={data.groupTag} groupLabel={data.groupLabel} key={index} />
         ))}
       </ScrollView>
     </View>
@@ -117,7 +117,7 @@ export const MainIncreaseGroupCard = () => {
       <Spacer space={12} />
       <ScrollView horizontal={true} style={{ paddingVertical: 10 }}>
         {tmpdata.map((data, index) => (
-          <GroupCard source={data.source} groupId={data.groupId} groupName={data.groupName} groupTag={data.groupTag} groupLabel={data.groupLabel} />
+          <GroupCard source={data.source} groupId={data.groupId} groupName={data.groupName} groupTag={data.groupTag} groupLabel={data.groupLabel} key={index} />
         ))}
       </ScrollView>
     </View>
