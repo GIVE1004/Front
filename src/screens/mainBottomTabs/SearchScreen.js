@@ -9,7 +9,7 @@ import { SwiftLabel } from '../../components/Labels/Labels';
 import { SearchGroupCard } from '../../modules/searchModule/SearchCard';
 
 const SearchScreen = () => {
-  const labels = ['지금 뜨는', '높은 신뢰도', '작은 기부단위', '활발한 활동'];
+  const labels = ['🔥 지금 뜨는', '높은 신뢰도', '작은 기부단위', '활발한 활동'];
   const [isFocus, setIsFocus] = useState([true, false]);
   const selectedLabel = labels[isFocus.indexOf(true)];
 

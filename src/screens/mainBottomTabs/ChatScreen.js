@@ -1,4 +1,4 @@
-import { View, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { MainHeader } from '../../components/Headers/Headers';
 import * as Color from '../../components/Colors/colors';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -12,6 +12,7 @@ import { chatbotState } from '../../util/recoil/Atoms';
 import { useRecoilState } from 'recoil';
 
 const ChatScreen = () => {
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [chatbot, setChatbot] = useRecoilState(chatbotState);
   const scrollViewRef = createRef();
 
@@ -41,7 +42,11 @@ const ChatScreen = () => {
   }, [botChatting]);
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? (keyboardHeight == 0 ? 'padding' : 'height') : keyboardHeight == 0 ? 'padding' : ''}
+      keyboardVerticalOffset={keyboardHeight}
+    >
       <MainHeader />
       <KeyboardAwareScrollView
         ref={scrollViewRef}
@@ -69,8 +74,13 @@ const ChatScreen = () => {
           width='80%'
           placeholder={waitTime ? '잠시 기다려주세요' : '입력해주세요.'}
           value={userChatting}
-          onChangeText={(text) => setUserChatting(text)}
+          onChangeText={(text) => {
+            setUserChatting(text);
+            setKeyboardHeight(1);
+          }}
           editable={!waitTime}
+          onFocus={() => setKeyboardHeight(1)}
+          onBlur={() => setKeyboardHeight()}
         />
         <TouchableOpacity
           onPress={() => {
@@ -88,7 +98,7 @@ const ChatScreen = () => {
           </Badge>
         </TouchableOpacity>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
