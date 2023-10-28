@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { useWindowDimensions, View } from 'react-native';
+import { ScrollView, useWindowDimensions, View } from 'react-native';
 import { LocalImageLoader } from '../../components/Images/ImageLoader';
 import { Logo } from '../../components/Images/Logo';
 import { Header } from '../../components/Headers/Headers';
@@ -52,41 +52,43 @@ const SplashScreen = () => {
 
   return (
     <SafeAreaProvider style={{ flex: 1, padding: 14, backgroundColor: Color.White_100 }}>
-      <Header />
-      <Logo style={{ height: 36, aspectRatio: 5 / 1 }} />
-      <Spacer space={20} />
-      <LocalImageLoader source={require('../../../assets/giveSplash.png')} style={{ width, height: undefined, aspectRatio: 4 / 3 }} resizeMode='contain' />
-      <Spacer space={34} />
-      <View style={{ alignItems: 'center' }}>
-        <Heading>기부를 더 쉽게 더 똑똑하게,</Heading>
-      </View>
-      <Spacer space={20} />
-      <BasicButton
-        backgroundColor={Color.Primary_50}
-        borderColor={Color.Primary_50}
-        onPress={() => {
-          getTokens(setAccessToken, setRefreshToken);
-        }}
-      >
-        <Heading fontSize={16}>시작하기</Heading>
-      </BasicButton>
+      <ScrollView>
+        <Header />
+        <Logo style={{ height: 36, aspectRatio: 5 / 1 }} />
+        <Spacer space={20} />
+        <LocalImageLoader source={require('../../../assets/giveSplash.png')} style={{ width, height: undefined, aspectRatio: 4 / 3 }} resizeMode='contain' />
+        <Spacer space={34} />
+        <View style={{ alignItems: 'center' }}>
+          <Heading>기부를 더 쉽게 더 똑똑하게,</Heading>
+        </View>
+        <Spacer space={20} />
+        <BasicButton
+          backgroundColor={Color.Primary_50}
+          borderColor={Color.Primary_50}
+          onPress={() => {
+            getTokens(setAccessToken, setRefreshToken);
+          }}
+        >
+          <Heading fontSize={16}>시작하기</Heading>
+        </BasicButton>
 
-      <BasicButton
-        borderColor={Color.Black_20}
-        onPress={() => {
-          setGoMainPage(true);
-        }}
-      >
-        <Heading fontSize={16}>임시: 메인화면으로 가기</Heading>
-      </BasicButton>
-      <BasicButton
-        borderColor={Color.Black_20}
-        onPress={() => {
-          navigation.reset({ routes: [{ name: 'QuestionScreen' }] });
-        }}
-      >
-        <Heading fontSize={16}>임시: 질문화면으로 가기</Heading>
-      </BasicButton>
+        <BasicButton
+          borderColor={Color.Black_20}
+          onPress={() => {
+            setGoMainPage(true);
+          }}
+        >
+          <Heading fontSize={16}>임시: 메인화면으로 가기</Heading>
+        </BasicButton>
+        <BasicButton
+          borderColor={Color.Black_20}
+          onPress={() => {
+            navigation.reset({ routes: [{ name: 'QuestionScreen' }] });
+          }}
+        >
+          <Heading fontSize={16}>임시: 질문화면으로 가기</Heading>
+        </BasicButton>
+      </ScrollView>
     </SafeAreaProvider>
   );
 };
