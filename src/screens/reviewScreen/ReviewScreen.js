@@ -25,7 +25,7 @@ const ReviewScreen = ({ groupId }) => {
       <BackWithLogoHeader />
       <Spacer space={10} />
 
-      <KeyboardAwareScrollView
+      <ScrollView
         style={{ padding: 8 }}
         onKeyboardWillShow={() => {
           setBottom(true);
@@ -46,7 +46,8 @@ const ReviewScreen = ({ groupId }) => {
         <SingleLineInput placeholder={'리뷰 제목'} />
         <Spacer space={10}></Spacer>
         <MultiLineInput placeholder={'내용을 작성해 주세요'} />
-      </KeyboardAwareScrollView>
+        <Spacer space={10}></Spacer>
+      </ScrollView>
 
       <Footer bottom={bottom}>
         <BasicButton

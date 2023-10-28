@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { useLayoutEffect, useState } from 'react';
+import { KeyboardAvoidingView, Platform, ScrollView, useWindowDimensions, View } from 'react-native';
 import { Caption, Divider } from 'react-native-paper';
 import { Spacer } from '../../components/Basic/Spacer';
 import { MyRadioButton } from '../../components/Buttons/RadioButtons';
@@ -11,9 +11,9 @@ import { Body, Heading } from '../../components/Typography/Typography';
 import * as Color from '../../components/Colors/colors';
 import { Footer } from '../../components/Footers/Footers';
 import { BasicButton } from '../../components/Buttons/Buttons';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { AddComma } from '../../util/util';
 import { useNavigation } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const DoDonation = (props) => {
   const data = props.data;
@@ -22,64 +22,81 @@ export const DoDonation = (props) => {
   const selectedLabel = labels[isFocus.indexOf(true)];
   const values = ['네', '아니오'];
   const [checked, setChecked] = useState();
+  const [price, setPrice] = useState('');
+  const [name, setName] = useState('');
+  const { height } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+
   return (
     <View style={{ flex: 1 }}>
       <View style={{ height: 70, alignItems: 'center', flexDirection: 'row', paddingHorizontal: 20 }}>
         <Heading>기부하기</Heading>
       </View>
       <Spacer space={10} />
-      <KeyboardAwareScrollView>
-        <View style={{ flexDirection: 'col', paddingHorizontal: 30 }}>
-          <View style={{ flexDirection: 'row' }}>
-            <View>
-              <ImageLoader source={data.source} style={{ width: 60, height: 60, borderRadius: 100 }} />
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : null} keyboardVerticalOffset={height * 0.2 - insets.bottom}>
+        <ScrollView>
+          <View style={{ flexDirection: 'col', paddingHorizontal: 30 }}>
+            <View style={{ flexDirection: 'row' }}>
+              <View>
+                <ImageLoader source={data.source} style={{ width: 60, height: 60, borderRadius: 100 }} />
+              </View>
+              <Spacer space={10} />
+              <View style={{ marginLeft: 15 }}>
+                <Heading fontSize={18}>{data.groupName}</Heading>
+                <Caption fontSize={16}>
+                  {data.groupTag} | {data.groupLabel}
+                </Caption>
+              </View>
             </View>
-            <Spacer space={10} />
-            <View style={{ marginLeft: 15 }}>
-              <Heading fontSize={18}>{data.groupName}</Heading>
-              <Caption fontSize={16}>
-                {data.groupTag} | {data.groupLabel}
-              </Caption>
+            <Spacer space={13} />
+            <Heading fontSize={20}>기부액(월단위)</Heading>
+            <Spacer space={13} />
+            <SingleLineInput
+              placeholder={'금액을 입력하세요'}
+              onChangeText={(text) => {
+                setPrice(text);
+              }}
+            />
+            <Spacer space={13} />
+            <Heading fontSize={20}>기부자</Heading>
+            <Spacer space={13} />
+            <SingleLineInput
+              placeholder={'원하시는 성함을 입력하세요'}
+              onChangeText={(text) => {
+                setName(text);
+              }}
+            />
+            <Spacer space={13} />
+            <View style={{ flexDirection: 'row' }}>
+              <Heading fontSize={20}>기간 선택 </Heading>
+              <HelpTooltip content={'기부금은 매달 1일에 기부됩니다.'} />
             </View>
+            <Spacer space={13} />
+            <View style={{ width: '100%', paddingHorizontal: 15 }}>
+              <SwiftLabel isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} width={90} />
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+              <Heading fontSize={20}>증명서가 필요한가요? </Heading>
+              <HelpTooltip content={'증명서는 가입한 메일로 갑니다.'} />
+            </View>
+            <Spacer space={13} />
+            <MyRadioButton values={values} setChecked={setChecked} color={Color.Secondary_50} />
           </View>
-          <Spacer space={13} />
-          <Heading fontSize={20}>기부액(월단위)</Heading>
-          <Spacer space={13} />
-          <SingleLineInput placeholder={'금액을 입력하세요'} />
-          <Spacer space={13} />
-          <Heading fontSize={20}>기부자</Heading>
-          <Spacer space={13} />
-          <SingleLineInput placeholder={'원하시는 성함을 입력하세요'} />
-          <Spacer space={13} />
-          <View style={{ flexDirection: 'row' }}>
-            <Heading fontSize={20}>기간 선택 </Heading>
-            <HelpTooltip content={'기부금은 매달 1일에 기부됩니다.'} />
-          </View>
-          <Spacer space={13} />
-          <View style={{ width: '100%', paddingHorizontal: 15 }}>
-            <SwiftLabel isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} width={90} />
-          </View>
-          <View style={{ flexDirection: 'row' }}>
-            <Heading fontSize={20}>증명서가 필요한가요? </Heading>
-            <HelpTooltip content={'증명서는 가입한 메일로 갑니다.'} />
-          </View>
-          <Spacer space={13} />
-          <MyRadioButton values={values} setChecked={setChecked} color={Color.Secondary_50} />
-        </View>
-      </KeyboardAwareScrollView>
-      <Footer>
-        <BasicButton
-          onPress={() => {
-            props.setIsVisible(false);
-            props.setIsVisibleCheck(true);
-          }}
-          width='100%'
-          backgroundColor={Color.Primary_50}
-          borderColor={Color.Primary_50}
-        >
-          <Heading fontSize={16}>기부하기</Heading>
-        </BasicButton>
-      </Footer>
+        </ScrollView>
+        <Footer>
+          <BasicButton
+            onPress={() => {
+              props.setIsVisible(false);
+              props.setIsVisibleCheck(true);
+            }}
+            width='100%'
+            backgroundColor={Color.Primary_50}
+            borderColor={Color.Primary_50}
+          >
+            <Heading fontSize={16}>기부하기</Heading>
+          </BasicButton>
+        </Footer>
+      </KeyboardAvoidingView>
     </View>
   );
 };

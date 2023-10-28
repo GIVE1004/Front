@@ -1,4 +1,4 @@
-import { View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { MainHeader } from '../../components/Headers/Headers';
 import * as Color from '../../components/Colors/colors';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -48,7 +48,7 @@ const ChatScreen = () => {
       keyboardVerticalOffset={keyboardHeight}
     >
       <MainHeader />
-      <KeyboardAwareScrollView
+      <ScrollView
         ref={scrollViewRef}
         onContentSizeChange={scrollToBottom} // 콘텐츠 크기가 변경될 때 스크롤을 맨 아래로 이동
         style={{ flex: 1 }}
@@ -57,7 +57,7 @@ const ChatScreen = () => {
           <ChatFinCard isBot={chat[0] == 'bot'} text={chat[1]} key={index} />
         ))}
         {waitTime && <ChatWaitCard />}
-      </KeyboardAwareScrollView>
+      </ScrollView>
       <View
         style={{
           margin: 10,
