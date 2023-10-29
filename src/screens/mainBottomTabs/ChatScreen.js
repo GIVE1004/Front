@@ -7,7 +7,7 @@ import { Icon } from '../../components/Icons/Icons';
 import * as IconName from '../../components/Icons/IconName';
 import { Badge } from '../../components/Icons/Badge';
 import { createRef, useEffect, useState } from 'react';
-import { ChatFinCard, ChatWaitCard } from '../../modules/chatModule/ChatCard';
+import { ChatFinCard, ChatWaitCard } from '../../modules/chatModule/ChatModule';
 import { chatbotState } from '../../util/recoil/Atoms';
 import { useRecoilState } from 'recoil';
 
