@@ -2,18 +2,16 @@ import { View, StyleSheet } from 'react-native';
 import { MainHeader } from '../../components/Headers/Headers';
 import * as Color from '../../components/Colors/colors';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { ChartGroupView, ChartMoneyView, ChartMyDonationView, ChartTotalView } from '../../modules/chartModule/ChartTopTabModule';
-import { useState } from 'react';
-import { ChartDefaultMsgCard } from '../../modules/chartModule/ChartDefaultModule';
-import ChartTopTabNavigation from '../../navigations/ChartTopTabNavigation';
+import { ReportDefaultMsgCard } from '../../modules/reportModule/ReportDefaultModule';
+import ReportTopTabNavigation from '../../navigations/ReportTopTabNavigation';
 
-const ChartScreen = () => {
+const ReportScreen = () => {
   const Tab = createMaterialTopTabNavigator();
   return (
     <View style={styles.container}>
       <MainHeader />
-      <ChartDefaultMsgCard />
-      <ChartTopTabNavigation />
+      <ReportDefaultMsgCard />
+      <ReportTopTabNavigation />
     </View>
   );
 };
@@ -25,4 +23,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChartScreen;
+export default ReportScreen;

@@ -6,7 +6,7 @@ import { LocalImageLoader } from '../Images/ImageLoader';
 export const BasicButton = (props) => {
   return (
     <View style={{ width: props.width, height: props.height, margin: 5 }}>
-      <TouchableOpacity onPress={props.onPress}>
+      <TouchableOpacity onPress={props.onPress} disabled={props.disabled}>
         <View
           style={[
             { backgroundColor: props.backgroundColor, borderRadius: props.borderRadius || 20, borderWidth: 2, borderColor: props.borderColor || Color.White_100 },

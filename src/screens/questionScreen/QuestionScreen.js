@@ -71,8 +71,8 @@ const QuestionScreen = () => {
         </ViewSliders>
         <Spacer space={Platform.OS == 'android' ? 100 : 120} />
       </View>
-      {answer.every((value) => value >= 0) && (
-        <Footer backgroundColor={Color.White_100} width={width}>
+      <Footer backgroundColor={Color.White_100} width={width}>
+        {answer.every((value) => value >= 0) ? (
           <BasicButton
             backgroundColor={Color.Secondary_50}
             width='100%'
@@ -84,8 +84,12 @@ const QuestionScreen = () => {
               메인으로 가기
             </Body>
           </BasicButton>
-        </Footer>
-      )}
+        ) : (
+          <BasicButton backgroundColor={Color.Black_20} width='100%' disabled={true}>
+            <Body fontSize={14}>모든 문항에 답해주세요.</Body>
+          </BasicButton>
+        )}
+      </Footer>
     </SafeAreaProvider>
   );
 };

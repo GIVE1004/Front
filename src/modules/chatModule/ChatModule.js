@@ -48,9 +48,7 @@ export const ChatWaitCard = () => {
           flexDirection: 'row',
         }}
       >
-        <View style={{ borderRadius: 100, height: 8, width: 8, backgroundColor: Color.Black_60, margin: 2 }} />
-        <View style={{ borderRadius: 100, height: 8, width: 8, backgroundColor: Color.Black_50, margin: 2 }} />
-        <View style={{ borderRadius: 100, height: 8, width: 8, backgroundColor: Color.Black_40, margin: 2 }} />
+        <LocalImageLoader source={require('../../../assets/bubble.gif')} style={{ height: 14, aspectRatio: 3 / 1 }} />
       </View>
     </View>
   );
