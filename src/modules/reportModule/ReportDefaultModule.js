@@ -6,7 +6,7 @@ import { Spacer } from '../../components/Basic/Spacer';
 import { Divider } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 
-export const ChartDefaultMsgCard = () => {
+export const ReportDefaultMsgCard = () => {
   const navigation = useNavigation();
   return (
     <LinearGradient

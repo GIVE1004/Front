@@ -31,7 +31,7 @@ const ChatScreen = () => {
     setTimeout(() => {
       setBotChatting('hello!');
       setWaitTime(false);
-    }, 2000);
+    }, 2500);
   };
 
   useEffect(() => {

@@ -6,9 +6,9 @@ import { Badge } from '../components/Icons/Badge';
 import { Icon } from '../components/Icons/Icons';
 import MainScreen from '../screens/mainBottomTabs/MainScreen';
 import SearchScreen from '../screens/mainBottomTabs/SearchScreen';
-import ChartScreen from '../screens/mainBottomTabs/ChartScreen';
 import UserScreen from '../screens/mainBottomTabs/UserScreen';
 import ChatScreen from '../screens/mainBottomTabs/ChatScreen';
+import ReportScreen from '../screens/mainBottomTabs/ReportScreen';
 const Tabs = createBottomTabNavigator();
 
 const MainBottomTabNavigation = () => {
@@ -25,7 +25,7 @@ const MainBottomTabNavigation = () => {
               return IconName.HOME;
             } else if (route.name === 'chat') {
               return IconName.CHAT;
-            } else if (route.name === 'chart') {
+            } else if (route.name === 'report') {
               return IconName.CHART;
             } else if (route.name === 'search') {
               return IconName.SEARCH;
@@ -44,7 +44,7 @@ const MainBottomTabNavigation = () => {
     >
       <Tabs.Screen name='main' component={MainScreen}></Tabs.Screen>
       <Tabs.Screen name='chat' component={ChatScreen}></Tabs.Screen>
-      <Tabs.Screen name='chart' component={ChartScreen}></Tabs.Screen>
+      <Tabs.Screen name='report' component={ReportScreen}></Tabs.Screen>
       <Tabs.Screen name='search' component={SearchScreen}></Tabs.Screen>
       <Tabs.Screen name='user' component={UserScreen}></Tabs.Screen>
     </Tabs.Navigator>

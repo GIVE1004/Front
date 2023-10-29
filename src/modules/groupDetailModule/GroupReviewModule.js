@@ -117,7 +117,7 @@ export const ReviewCard = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <BasicButton borderColor={Color.Black_20} borderRadius={10} onPress={() => setIsOpen(!isOpen)}>
-      <View style={{ flexDirection: 'column' }}>
+      <View style={{ flexDirection: 'column', minWidth: '92%' }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
           <View style={{ marginHorizontal: 4 }}>
             <Heading color={data.reviewScore < 50 ? Color.Danger_50 : data.reviewScore == 50 ? Color.Black_50 : Color.Success_50} fontSize={16}>

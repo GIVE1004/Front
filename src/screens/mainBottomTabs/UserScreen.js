@@ -15,6 +15,13 @@ import { useRecoilState } from 'recoil';
 import { getTokens, removeTokens } from '../../util/token/tokenUtil';
 import { useEffect } from 'react';
 
+/**
+ * TO-DO
+ * 이 페이지가 마이페이지로 바뀔 가능성이 농후합니다.
+ * 관심 기부단체는 다른 페이지로 옮겨 갔으며, 세금계산기 및 기부단체 추가하기는
+ * 현재로써 할 수 없다 판단되어 빼게 될 예정이므로 나중에 다시 확인할 예정입니다.
+ * @returns
+ */
 const UserScreen = () => {
   const navigation = useNavigation();
   const [memberInfo, setMemberInfo] = useRecoilState(memberInfoState);
@@ -29,9 +36,6 @@ const UserScreen = () => {
         {
           text: '로그아웃',
           onPress: () => {
-            // TO-DO
-            // getToken으로 토큰 가져오고 api 타서
-            // 토큰 없애주기...?
             removeTokens();
             setMemberInfo(null);
             setGoMainPage(false);

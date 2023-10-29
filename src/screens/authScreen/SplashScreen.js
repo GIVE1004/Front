@@ -9,7 +9,7 @@ import { Heading } from '../../components/Typography/Typography';
 import { BasicButton } from '../../components/Buttons/Buttons';
 import * as Color from '../../components/Colors/colors';
 import { useRecoilState } from 'recoil';
-import { goMainPageState } from '../../util/recoil/Atoms';
+import { goMainPageState, memberInfoState } from '../../util/recoil/Atoms';
 import { useNavigation } from '@react-navigation/native';
 import { getTokens, setTokens } from '../../util/token/tokenUtil';
 import { getRefreshFetch } from '../../util/fetch/fetchUtil';
@@ -20,6 +20,7 @@ const SplashScreen = () => {
   const [goMainPage, setGoMainPage] = useRecoilState(goMainPageState);
   const [accessToken, setAccessToken] = useState('');
   const [refreshToken, setRefreshToken] = useState('');
+  const [memberInfo, setMemberInfo] = useRecoilState(memberInfoState);
 
   const getRefreshData = async () => {
     try {
@@ -29,8 +30,8 @@ const SplashScreen = () => {
       setRefreshToken('');
       if (data.dataHeader.successCode == 0) {
         setTokens(data.dataBody.accessToken, data.dataBody.refreshToken);
-        // TO-DO
-        // API달라졌을 때, memberInfo 오게되는 경우 처리하기
+        console.log(data.dataBody.memberInfo);
+        setMemberInfo(data.dataBody.memberInfo);
         setGoMainPage(true);
       } else {
         navigation.navigate('OauthScreen');
@@ -42,6 +43,7 @@ const SplashScreen = () => {
 
   useEffect(() => {
     if (accessToken !== null && refreshToken !== null && accessToken !== '' && refreshToken !== '') {
+      console.log(refreshToken);
       getRefreshData();
     } else if (accessToken == null && refreshToken == null) {
       navigation.navigate('OauthScreen');
