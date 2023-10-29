@@ -4,7 +4,7 @@ import OauthScreen from '../screens/authScreen/OauthScreen';
 import QuestionScreen from '../screens/questionScreen/QuestionScreen';
 
 const Stack = createNativeStackNavigator();
-const AuthStackNavigation = () => {
+const AuthStack = () => {
   return (
     <Stack.Navigator initialRouteName='SplashScreen'>
       <Stack.Screen name='SplashScreen' component={SplashScreen} options={{ headerShown: false }} />
@@ -13,4 +13,4 @@ const AuthStackNavigation = () => {
     </Stack.Navigator>
   );
 };
-export default AuthStackNavigation;
+export default AuthStack;

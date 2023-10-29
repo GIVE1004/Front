@@ -8,8 +8,8 @@ import { StarHeader } from '../../components/Headers/Headers';
 import { MyModal } from '../../components/Modals/Modals';
 import { Heading, Caption, Body } from '../../components/Typography/Typography';
 import { Spacer } from '../../components/Basic/Spacer';
-import { GroupDetailInfoCard, GroupGraphCard, GroupInfoCard } from '../../modules/groupDetailModule/GroupBasicCard';
-import { DoDonation, DonationCheck, DonationStopCheck, DonnationStopSuccess, DonnationSuccess } from '../../modules/groupDetailModule/GroupModalView';
+import { GroupDetailInfoCard, GroupGraph, GroupInfoCard } from '../../modules/groupDetailModule/GroupBasicModule';
+import { DoDonation, DonationCheck, DonationStopCheck, DonnationStopSuccess, DonnationSuccess } from '../../modules/groupDetailModule/GroupModalModule';
 
 const GroupDetailScreen = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -44,7 +44,7 @@ const GroupDetailScreen = () => {
       <KeyboardAwareScrollView>
         <GroupInfoCard />
         <Spacer space={6} />
-        <GroupGraphCard />
+        <GroupGraph />
         <Spacer space={10} />
         <GroupDetailInfoCard />
         <Spacer space={6} />

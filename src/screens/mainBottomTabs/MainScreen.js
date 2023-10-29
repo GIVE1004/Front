@@ -2,7 +2,7 @@ import { View, StyleSheet, RefreshControl } from 'react-native';
 import { MainHeader } from '../../components/Headers/Headers';
 import * as Color from '../../components/Colors/colors';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { MainGraphCard, MainIncreaseGroupCard, MainRecomentGroupCard } from '../../modules/mainModule/MainCard';
+import { MainGraphCard, MainIncreaseGroupCard, MainRecomentGroupCard } from '../../modules/mainModule/MainModule';
 import { Spacer } from '../../components/Basic/Spacer';
 import { useCallback, useState } from 'react';
 import { memberInfoState } from '../../util/recoil/Atoms';

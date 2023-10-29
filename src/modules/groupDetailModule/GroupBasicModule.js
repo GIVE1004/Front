@@ -7,11 +7,11 @@ import { Graph } from '../../components/Graphs/Graphs';
 import { GraphLabel, SwiftLabel } from '../../components/Labels/Labels';
 import { AddComma } from '../../util/util';
 import { ImageLoader } from '../../components/Images/ImageLoader';
-import { ReviewView } from './GroupReviewCard';
-import { NewsView } from './GroupNewsCard';
-import { AIReportView } from './GroupAIReportCard';
-import { GroupFinancialView } from './GroupFinancialCard';
-import { InfoView } from './GroupInfoCard';
+import { ReviewView } from './GroupReviewModule';
+import { NewsView } from './GroupNewsModule';
+import { AIReportView } from './GroupAIReportModule';
+import { GroupFinancialView } from './GroupFinancialModule';
+import { InfoView } from './GroupInfoModule';
 
 export const GroupInfoCard = () => {
   const data = { source: 'https://picsum.photos/300', groupId: 1, groupName: '사회복지법인 굿네이버스1', groupTag: '사회복지', groupLabel: '지정기부금단체' };
@@ -34,7 +34,7 @@ export const GroupInfoCard = () => {
 // selected = 기부액/기부자
 // pmGive = 증감기부액
 // percentPmGive = 증감기부액 퍼센트
-export const GroupGraphCard = () => {
+export const GroupGraph = () => {
   const data = {
     give: Math.random() * 10000000 + 1,
     pmGive: (Math.random() - 0.5) * 100000,

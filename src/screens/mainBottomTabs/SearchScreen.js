@@ -6,7 +6,7 @@ import * as Color from '../../components/Colors/colors';
 import { Body } from '../../components/Typography/Typography';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { SwiftLabel } from '../../components/Labels/Labels';
-import { SearchGroupCard } from '../../modules/searchModule/SearchCard';
+import { SearchGroupCard } from '../../modules/searchModule/SearchModule';
 
 const SearchScreen = () => {
   const labels = ['🔥 지금 뜨는', '높은 신뢰도', '작은 기부단위', '활발한 활동'];
