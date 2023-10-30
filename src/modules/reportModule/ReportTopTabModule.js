@@ -7,6 +7,7 @@ import { ReportCard, ReportMyReviewView, ReportPandaCard } from './ReportTotalMo
 import { Spacer } from '../../components/Basic/Spacer';
 import { useNavigation } from '@react-navigation/native';
 import { ReportGroupInfoView } from './ReportDonationGroupModule';
+import { ReportMonthMyDonationView } from './ReportMyDonationModule';
 
 export const ReportTotalView = () => {
   const navigation = useNavigation();
@@ -76,7 +77,7 @@ export const ReportMyDonationView = () => {
 
   return (
     <KeyboardAwareScrollView style={styles.container} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-      <Body>{Math.random()}</Body>
+      <ReportMonthMyDonationView />
     </KeyboardAwareScrollView>
   );
 };
