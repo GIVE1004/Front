@@ -29,3 +29,8 @@ export const formatNumberWithSign = (number) => {
     return `${number}`;
   }
 };
+
+export const getCurMonth = () => {
+  var now = new Date();
+  return now.getMonth();
+};

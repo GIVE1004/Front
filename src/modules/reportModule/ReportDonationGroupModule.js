@@ -1,8 +1,8 @@
-import { Caption, Divider } from 'react-native-paper';
+import { Divider } from 'react-native-paper';
 import { TouchableOpacity, View } from 'react-native';
 import { Spacer } from '../../components/Basic/Spacer';
 import { ImageLoader } from '../../components/Images/ImageLoader';
-import { Heading } from '../../components/Typography/Typography';
+import { Heading, Caption } from '../../components/Typography/Typography';
 
 export const ReportGroupInfoView = (props) => {
   let data;
@@ -54,16 +54,19 @@ export const ReportGroupInfoView = (props) => {
 export const ReportGroupInfoCard = (props) => {
   const data = props.data;
   return (
-    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', margin: 8, padding: 4 }}>
-      <View style={{ marginHorizontal: 8 }}>
-        <ImageLoader source={data.source} style={{ width: 50, height: 50, borderRadius: 100 }} />
-      </View>
-      <View style={{ marginHorizontal: 8 }}>
-        <Heading fontSize={16}>{data.groupName}</Heading>
-        <Spacer space={4} />
-        <Caption fontSize={14}>
-          {data.groupTag} | {data.groupLabel}
-        </Caption>
+    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', paddingVertical: 12, margin: 2 }}>
+      <View style={{ flexDirection: 'row' }}>
+        <View>
+          <ImageLoader source={data.source} style={{ width: 50, height: 50, borderRadius: 100 }} />
+        </View>
+        <Spacer horizontal={true} space={8} />
+        <View>
+          <Heading fontSize={16}>{data.groupName}</Heading>
+          <Spacer space={4} />
+          <Caption fontSize={14}>
+            {data.groupTag} | {data.groupLabel}
+          </Caption>
+        </View>
       </View>
     </View>
   );
