@@ -14,7 +14,7 @@ import { goMainPageState, memberInfoState } from '../../util/recoil/Atoms';
 import { useRecoilState } from 'recoil';
 import { getTokens, removeTokens } from '../../util/token/tokenUtil';
 import { useEffect } from 'react';
-
+import { PlusGroupCard, StarGroupCard, TypeTestCard, UserCard } from '../../modules/userModule/UserCardModule';
 /**
  * TO-DO
  * 이 페이지가 마이페이지로 바뀔 가능성이 농후합니다.
@@ -58,52 +58,12 @@ const UserScreen = () => {
         </View>
         <Spacer space={14} />
 
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('UserInfoScreen');
-          }}
-          style={{ flexDirection: 'row', paddingHorizontal: 12, paddingVertical: 20, alignItems: 'center' }}
-        >
-          <Icon name={IconName.USER} size={22} />
-          <Spacer space={14} horizontal={true} />
-          <Body> 계정정보</Body>
-        </TouchableOpacity>
+        <UserCard />
+        <StarGroupCard />
         <Divider />
-
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('StarScreen');
-          }}
-          style={{ flexDirection: 'row', paddingHorizontal: 12, paddingVertical: 20, alignItems: 'center' }}
-        >
-          <Icon name={IconName.STAR} size={22} />
-          <Spacer space={14} horizontal={true} />
-          <Body> 관심 기부단체</Body>
-        </TouchableOpacity>
+        <PlusGroupCard />
         <Divider />
-
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('PlusScreen');
-          }}
-          style={{ flexDirection: 'row', paddingHorizontal: 12, paddingVertical: 20, alignItems: 'center' }}
-        >
-          <Icon name={IconName.DUPLICATE} size={22} />
-          <Spacer space={14} horizontal={true} />
-          <Body> 기부단체 추가하기</Body>
-        </TouchableOpacity>
-        <Divider />
-
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('CalScreen');
-          }}
-          style={{ flexDirection: 'row', paddingHorizontal: 12, paddingVertical: 20, alignItems: 'center' }}
-        >
-          <Icon name={IconName.CALCULATOR} size={22} />
-          <Spacer space={14} horizontal={true} />
-          <Body> 세금 계산기</Body>
-        </TouchableOpacity>
+        <TypeTestCard />
         <Divider />
 
         <TouchableOpacity onPress={pressLogout} style={{ flexDirection: 'row', paddingHorizontal: 12, paddingVertical: 20, alignItems: 'center' }}>
