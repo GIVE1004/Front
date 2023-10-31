@@ -20,7 +20,7 @@ const ReportTopTabNavigation = () => {
         <Tab.Screen name='종합' component={ReportTotalView} />
         <Tab.Screen name='기부단체' component={ReportGroupView} />
         <Tab.Screen name='기부내역' component={ReportMyDonationView} />
-        <Tab.Screen name='새액공제' component={ReportMoneyView} />
+        <Tab.Screen name='세액공제' component={ReportMoneyView} />
       </Tab.Navigator>
     </View>
   );
