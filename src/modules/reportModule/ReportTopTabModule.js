@@ -1,6 +1,5 @@
 import { RefreshControl, StyleSheet, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Body } from '../../components/Typography/Typography';
 import * as Color from '../../components/Colors/colors';
 import { useCallback, useState } from 'react';
 import { ReportCard, ReportMyReviewView, ReportPandaCard } from './ReportTotalModule';
@@ -8,6 +7,7 @@ import { Spacer } from '../../components/Basic/Spacer';
 import { useNavigation } from '@react-navigation/native';
 import { ReportGroupInfoView } from './ReportDonationGroupModule';
 import { ReportMonthMyDonationView } from './ReportMyDonationModule';
+import { ReportmyTaxView } from './ReportTaxModule';
 
 export const ReportTotalView = () => {
   const navigation = useNavigation();
@@ -93,7 +93,7 @@ export const ReportMoneyView = () => {
 
   return (
     <KeyboardAwareScrollView style={styles.container} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-      <Body>{Math.random()}</Body>
+      <ReportmyTaxView />
     </KeyboardAwareScrollView>
   );
 };
