@@ -48,7 +48,7 @@ export const ChatWaitCard = () => {
           flexDirection: 'row',
         }}
       >
-        <LocalImageLoader source={require('../../../assets/bubble.gif')} style={{ height: 14, aspectRatio: 3 / 1 }} />
+        <LocalImageLoader source={require('../../../assets/bubble.gif')} style={{ height: 30, aspectRatio: 1 / 1 }} />
       </View>
     </View>
   );
