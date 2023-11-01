@@ -4,15 +4,17 @@ import { Spacer } from '../../components/Basic/Spacer';
 import { Body, Caption, Heading } from '../../components/Typography/Typography';
 import { AddComma, Scaleing } from '../../util/util';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
+import { useEffect, useState } from 'react';
+import { getAssetData, getPublicProfitsData, getRevenueData } from '../../util/fetch/fetchUtil';
 
-export const GroupFinancialView = () => {
+export const GroupFinancialView = (props) => {
   return (
     <View>
-      <FinancialCommentCard />
-      <FinancialCard />
-      <RevenueCard />
-      <AssetCard />
-      <RevenueDetailCard />
+      <FinancialCommentCard charityId={props.charityId} />
+      <FinancialCard charityId={props.charityId} />
+      <RevenueCard charityId={props.charityId} />
+      <AssetCard charityId={props.charityId} />
+      <RevenueDetailCard charityId={props.charityId} />
     </View>
   );
 };
@@ -92,166 +94,182 @@ export const FinancialCard = () => {
   );
 };
 
-export const RevenueCard = () => {
-  const data = {
-    사업수익_소계: 97216986350,
-    사업수익_기부금품: 488851983532,
-    사업수익_보조금: 1235342689,
-    사업수익_회비수익: 0,
-    사업수익_기타: 3159234869,
-    고유목적사업_준비금_환입액: 0,
-    총계: 1489457296792,
-  };
+export const RevenueCard = (props) => {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    const getRevenue = async () => {
+      const responseData = await getRevenueData(props.charityId);
+      if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
+    };
+    getRevenue();
+  }, []);
+
   return (
     <View style={{ flex: 1, padding: 8, marginVertical: 6 }}>
-      <Heading fontSize={18}>수익 현황</Heading>
-      <Spacer space={14} />
-      <View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>사업수익 (소계)</Body>
-          <Heading fontSize={14}>{AddComma(data.사업수익_소계)}</Heading>
-        </View>
-        <Spacer space={6} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>사업수익 (기부금품)</Body>
-          <Heading fontSize={14}>{AddComma(data.사업수익_기부금품)}</Heading>
-        </View>
-        <Spacer space={6} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>사업수익 (보조금)</Body>
-          <Heading fontSize={14}>{AddComma(data.사업수익_보조금)}</Heading>
-        </View>
-        <Spacer space={6} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>사업수익 (회비수익)</Body>
-          <Heading fontSize={14}>{AddComma(data.사업수익_회비수익)}</Heading>
-        </View>
-        <Spacer space={6} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>사업수익 (기타)</Body>
-          <Heading fontSize={14}>{AddComma(data.사업수익_기타)}</Heading>
-        </View>
-        <Spacer space={6} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>고유목적사업 준비금 환입액</Body>
-          <Heading fontSize={14}>{AddComma(data.고유목적사업_준비금_환입액)}</Heading>
-        </View>
-        <Spacer space={6} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>총계</Body>
-          <Heading fontSize={14}>{AddComma(data.총계)}</Heading>
-        </View>
-      </View>
+      {data != null && (
+        <>
+          <Heading fontSize={18}>수익 현황</Heading>
+          <Spacer space={14} />
+          <View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>사업수익 (소계)</Body>
+              <Heading fontSize={14}>{AddComma(data.biz_sum)}</Heading>
+            </View>
+            <Spacer space={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>사업수익 (기부금품)</Body>
+              <Heading fontSize={14}>{AddComma(data.biz_donation)}</Heading>
+            </View>
+            <Spacer space={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>사업수익 (보조금)</Body>
+              <Heading fontSize={14}>{AddComma(data.biz_subsidy)}</Heading>
+            </View>
+            <Spacer space={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>사업수익 (회비수익)</Body>
+              <Heading fontSize={14}>{AddComma(data.biz_membership)}</Heading>
+            </View>
+            <Spacer space={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>사업수익 (기타)</Body>
+              <Heading fontSize={14}>{AddComma(data.biz_etc)}</Heading>
+            </View>
+            <Spacer space={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>사업 외 수익</Body>
+              <Heading fontSize={14}>{AddComma(data.non_biz)}</Heading>
+            </View>
+            <Spacer space={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>고유목적사업 준비금 환입액</Body>
+              <Heading fontSize={14}>{AddComma(data.reversal)}</Heading>
+            </View>
+            <Spacer space={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>총계</Body>
+              <Heading fontSize={14}>{AddComma(data.total_sum)}</Heading>
+            </View>
+          </View>
+        </>
+      )}
     </View>
   );
 };
 
-export const AssetCard = () => {
-  const data = {
-    총_자산가액: 97216986350,
-    토지: 488851983532,
-    건물: 1235342689,
-    주식_및_출자지분: 0,
-    금융자산: 3159234869,
-    기타자산: 12363434253,
-  };
+export const AssetCard = (props) => {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    const getAsset = async () => {
+      const responseData = await getAssetData(props.charityId);
+      if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
+    };
+    getAsset();
+  }, []);
   return (
     <View style={{ flex: 1, padding: 8, marginVertical: 6 }}>
-      <Heading fontSize={18}>자산 현황</Heading>
-      <Spacer space={14} />
-      <View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>총 자산가액</Body>
-          <Heading fontSize={14}>{AddComma(data.총_자산가액)}</Heading>
-        </View>
-        <Spacer space={6} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>토지</Body>
-          <Heading fontSize={14}>{AddComma(data.토지)}</Heading>
-        </View>
-        <Spacer space={6} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>건물</Body>
-          <Heading fontSize={14}>{AddComma(data.건물)}</Heading>
-        </View>
-        <Spacer space={6} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>주식 및 출자지분</Body>
-          <Heading fontSize={14}>{AddComma(data.주식_및_출자지분)}</Heading>
-        </View>
-        <Spacer space={6} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>금융자산</Body>
-          <Heading fontSize={14}>{AddComma(data.금융자산)}</Heading>
-        </View>
-        <Spacer space={6} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>기타자산</Body>
-          <Heading fontSize={14}>{AddComma(data.기타자산)}</Heading>
-        </View>
-      </View>
+      {data != null && (
+        <>
+          <Heading fontSize={18}>자산 현황</Heading>
+          <Spacer space={14} />
+          <View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>총 자산가액</Body>
+              <Heading fontSize={14}>{AddComma(data.total_sum)}</Heading>
+            </View>
+            <Spacer space={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>토지</Body>
+              <Heading fontSize={14}>{AddComma(data.land)}</Heading>
+            </View>
+            <Spacer space={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>건물</Body>
+              <Heading fontSize={14}>{AddComma(data.building)}</Heading>
+            </View>
+            <Spacer space={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>주식 및 출자지분</Body>
+              <Heading fontSize={14}>{AddComma(data.stock)}</Heading>
+            </View>
+            <Spacer space={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>금융자산</Body>
+              <Heading fontSize={14}>{AddComma(data.finance)}</Heading>
+            </View>
+            <Spacer space={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>기타자산</Body>
+              <Heading fontSize={14}>{AddComma(data.etc)}</Heading>
+            </View>
+          </View>
+        </>
+      )}
     </View>
   );
 };
 
-export const RevenueDetailCard = () => {
-  const data = {
-    기부금품_소계: 97216986350,
-    기부금품_개인기부금품: 488851983532,
-    기부금품_영리법인기부금품: 1235342689,
-    기부금품_지원금품: 0,
-    기부금품_기타기부금품: 12363434253,
-    보조금: 3159234869,
-    회비수익: 3159234869,
-    기타공익목적사업수익: 3159234869,
-  };
+export const RevenueDetailCard = (props) => {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    const getPublicProfits = async () => {
+      const responseData = await getPublicProfitsData(props.charityId);
+      console.log(responseData);
+      if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
+    };
+    getPublicProfits();
+  }, []);
   return (
     <View style={{ flex: 1, padding: 8, marginVertical: 6 }}>
-      <Heading fontSize={18}>공익목적사업의 수익세부현황</Heading>
-      <Spacer space={10} />
-      <Heading fontSize={16}>사업수익</Heading>
-      <Spacer space={8} />
-      <View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>기부금품(소계)</Body>
-          <Heading fontSize={14}>{AddComma(data.기부금품_소계)}</Heading>
-        </View>
-        <Spacer space={6} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>기부금품(개인기부금품)</Body>
-          <Heading fontSize={14}>{AddComma(data.기부금품_개인기부금품)}</Heading>
-        </View>
-        <Spacer space={6} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>기부금품(영리법인기부금품)</Body>
-          <Heading fontSize={14}>{AddComma(data.기부금품_영리법인기부금품)}</Heading>
-        </View>
-        <Spacer space={6} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>기부금품(지원금품)</Body>
-          <Heading fontSize={14}>{AddComma(data.기부금품_지원금품)}</Heading>
-        </View>
-        <Spacer space={6} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>기부금품(기타기부금품)</Body>
-          <Heading fontSize={14}>{AddComma(data.기부금품_기타기부금품)}</Heading>
-        </View>
-        <Spacer space={6} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>보조금</Body>
-          <Heading fontSize={14}>{AddComma(data.보조금)}</Heading>
-        </View>
-        <Spacer space={6} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>회비수익</Body>
-          <Heading fontSize={14}>{AddComma(data.회비수익)}</Heading>
-        </View>
-        <Spacer space={6} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>기타공익목적사업수익</Body>
-          <Heading fontSize={14}>{AddComma(data.기타공익목적사업수익)}</Heading>
-        </View>
-      </View>
+      {data != null && (
+        <>
+          <Heading fontSize={18}>공익목적사업의 수익세부현황</Heading>
+          <Spacer space={10} />
+          <Heading fontSize={16}>사업수익</Heading>
+          <Spacer space={8} />
+          <View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>기부금품(소계)</Body>
+              <Heading fontSize={14}>{AddComma(data.donation_sum)}</Heading>
+            </View>
+            <Spacer space={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>기부금품(개인기부금품)</Body>
+              <Heading fontSize={14}>{AddComma(data.donation_individual)}</Heading>
+            </View>
+            <Spacer space={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>기부금품(영리법인기부금품)</Body>
+              <Heading fontSize={14}>{AddComma(data.donation_profit_corp)}</Heading>
+            </View>
+            <Spacer space={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>기부금품(지원금품)</Body>
+              <Heading fontSize={14}>{AddComma(data.donation_public_corp)}</Heading>
+            </View>
+            <Spacer space={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>기부금품(기타기부금품)</Body>
+              <Heading fontSize={14}>{AddComma(data.donation_etc)}</Heading>
+            </View>
+            <Spacer space={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>보조금</Body>
+              <Heading fontSize={14}>{AddComma(data.subsidy)}</Heading>
+            </View>
+            <Spacer space={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>회비수익</Body>
+              <Heading fontSize={14}>{AddComma(data.profit_membership)}</Heading>
+            </View>
+            <Spacer space={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>기타공익목적사업수익</Body>
+              <Heading fontSize={14}>{AddComma(data.profit_public_business_etc)}</Heading>
+            </View>
+          </View>
+        </>
+      )}
     </View>
   );
 };

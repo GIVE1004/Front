@@ -26,7 +26,7 @@ const GroupDetailScreen = () => {
 
   const tmpdata = {
     source: 'https://picsum.photos/300',
-    charityId: '1',
+    charityId: 1,
     groupName: '사회복지법인 굿네이버스1',
     groupTag: '사회복지',
     groupLabel: '지정기부금단체',
