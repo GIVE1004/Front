@@ -94,7 +94,7 @@ export const GroupGraph = () => {
   );
 };
 
-export const GroupDetailInfoCard = () => {
+export const GroupDetailInfoCard = (props) => {
   const labels = ['리뷰', '언론보도', 'GIVE AI 분석', '재무재표', '단체정보'];
   const [isFocus, setIsFocus] = useState([true, false]);
   const selectedLabel = labels[isFocus.indexOf(true)];
@@ -103,11 +103,11 @@ export const GroupDetailInfoCard = () => {
       <View style={{ width: '100%', paddingHorizontal: 15 }}>
         <SwiftLabel isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} />
         <Spacer space={10} />
-        {selectedLabel == '리뷰' && <ReviewView />}
-        {selectedLabel == '언론보도' && <NewsView />}
-        {selectedLabel == 'GIVE AI 분석' && <AIReportView />}
-        {selectedLabel == '재무재표' && <GroupFinancialView />}
-        {selectedLabel == '단체정보' && <InfoView />}
+        {selectedLabel == '리뷰' && <ReviewView charityId={props.charityId} />}
+        {selectedLabel == '언론보도' && <NewsView charityId={props.charityId} />}
+        {selectedLabel == 'GIVE AI 분석' && <AIReportView charityId={props.charityId} />}
+        {selectedLabel == '재무재표' && <GroupFinancialView charityId={props.charityId} />}
+        {selectedLabel == '단체정보' && <InfoView charityId={props.charityId} />}
       </View>
     </View>
   );

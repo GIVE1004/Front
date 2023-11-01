@@ -26,7 +26,7 @@ const GroupDetailScreen = () => {
 
   const tmpdata = {
     source: 'https://picsum.photos/300',
-    groupId: '1',
+    charityId: '1',
     groupName: '사회복지법인 굿네이버스1',
     groupTag: '사회복지',
     groupLabel: '지정기부금단체',
@@ -46,7 +46,7 @@ const GroupDetailScreen = () => {
         <Spacer space={6} />
         <GroupGraph />
         <Spacer space={10} />
-        <GroupDetailInfoCard />
+        <GroupDetailInfoCard charityId={tmpdata.charityId} />
         <Spacer space={6} />
       </KeyboardAwareScrollView>
       {/* 그룹 디테일 Footer */}

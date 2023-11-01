@@ -30,7 +30,6 @@ const SplashScreen = () => {
       setRefreshToken('');
       if (data.dataHeader.successCode == 0) {
         setTokens(data.dataBody.accessToken, data.dataBody.refreshToken);
-        console.log(data.dataBody.memberInfo);
         setMemberInfo(data.dataBody.memberInfo);
         setGoMainPage(true);
       } else {
