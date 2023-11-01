@@ -34,3 +34,10 @@ export const getCurMonth = () => {
   var now = new Date();
   return now.getMonth();
 };
+
+export const checkIfImage = (fileName) => {
+  const imageExtensions = /\.(jpg|jpeg|png)/i;
+  const hasHTTP = /http/i;
+
+  return hasHTTP.test(fileName) && imageExtensions.test(fileName);
+};

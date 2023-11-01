@@ -30,6 +30,7 @@
     "@react-native-community/slider": "^4.4.3",
     "@react-navigation/material-top-tabs": "^6.6.5",
     "@rneui/themed": "^4.0.0-rc.8",
+    "axios": "^1.6.0",
     "deprecated-react-native-prop-types": "^5.0.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",

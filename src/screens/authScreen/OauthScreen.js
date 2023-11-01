@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Alert, useWindowDimensions, View } from 'react-native';
-import { BackHeader, BackWithLogoHeader, MainHeader } from '../../components/Headers/Headers';
+import { BackWithLogoHeader, MainHeader } from '../../components/Headers/Headers';
 import { Spacer } from '../../components/Basic/Spacer';
 import { Heading } from '../../components/Typography/Typography';
-import { BasicButton, LoginButton } from '../../components/Buttons/Buttons';
+import { LoginButton } from '../../components/Buttons/Buttons';
 import * as Color from '../../components/Colors/colors';
 import { useRecoilState } from 'recoil';
 import { goMainPageState, memberInfoState } from '../../util/recoil/Atoms';
 import { LocalImageLoader } from '../../components/Images/ImageLoader';
-import { useNavigation } from '@react-navigation/native';
 import { getAuthRedirectFetch, getLoginFetch } from '../../util/fetch/fetchUtil';
 import WebView from 'react-native-webview';
 import { setTokens } from '../../util/token/tokenUtil';
@@ -18,7 +17,6 @@ const OauthScreen = () => {
   const [goMainPage, setGoMainPage] = useRecoilState(goMainPageState);
   const [memberInfo, setMemberInfo] = useRecoilState(memberInfoState);
   const { width } = useWindowDimensions();
-  const navigation = useNavigation();
   const [oAuthServerType, setOAuthServerType] = useState('');
   const [url, setUrl] = useState('');
   const [webViewState, setWebViewState] = useState({ url: '' });
@@ -43,7 +41,7 @@ const OauthScreen = () => {
   const getServerRedirectUrlData = async () => {
     try {
       const response = await getAuthRedirectFetch(oAuthServerType);
-      if (response.status === 200) {
+      if (response.status == 200) {
         setUrl(response.url);
       } else if (oAuthServerType === 'kakao' && response.status === 404 && response.url.includes('/oauth/redirected/' + oAuthServerType + '?code')) {
         const match = response.url.match(/[?&]code=([^&]+)/);
@@ -69,11 +67,8 @@ const OauthScreen = () => {
       const data = await response.json();
       if (data != undefined && data.dataHeader != undefined) {
         if (data.dataHeader.successCode == 0) {
-          // Token 저장
           setTokens(data.dataBody.tokens.accessToken, data.dataBody.tokens.refreshToken);
-          // memberInfo 저장
           setMemberInfo(data.dataBody.memberInfo);
-          // 메인 페이지로 가기
           setGoMainPage(true);
         } else {
           Alert.alert('로그인 실패', '다시 시도해주세요.');

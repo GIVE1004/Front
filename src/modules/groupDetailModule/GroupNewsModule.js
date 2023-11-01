@@ -1,42 +1,32 @@
-import { TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
 import * as Color from '../../components/Colors/colors';
 import { Spacer } from '../../components/Basic/Spacer';
 import { Body, Caption, Heading } from '../../components/Typography/Typography';
-import { ImageLoader } from '../../components/Images/ImageLoader';
+import { ImageLoader, LocalImageLoader } from '../../components/Images/ImageLoader';
 import { Divider } from 'react-native-paper';
 import Hyperlink from 'react-native-hyperlink';
 import { openURL } from '../../util/linkUtil';
+import { checkIfImage } from '../../util/util';
+import { getCharityNews } from '../../util/fetch/fetchUtil';
+import { useEffect, useState } from 'react';
 
-export const NewsView = () => {
-  const data = [
-    {
-      newsTitle: "굿네이버스 인천서부지부•지역후원회 '두 손 가득 희망키트'",
-      newsDate: '4:14 PM',
-      newsCompany: '뉴시스',
-      newsPhotoUri: 'https://picsum.photos/400',
-      newsUrl: 'https://www.wowtv.co.kr/NewsCenter/News/Read?articleId=A202310160154&t=NT',
-    },
-    {
-      newsTitle: '원주시 보건소, 굿네이버스 강원지역본부와 업무협약 체결',
-      newsDate: '9:20 AM',
-      newsCompany: '스포츠서울',
-      newsPhotoUri: 'https://picsum.photos/400',
-      newsUrl: 'https://www.wowtv.co.kr/NewsCenter/News/Read?articleId=A202310160154&t=NT',
-    },
-    {
-      newsTitle: '씨알유치원 원아들 굿네이버스에 성금',
-      newsDate: '11:04 AM',
-      newsCompany: '고양신문',
-      newsPhotoUri: 'https://picsum.photos/400',
-      newsUrl: 'https://www.wowtv.co.kr/NewsCenter/News/Read?articleId=A202310160154&t=NT',
-    },
-  ];
+export const NewsView = (props) => {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    const getNewsData = async () => {
+      await getCharityNews(props.charityId).then((data) => {
+        if (data.dataHeader.successCode == 0) {
+          setData(data.dataBody.news);
+        }
+      });
+    };
+    getNewsData();
+  }, []);
+
   return (
     <View>
       <NewsCommentCard />
-      {data.map((value, index) => (
-        <NewsCard data={value} />
-      ))}
+      {data != null ? data.map((value, index) => <NewsCard data={value} key={index} />) : <ActivityIndicator />}
     </View>
   );
 };
@@ -63,16 +53,20 @@ export const NewsCard = (props) => {
   const data = props.data;
   return (
     <Hyperlink>
-      <TouchableOpacity onPress={() => openURL(data.newsUrl)}>
+      <TouchableOpacity onPress={() => openURL(data.link)}>
         <View style={{ padding: 14, flexDirection: 'row', justifyContent: 'space-between' }}>
           <View style={{ width: '70%', justifyContent: 'space-between' }}>
-            <Heading fontSize={14}>{data.newsTitle}</Heading>
+            <Heading fontSize={14}>{data.title}</Heading>
             <Caption fontSize={12}>
-              {data.newsDate}•{data.newsCompany}
+              {data.pubDate}•{data.publisher}
             </Caption>
           </View>
           <View>
-            <ImageLoader source={data.newsPhotoUri} style={{ width: 60, height: 60, borderRadius: 6 }} />
+            {data.thumbnail == null || data.thumbnail == '' || !checkIfImage(data.thumbnail) ? (
+              <LocalImageLoader source={require('../../../assets/giveIcon.png')} style={{ width: 60, height: 60, borderRadius: 6 }} />
+            ) : (
+              <ImageLoader source={data.thumbnail} style={{ width: 60, height: 60, borderRadius: 6 }} />
+            )}
           </View>
         </View>
         <Divider />

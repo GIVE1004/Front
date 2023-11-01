@@ -1,4 +1,5 @@
 import { Platform } from 'react-native';
+import axios from 'axios';
 
 const _ANDROID_AVD_API_HOST = 'http://10.0.2.2:8080';
 const _IOS_API_HOST = 'http://localhost:8080';
@@ -28,7 +29,6 @@ export const makeQueryStringForGet = (baseUrl, queryParams) => {
 // oauth 페이지 호출
 export const getAuthRedirectFetch = async (oAuthServerType) => {
   const baseUrl = `${url}/oauth/${oAuthServerType}`;
-  console.log(baseUrl);
 
   return await fetch(baseUrl, {
     method: 'GET',
@@ -57,7 +57,6 @@ export const getLoginFetch = async (oAuthServerType, code) => {
 // token 상태 확인 및 memberInfo 받아오기
 export const getRefreshFetch = async (accessToken, refreshToken) => {
   const baseUrl = `${url}/oauth/refresh`;
-
   if (accessToken != null && refreshToken != null) {
     accessToken = accessToken.slice(1, -1);
     refreshToken = refreshToken.slice(1, -1);
@@ -74,4 +73,11 @@ export const getRefreshFetch = async (accessToken, refreshToken) => {
       refreshToken: refreshToken,
     }),
   });
+};
+
+// /charities/{charityId}/news
+export const getCharityNews = async (charityId) => {
+  const baseUrl = `${url}/charities/${charityId}/news`;
+  const response = await axios.get(baseUrl);
+  return response.data;
 };
