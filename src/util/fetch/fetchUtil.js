@@ -25,8 +25,9 @@ export const makeQueryStringForGet = (baseUrl, queryParams) => {
 };
 
 //********* AuthFetch **********/
-/// oauth/{oAuthServerType}
-// oauth 페이지 호출
+// 작업 JS: OauthScreen.js
+// URI: oauth/{oAuthServerType}
+// 요약: oauth 페이지 호출
 export const getAuthRedirectFetch = async (oAuthServerType) => {
   const baseUrl = `${url}/oauth/${oAuthServerType}`;
 
@@ -39,8 +40,9 @@ export const getAuthRedirectFetch = async (oAuthServerType) => {
   });
 };
 
-// /login/{kakao}?code=인증코드
-// token + memberInfo 받아오기
+// 작업 JS: OauthScreen.js
+// URI: /login/{kakao}?code=인증코드
+// 요약: token + memberInfo 받아오기
 export const getLoginFetch = async (oAuthServerType, code) => {
   const baseUrl = `${url}/oauth/login/${oAuthServerType}?code=${code}`;
 
@@ -53,8 +55,9 @@ export const getLoginFetch = async (oAuthServerType, code) => {
   });
 };
 
-// /oauth/refresh
-// token 상태 확인 및 memberInfo 받아오기
+// 작업 JS: SplashScreen.js
+// URI: /oauth/refresh
+// 요약: token 상태 확인 및 memberInfo 받아오기
 export const getRefreshFetch = async (accessToken, refreshToken) => {
   const baseUrl = `${url}/oauth/refresh`;
   if (accessToken != null && refreshToken != null) {
@@ -75,9 +78,39 @@ export const getRefreshFetch = async (accessToken, refreshToken) => {
   });
 };
 
-// /charities/{charityId}/news
+//********* GroupDetail(charityDetail) **********/
+// 작업 JS: GroupNewsModule.js
+// URI: /charities/{charityId}/news
+// 요약: 언론보도 내 뉴스의 정보를 크롤링하여 뿌려준다.
 export const getCharityNews = async (charityId) => {
   const baseUrl = `${url}/charities/${charityId}/news`;
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
+
+// 작업 JS: GroupFinancialModule.js > RevenueCard
+// URI: /charities/{charityId}/profits/current
+// 요약: 재무재표 내 수익현황을 뿌려준다.
+export const getRevenueData = async (charityId) => {
+  const baseUrl = `${url}/charities/${charityId}/profits/current`;
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
+
+// 작업 JS: GroupFinancialModule.js > AssetCard
+// URI: /charities/{charityId}/assets/current
+// 요약: 재무재표 내 자산현황을 뿌려준다.
+export const getAssetData = async (charityId) => {
+  const baseUrl = `${url}/charities/${charityId}/assets/current`;
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
+
+// 작업 JS: GroupFinancialModule.js > RevenueDetailCard
+// URI: /charities/{charityId}/profits/public
+// 요약: 재무재표 내 공익목적사업의 수익 세부현황 뿌려준다.
+export const getPublicProfitsData = async (charityId) => {
+  const baseUrl = `${url}/charities/${charityId}/profits/public-current`;
   const response = await axios.get(baseUrl);
   return response.data;
 };
