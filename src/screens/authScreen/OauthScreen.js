@@ -57,7 +57,8 @@ const OauthScreen = () => {
         setOAuthServerType('');
       }
     } catch (e) {
-      console.log(e);
+      Alert.alert('로그인 실패', '다시 시도해주세요.');
+      setOAuthServerType('');
     }
   };
 
@@ -77,7 +78,7 @@ const OauthScreen = () => {
         Alert.alert('로그인 실패', '다시 시도해주세요.');
       }
     } catch (e) {
-      console.log(e);
+      Alert.alert('로그인 실패', '다시 시도해주세요.');
     }
   };
 

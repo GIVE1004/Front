@@ -79,6 +79,7 @@ export const getRefreshFetch = async (accessToken, refreshToken) => {
 };
 
 //********* GroupDetail(charityDetail) **********/
+/////////////NEWS/////////////
 // 작업 JS: GroupNewsModule.js
 // URI: /charities/{charityId}/news
 // 요약: 언론보도 내 뉴스의 정보를 크롤링하여 뿌려준다.
@@ -111,6 +112,16 @@ export const getAssetData = async (charityId) => {
 // 요약: 재무재표 내 공익목적사업의 수익 세부현황 뿌려준다.
 export const getPublicProfitsData = async (charityId) => {
   const baseUrl = `${url}/charities/${charityId}/profits/public-current`;
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
+
+/////////////INFO/////////////
+// 작업 JS: GroupInfoModule.js > InfoCard
+// URI: /charities/{charityId}
+// 요약: 단체정보 내 기부단체의 기본정보를 가져온다.
+export const getGroupDetailInfoData = async (charityId) => {
+  const baseUrl = `${url}/charities/${charityId}`;
   const response = await axios.get(baseUrl);
   return response.data;
 };

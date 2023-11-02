@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Alert, View } from 'react-native';
 import * as Color from '../../components/Colors/colors';
 import { Spacer } from '../../components/Basic/Spacer';
 import { Body, Caption, Heading } from '../../components/Typography/Typography';
@@ -8,18 +8,26 @@ import { useEffect, useState } from 'react';
 import { getAssetData, getPublicProfitsData, getRevenueData } from '../../util/fetch/fetchUtil';
 
 export const GroupFinancialView = (props) => {
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    if (isError) {
+      Alert.alert('데이터를 불러오는데 실패했습니다.');
+    }
+  }, [isError]);
+
   return (
     <View>
-      <FinancialCommentCard charityId={props.charityId} />
-      <FinancialCard charityId={props.charityId} />
-      <RevenueCard charityId={props.charityId} />
-      <AssetCard charityId={props.charityId} />
-      <RevenueDetailCard charityId={props.charityId} />
+      <FinancialCommentCard charityId={props.charityId} setIsError={setIsError} />
+      <FinancialCard charityId={props.charityId} setIsError={setIsError} />
+      <RevenueCard charityId={props.charityId} setIsError={setIsError} />
+      <AssetCard charityId={props.charityId} setIsError={setIsError} />
+      <RevenueDetailCard charityId={props.charityId} setIsError={setIsError} />
     </View>
   );
 };
 
-export const FinancialCommentCard = () => {
+export const FinancialCommentCard = (props) => {
   const data = {
     financialAIData: '굿네이버스의 재무 현황은 안정적으로 보입니다. 총 자산과 순자산의 크기가 상당하며, 부채 비율이 낮아 재무 건전성을 나타냅니다.',
   };
@@ -36,7 +44,7 @@ export const FinancialCommentCard = () => {
   );
 };
 
-export const FinancialCard = () => {
+export const FinancialCard = (props) => {
   const tableTitle = ['자산', '부채', '사업수익', '기부금품', '사업비용', '분배비용'];
   const data = {
     total: '32616498876',
@@ -98,15 +106,24 @@ export const RevenueCard = (props) => {
   const [data, setData] = useState(null);
   useEffect(() => {
     const getRevenue = async () => {
-      const responseData = await getRevenueData(props.charityId);
-      if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
+      try {
+        const responseData = await getRevenueData(props.charityId);
+        if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
+        else {
+          console.error('GroupFinancialModule.js > RevenueCard: responseData가 없습니다.');
+          props.setIsError(true);
+        }
+      } catch (error) {
+        console.error('GroupFinancialModule.js > RevenueCard: ' + error);
+        props.setIsError(true);
+      }
     };
     getRevenue();
   }, []);
 
   return (
     <View style={{ flex: 1, padding: 8, marginVertical: 6 }}>
-      {data != null && (
+      {data != null ? (
         <>
           <Heading fontSize={18}>수익 현황</Heading>
           <Spacer space={14} />
@@ -152,6 +169,12 @@ export const RevenueCard = (props) => {
             </View>
           </View>
         </>
+      ) : (
+        <>
+          <Heading fontSize={18}>수익 현황</Heading>
+          <Spacer space={14} />
+          <Caption fontSize={16}>* 데이터를 불러오는데 실패했습니다 :(</Caption>
+        </>
       )}
     </View>
   );
@@ -161,14 +184,23 @@ export const AssetCard = (props) => {
   const [data, setData] = useState(null);
   useEffect(() => {
     const getAsset = async () => {
-      const responseData = await getAssetData(props.charityId);
-      if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
+      try {
+        const responseData = await getAssetData(props.charityId);
+        if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
+        else {
+          console.error('GroupFinancialModule.js > AssetCard: responseData가 없습니다.');
+          props.setIsError(true);
+        }
+      } catch (error) {
+        console.error('GroupFinancialModule.js > AssetCard: ' + error);
+        props.setIsError(true);
+      }
     };
     getAsset();
   }, []);
   return (
     <View style={{ flex: 1, padding: 8, marginVertical: 6 }}>
-      {data != null && (
+      {data != null ? (
         <>
           <Heading fontSize={18}>자산 현황</Heading>
           <Spacer space={14} />
@@ -204,6 +236,12 @@ export const AssetCard = (props) => {
             </View>
           </View>
         </>
+      ) : (
+        <>
+          <Heading fontSize={18}>자산 현황</Heading>
+          <Spacer space={14} />
+          <Caption fontSize={16}>* 데이터를 불러오는데 실패했습니다 :(</Caption>
+        </>
       )}
     </View>
   );
@@ -213,15 +251,23 @@ export const RevenueDetailCard = (props) => {
   const [data, setData] = useState(null);
   useEffect(() => {
     const getPublicProfits = async () => {
-      const responseData = await getPublicProfitsData(props.charityId);
-      console.log(responseData);
-      if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
+      try {
+        const responseData = await getPublicProfitsData(props.charityId);
+        if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
+        else {
+          console.error('GroupFinancialModule.js > RevenueDetailCard: responseData가 없습니다.');
+          props.setIsError(true);
+        }
+      } catch (error) {
+        console.error('GroupFinancialModule.js > RevenueDetailCard: ' + error);
+        props.setIsError(true);
+      }
     };
     getPublicProfits();
   }, []);
   return (
     <View style={{ flex: 1, padding: 8, marginVertical: 6 }}>
-      {data != null && (
+      {data != null ? (
         <>
           <Heading fontSize={18}>공익목적사업의 수익세부현황</Heading>
           <Spacer space={10} />
@@ -268,6 +314,12 @@ export const RevenueDetailCard = (props) => {
               <Heading fontSize={14}>{AddComma(data.profit_public_business_etc)}</Heading>
             </View>
           </View>
+        </>
+      ) : (
+        <>
+          <Heading fontSize={18}>공익목적사업의 수익세부현황</Heading>
+          <Spacer space={14} />
+          <Caption fontSize={16}>* 데이터를 불러오는데 실패했습니다 :(</Caption>
         </>
       )}
     </View>
