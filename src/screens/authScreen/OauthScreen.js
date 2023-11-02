@@ -9,9 +9,10 @@ import * as Color from '../../components/Colors/colors';
 import { useRecoilState } from 'recoil';
 import { goMainPageState, memberInfoState } from '../../util/recoil/Atoms';
 import { LocalImageLoader } from '../../components/Images/ImageLoader';
-import { getAuthRedirectFetch, getLoginFetch } from '../../util/fetch/fetchUtil';
+import { getAuthRedirectFetch, getIsAnswerQuestionData, getLoginFetch } from '../../util/fetch/fetchUtil';
 import WebView from 'react-native-webview';
 import { setTokens } from '../../util/token/tokenUtil';
+import { useNavigation } from '@react-navigation/native';
 
 const OauthScreen = () => {
   const [goMainPage, setGoMainPage] = useRecoilState(goMainPageState);
@@ -21,6 +22,8 @@ const OauthScreen = () => {
   const [url, setUrl] = useState('');
   const [webViewState, setWebViewState] = useState({ url: '' });
   const [code, setCode] = useState('');
+  const [isAnswer, setIsAnswer] = useState(null);
+  const navigation = useNavigation();
 
   const handleNavigationStateChange = (newState) => {
     // 여기에서 newState.url을 기반으로 리다이렉트 여부를 판단하고 처리
@@ -70,7 +73,8 @@ const OauthScreen = () => {
         if (data.dataHeader.successCode == 0) {
           setTokens(data.dataBody.tokens.accessToken, data.dataBody.tokens.refreshToken);
           setMemberInfo(data.dataBody.memberInfo);
-          setGoMainPage(true);
+          const responseData = await getIsAnswerQuestionData(data.dataBody.tokens.accessToken);
+          setIsAnswer(responseData.dataBody);
         } else {
           Alert.alert('로그인 실패', '다시 시도해주세요.');
         }
@@ -78,6 +82,7 @@ const OauthScreen = () => {
         Alert.alert('로그인 실패', '다시 시도해주세요.');
       }
     } catch (e) {
+      console.error('OauthScreen.js > getLoginData: ' + e);
       Alert.alert('로그인 실패', '다시 시도해주세요.');
     }
   };
@@ -95,6 +100,16 @@ const OauthScreen = () => {
       getServerRedirectUrlData();
     }
   }, [oAuthServerType]);
+
+  useEffect(() => {
+    if (isAnswer != null) {
+      if (!isAnswer) {
+        navigation.reset({ routes: [{ name: 'QuestionScreen' }] });
+      } else {
+        setGoMainPage(true);
+      }
+    }
+  }, [isAnswer]);
 
   return (
     <SafeAreaProvider style={{ backgroundColor: Color.White_100 }}>

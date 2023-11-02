@@ -12,7 +12,7 @@ import { useRecoilState } from 'recoil';
 import { goMainPageState, memberInfoState } from '../../util/recoil/Atoms';
 import { useNavigation } from '@react-navigation/native';
 import { getTokens, setTokens } from '../../util/token/tokenUtil';
-import { getRefreshFetch } from '../../util/fetch/fetchUtil';
+import { getIsAnswerQuestionData, getRefreshFetch } from '../../util/fetch/fetchUtil';
 
 const SplashScreen = () => {
   const navigation = useNavigation();
@@ -21,6 +21,7 @@ const SplashScreen = () => {
   const [accessToken, setAccessToken] = useState('');
   const [refreshToken, setRefreshToken] = useState('');
   const [memberInfo, setMemberInfo] = useRecoilState(memberInfoState);
+  const [isAnswer, setIsAnswer] = useState(null);
 
   const getRefreshData = async () => {
     try {
@@ -31,11 +32,14 @@ const SplashScreen = () => {
       if (data.dataHeader.successCode == 0) {
         setTokens(data.dataBody.accessToken, data.dataBody.refreshToken);
         setMemberInfo(data.dataBody.memberInfo);
-        setGoMainPage(true);
+
+        const responseData = await getIsAnswerQuestionData(accessToken.slice(1, -1));
+        setIsAnswer(responseData.dataBody);
       } else {
         navigation.navigate('OauthScreen');
       }
     } catch (e) {
+      console.error('SplashScreen.js > getRefreshData: ' + e);
       Alert.alert('서버 통신 에러');
       setAccessToken('');
       setRefreshToken('');
@@ -51,6 +55,16 @@ const SplashScreen = () => {
       setRefreshToken('');
     }
   }, [accessToken, refreshToken]);
+
+  useEffect(() => {
+    if (isAnswer != null) {
+      if (!isAnswer) {
+        navigation.reset({ routes: [{ name: 'QuestionScreen' }] });
+      } else {
+        setGoMainPage(true);
+      }
+    }
+  }, [isAnswer]);
 
   return (
     <SafeAreaProvider style={{ flex: 1, padding: 14, backgroundColor: Color.White_100 }}>
