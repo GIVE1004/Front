@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { ScrollView, useWindowDimensions, View } from 'react-native';
+import { Alert, ScrollView, useWindowDimensions, View } from 'react-native';
 import { LocalImageLoader } from '../../components/Images/ImageLoader';
 import { Logo } from '../../components/Images/Logo';
 import { Header } from '../../components/Headers/Headers';
@@ -36,13 +36,14 @@ const SplashScreen = () => {
         navigation.navigate('OauthScreen');
       }
     } catch (e) {
-      console.log(e);
+      Alert.alert('서버 통신 에러');
+      setAccessToken('');
+      setRefreshToken('');
     }
   };
 
   useEffect(() => {
     if (accessToken !== null && refreshToken !== null && accessToken !== '' && refreshToken !== '') {
-      console.log(refreshToken);
       getRefreshData();
     } else if (accessToken == null && refreshToken == null) {
       navigation.navigate('OauthScreen');
