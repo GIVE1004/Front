@@ -5,7 +5,7 @@ import { Body, Caption, Heading } from '../../components/Typography/Typography';
 import { AddComma, Scaleing } from '../../util/util';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
 import { useEffect, useState } from 'react';
-import { getAssetData, getPublicProfitsData, getRevenueData } from '../../util/fetch/fetchUtil';
+import { getAssetData, getGraphFinancialData, getPublicProfitsData, getRevenueData } from '../../util/fetch/fetchUtil';
 
 export const GroupFinancialView = (props) => {
   const [isError, setIsError] = useState(false);
@@ -46,58 +46,75 @@ export const FinancialCommentCard = (props) => {
 
 export const FinancialCard = (props) => {
   const tableTitle = ['자산', '부채', '사업수익', '기부금품', '사업비용', '분배비용'];
-  const data = {
-    total: '32616498876',
-    debt: '2905962004',
-    netAsset: '29710536872',
-    tableHead: ['PERIOD', '2020', '2021', '2022'],
-    // 1. 년도별 자산
-    // 2. 년도별 부채
-    // 3. 년도별 사업수익..
-    // ...
-    tableData: [
-      ['13916498876', '13916498876', '13916498876'],
-      ['2116498876', '2116498876', '2116498876'],
-      ['59516498876', '59516498876', '59516498876'],
-      ['25216498876', '25216498876', '25216498876'],
-      ['53916498876', '53916498876', '53916498876'],
-      ['9716498876', '9716498876', '9716498876'],
-    ],
-  };
-  const tableDataWithUnit = data.tableData.map((row) => row.map((value) => Scaleing(value)));
+  const [data, setData] = useState(null);
+  const [tableDataWithUnit, setTableDataWithUnit] = useState(null);
+  useEffect(() => {
+    const getGraphFinancial = async () => {
+      try {
+        const responseData = await getGraphFinancialData(props.charityId);
+        if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
+        else {
+          console.error('GroupFinancialModule.js > FinancialCard: responseData가 없습니다.');
+          props.setIsError(true);
+        }
+      } catch (error) {
+        console.error('GroupFinancialModule.js > FinancialCard: ' + error);
+        props.setIsError(true);
+      }
+    };
+    getGraphFinancial();
+  }, []);
+
+  useEffect(() => {
+    if (data != null) {
+      const reverseTable = data.table_data[0].map((_, columnIndex) => data.table_data.map((row) => row[columnIndex]));
+      const tableDataWithUnit = reverseTable.map((row) => row.map((value) => Scaleing(value)));
+      setTableDataWithUnit(tableDataWithUnit);
+    }
+  }, [data]);
 
   return (
     <View style={{ flex: 1, padding: 8, marginVertical: 6 }}>
-      <Heading fontSize={18}>재무 현황</Heading>
-      <Spacer space={14} />
-      <View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>총 가산가액 (원)</Body>
-          <Heading fontSize={14}>{AddComma(data.total)}</Heading>
-        </View>
-        <Spacer space={4} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>부채 (원)</Body>
-          <Heading fontSize={14}>{AddComma(data.debt)}</Heading>
-        </View>
-        <Spacer space={4} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Body fontSize={14}>순자산 (원)</Body>
-          <Heading fontSize={14}>{AddComma(data.netAsset)}</Heading>
-        </View>
-      </View>
-      <Spacer space={12} />
-      <View>
-        <View style={{ flex: 1, marginVertical: 10 }}>
-          <Table borderStyle={{ borderWidth: 1, borderColor: Color.Black_60 }} style={{ backgroundColor: Color.Black_20 }}>
-            <Row data={data.tableHead} flexArr={[1, 1, 1, 1]} style={{ height: 40, backgroundColor: Color.Black_40 }} textStyle={{ textAlign: 'center' }} />
-            <TableWrapper style={{ flexDirection: 'row' }}>
-              <Col data={tableTitle} style={{ flex: 1, backgroundColor: Color.Black_40 }} heightArr={[40, 40, 40, 40, 40, 40]} textStyle={{ textAlign: 'center' }} />
-              <Rows data={tableDataWithUnit} flexArr={[1, 1, 1]} style={{ height: 40 }} textStyle={{ textAlign: 'center' }} />
-            </TableWrapper>
-          </Table>
-        </View>
-      </View>
+      {data != null && tableDataWithUnit != null ? (
+        <>
+          <Heading fontSize={18}>재무 현황</Heading>
+          <Spacer space={14} />
+          <View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>총 가산가액 (원)</Body>
+              <Heading fontSize={14}>{AddComma(data.total_asset)}</Heading>
+            </View>
+            <Spacer space={4} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>부채 (원)</Body>
+              <Heading fontSize={14}>{AddComma(data.debt)}</Heading>
+            </View>
+            <Spacer space={4} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Body fontSize={14}>순자산 (원)</Body>
+              <Heading fontSize={14}>{AddComma(data.net_asset)}</Heading>
+            </View>
+          </View>
+          <Spacer space={12} />
+          <View>
+            <View style={{ flex: 1, marginVertical: 10 }}>
+              <Table borderStyle={{ borderWidth: 1, borderColor: Color.Black_60 }} style={{ backgroundColor: Color.Black_20 }}>
+                <Row data={data.table_head} flexArr={[1, 1, 1, 1]} style={{ height: 40, backgroundColor: Color.Black_40 }} textStyle={{ textAlign: 'center' }} />
+                <TableWrapper style={{ flexDirection: 'row' }}>
+                  <Col data={tableTitle} style={{ flex: 1, backgroundColor: Color.Black_40 }} heightArr={[40, 40, 40, 40, 40, 40]} textStyle={{ textAlign: 'center' }} />
+                  <Rows data={tableDataWithUnit} flexArr={[1, 1, 1]} style={{ height: 40 }} textStyle={{ textAlign: 'center' }} />
+                </TableWrapper>
+              </Table>
+            </View>
+          </View>
+        </>
+      ) : (
+        <>
+          <Heading fontSize={18}>재무 현황</Heading>
+          <Spacer space={14} />
+          <Caption fontSize={16}>* 데이터를 불러오는데 실패했습니다 :(</Caption>
+        </>
+      )}
     </View>
   );
 };

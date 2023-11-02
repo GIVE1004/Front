@@ -116,6 +116,15 @@ export const getPublicProfitsData = async (charityId) => {
   return response.data;
 };
 
+// 작업 JS: GroupFinancialModule.js > FinancialCard
+// URI: /charities/{charityId}/finance
+// 요약: 재무재표 내 표 정보를 뿌려준다.
+export const getGraphFinancialData = async (charityId) => {
+  const baseUrl = `${url}/charities/${charityId}/finance`;
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
+
 /////////////INFO/////////////
 // 작업 JS: GroupInfoModule.js > InfoCard
 // URI: /charities/{charityId}
@@ -123,5 +132,29 @@ export const getPublicProfitsData = async (charityId) => {
 export const getGroupDetailInfoData = async (charityId) => {
   const baseUrl = `${url}/charities/${charityId}`;
   const response = await axios.get(baseUrl);
+  return response.data;
+};
+
+//********* question **********/
+// 작업 JS: QuestionScreen.js
+// URI: /members/me/surveys
+// 요약: 취향조사 답변 전송
+export const postQuestionData = async (sendData, accessToken) => {
+  const baseUrl = `${url}/members/me/surveys`;
+  const response = await axios({
+    method: 'post',
+    url: baseUrl,
+    headers: { Authorization: `Bearer ${accessToken}` },
+    data: sendData,
+  });
+  return response.data;
+};
+
+// 작업 JS: SplashScreen.js, OauthScreen.js
+// URI: /members/me/surveys/check
+// 요약: 시작 시 question 대답에 대한 여부 가져오기
+export const getIsAnswerQuestionData = async (accessToken) => {
+  const baseUrl = `${url}/members/me/surveys/check`;
+  const response = await axios.get(baseUrl, { headers: { Authorization: `Bearer ${accessToken}` } });
   return response.data;
 };

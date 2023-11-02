@@ -107,7 +107,7 @@ export const InfoCard = (props) => {
             <Spacer space={6} />
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
               <Body fontSize={14}>소재지</Body>
-              <Heading fontSize={14}>{data.area || '소재지 정보가 없습니다 :('}</Heading>
+              <Heading fontSize={14}>{data.location}</Heading>
             </View>
             <Spacer space={6} />
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
