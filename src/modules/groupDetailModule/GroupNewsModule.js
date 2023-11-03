@@ -20,7 +20,6 @@ export const NewsView = (props) => {
         if (responseData.dataHeader && responseData.dataHeader.successCode === 0) setData(responseData.dataBody.news);
         else {
           console.error('GroupNewsModule.js > NewsView: responseData가 없습니다.');
-          setIsError(true);
         }
       } catch (error) {
         console.error('GroupNewsModule.js > NewsView: ' + error);
@@ -30,16 +29,16 @@ export const NewsView = (props) => {
     getNewsData();
   }, []);
 
-  useEffect(() => {
-    if (isError) {
-      Alert.alert('데이터를 불러오는데 실패했습니다.');
-    }
-  }, [isError]);
-
   return (
     <View>
-      <NewsCommentCard setIsError={setIsError} />
-      {data != null ? data.map((value, index) => <NewsCard data={value} key={index} />) : isError ? null : <ActivityIndicator />}
+      <NewsCommentCard />
+      {data != null ? (
+        data.map((value, index) => <NewsCard data={value} key={index} />)
+      ) : isError ? (
+        <Caption fontSize={16}>* 뉴스 데이터를 불러오는데 실패했습니다 :(</Caption>
+      ) : (
+        <ActivityIndicator />
+      )}
     </View>
   );
 };

@@ -53,12 +53,9 @@ const UserScreen = () => {
     <View style={styles.container}>
       <MainHeader />
       <KeyboardAwareScrollView style={{ padding: 8 }}>
-        <View style={{ paddingHorizontal: 12 }}>
-          <Heading>Settings</Heading>
-        </View>
         <Spacer space={14} />
-
         <UserCard />
+        <Spacer space={14} />
         <StarGroupCard />
         <Divider />
         <PlusGroupCard />

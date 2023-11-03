@@ -1,3 +1,4 @@
+export const SETTING = 'settings-outline';
 export const USER = 'person-outline';
 export const HOME = 'home-outline';
 export const STAR = 'star-outline';

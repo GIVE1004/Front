@@ -4,18 +4,19 @@ import * as IconName from '../../components/Icons/IconName';
 import { useNavigation } from '@react-navigation/native';
 import { Spacer } from '../../components/Basic/Spacer';
 import { Icon } from '../../components/Icons/Icons';
-import { ImageLoader } from '../../components/Images/ImageLoader';
-import { Alert, TouchableOpacity } from 'react-native';
+import { ImageLoader, LocalImageLoader } from '../../components/Images/ImageLoader';
+import { Alert, TouchableOpacity, View } from 'react-native';
+import { memberInfoState } from '../../util/recoil/Atoms';
+import { useRecoilValue } from 'recoil';
 
 const preparing = () => {
   Alert.alert('죄송합니다', '현재 컨텐츠 준비중입니다.', [{ text: '확인', onPress: () => {}, style: 'cancle' }], { cancelable: true });
 };
 
 export const UserCard = () => {
-  const tmpdata = [{ source: 'https://picsum.photos/300', userId: 1, userName: '킹받은 짱구', userEmail: 'give1004', userEmailDomain: 'give.com' }];
-  const navigation = useNavigation();
+  const memberInfo = useRecoilValue(memberInfoState);
   return (
-    <TouchableOpacity
+    <View
       style={{
         backgroundColor: Color.White_100,
         borderColor: Color.Black_40,
@@ -30,18 +31,27 @@ export const UserCard = () => {
         marginHorizontal: 10,
         paddingHorizontal: 16,
       }}
-      onPress={() => {
-        navigation.navigate('UserInfoScreen', { userId: tmpdata[0].userId });
-      }}
     >
-      <ImageLoader source={tmpdata[0].source} style={{ width: 60, height: 60, borderRadius: 100 }} />
-      <Spacer space={10} />
-      <Heading fontSize={18}>{tmpdata[0].userName}</Heading>
-      <Spacer space={5} />
-      <Caption fontSize={16} color={Color.Black_80}>
-        {tmpdata[0].userEmail}@{tmpdata[0].userEmailDomain}
-      </Caption>
-    </TouchableOpacity>
+      {memberInfo ? (
+        <>
+          <ImageLoader source={memberInfo.profileImg} style={{ width: 60, height: 60, borderRadius: 100, borderWidth: 0.5, borderColor: Color.Black_50 }} />
+          <Spacer space={10} />
+          <Heading fontSize={18}>{memberInfo.nickname}</Heading>
+          <Spacer space={5} />
+          <Caption fontSize={16}>{memberInfo.email}</Caption>
+        </>
+      ) : (
+        <>
+          <LocalImageLoader source={require('../../../assets/giveIcon.png')} style={{ width: 60, height: 60, borderRadius: 100, borderWidth: 0.5, borderColor: Color.Black_50 }} />
+          <Spacer space={10} />
+          <Heading fontSize={18} color={Color.Secondary_50}>
+            {'유저 정보를 불러오는데 실패했습니다.'}
+          </Heading>
+          <Spacer space={5} />
+          <Caption fontSize={16}>{'다시 시도해주세요.'}</Caption>
+        </>
+      )}
+    </View>
   );
 };
 

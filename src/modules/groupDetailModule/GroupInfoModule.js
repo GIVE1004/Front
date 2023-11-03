@@ -1,6 +1,6 @@
 import { Alert, TouchableOpacity, View } from 'react-native';
 import { Spacer } from '../../components/Basic/Spacer';
-import { Body, Heading } from '../../components/Typography/Typography';
+import { Body, Caption, Heading } from '../../components/Typography/Typography';
 import * as Color from '../../components/Colors/colors';
 import { AddComma } from '../../util/util';
 import { openURL } from '../../util/linkUtil';
@@ -9,19 +9,11 @@ import { getGroupDetailInfoData } from '../../util/fetch/fetchUtil';
 import { useEffect, useState } from 'react';
 
 export const InfoView = (props) => {
-  const [isError, setIsError] = useState(false);
-
-  useEffect(() => {
-    if (isError) {
-      Alert.alert('데이터를 불러오는데 실패했습니다.');
-    }
-  }, [isError]);
-
   return (
     <View>
-      <InfoCommentCard charityId={props.charityId} setIsError={setIsError} />
-      <IntroduceCard charityId={props.charityId} setIsError={setIsError} />
-      <InfoCard charityId={props.charityId} setIsError={setIsError} />
+      <InfoCommentCard charityId={props.charityId} />
+      <IntroduceCard charityId={props.charityId} />
+      <InfoCard charityId={props.charityId} />
     </View>
   );
 };
@@ -61,6 +53,7 @@ export const IntroduceCard = (props) => {
 
 export const InfoCard = (props) => {
   const [data, setData] = useState(null);
+  const [isError, setIsError] = useState(false);
   useEffect(() => {
     const getGroupDetailInfo = async () => {
       try {
@@ -68,11 +61,10 @@ export const InfoCard = (props) => {
         if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
         else {
           console.error('GroupInfoModule.js > InfoCard: responseData가 없습니다.');
-          props.setIsError(true);
+          setIsError(true);
         }
       } catch (error) {
         console.error('GroupInfoModule.js > InfoCard: ' + error);
-        props.setIsError(true);
       }
     };
     getGroupDetailInfo();
@@ -80,7 +72,7 @@ export const InfoCard = (props) => {
 
   return (
     <View style={{ flex: 1, padding: 8, marginVertical: 6 }}>
-      {data != null ? (
+      {data != null && !isError ? (
         <>
           <Heading fontSize={18}>단체정보</Heading>
           <Spacer space={14} />
@@ -161,7 +153,13 @@ export const InfoCard = (props) => {
             </View>
           </View>
         </>
-      ) : null}
+      ) : (
+        <>
+          <Heading fontSize={18}>단체정보</Heading>
+          <Spacer space={14} />
+          <Caption fontSize={16}>* 데이터를 불러오는데 실패했습니다 :(</Caption>
+        </>
+      )}
     </View>
   );
 };

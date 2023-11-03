@@ -42,7 +42,7 @@ const GroupDetailScreen = () => {
     <View style={styles.container}>
       <StarHeader isStar={isStar} setIsStar={setIsStar} />
       <KeyboardAwareScrollView>
-        <GroupInfoCard />
+        <GroupInfoCard charityId={tmpdata.charityId} />
         <Spacer space={6} />
         <GroupGraph />
         <Spacer space={10} />
