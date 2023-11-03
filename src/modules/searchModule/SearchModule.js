@@ -105,7 +105,7 @@ export const SearchCard = (props) => {
     >
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate('GroupDetailScreen', { groupId: data.groupId });
+          navigation.navigate('GroupDetailScreen', { charityId: data.groupId });
         }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center', flexGrow: 4, paddingHorizontal: 6 }}>

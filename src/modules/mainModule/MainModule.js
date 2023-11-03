@@ -143,7 +143,7 @@ export const GroupCard = (props) => {
         paddingHorizontal: 16,
       }}
       onPress={() => {
-        navigation.navigate('GroupDetailScreen', { groupId: props.groupId });
+        navigation.navigate('GroupDetailScreen', { charityId: props.groupId });
       }}
     >
       <ImageLoader source={props.source} style={{ width: 60, height: 60, borderRadius: 100 }} />
