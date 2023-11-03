@@ -11,7 +11,8 @@ import { Spacer } from '../../components/Basic/Spacer';
 import { GroupDetailInfoCard, GroupGraph, GroupInfoCard } from '../../modules/groupDetailModule/GroupBasicModule';
 import { DoDonation, DonationCheck, DonationStopCheck, DonnationStopSuccess, DonnationSuccess } from '../../modules/groupDetailModule/GroupModalModule';
 
-const GroupDetailScreen = () => {
+const GroupDetailScreen = (props) => {
+  const charityId = props.route.params.charityId;
   const [isVisible, setIsVisible] = useState(false);
   const [isVisibleCheck, setIsVisibleCheck] = useState(false); //확인 모달
   const [isVisibleStopCheck, setIsVisibleStopCheck] = useState(false); //기부멈추기 확인 모달
@@ -42,11 +43,11 @@ const GroupDetailScreen = () => {
     <View style={styles.container}>
       <StarHeader isStar={isStar} setIsStar={setIsStar} />
       <KeyboardAwareScrollView>
-        <GroupInfoCard charityId={tmpdata.charityId} />
+        <GroupInfoCard charityId={charityId} />
         <Spacer space={6} />
         <GroupGraph />
         <Spacer space={10} />
-        <GroupDetailInfoCard charityId={tmpdata.charityId} />
+        <GroupDetailInfoCard charityId={charityId} />
         <Spacer space={6} />
       </KeyboardAwareScrollView>
       {/* 그룹 디테일 Footer */}
