@@ -29,8 +29,8 @@ const MainBottomTabNavigation = () => {
               return IconName.CHART;
             } else if (route.name === 'search') {
               return IconName.SEARCH;
-            } else if (route.name === 'user') {
-              return IconName.USER;
+            } else if (route.name === 'setting') {
+              return IconName.SETTING;
             }
           };
           const iconName = getIconName();
@@ -46,7 +46,7 @@ const MainBottomTabNavigation = () => {
       <Tabs.Screen name='chat' component={ChatScreen}></Tabs.Screen>
       <Tabs.Screen name='report' component={ReportScreen}></Tabs.Screen>
       <Tabs.Screen name='search' component={SearchScreen}></Tabs.Screen>
-      <Tabs.Screen name='user' component={UserScreen}></Tabs.Screen>
+      <Tabs.Screen name='setting' component={UserScreen}></Tabs.Screen>
     </Tabs.Navigator>
   );
 };

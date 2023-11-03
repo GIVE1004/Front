@@ -8,21 +8,13 @@ import { useEffect, useState } from 'react';
 import { getAssetData, getGraphFinancialData, getPublicProfitsData, getRevenueData } from '../../util/fetch/fetchUtil';
 
 export const GroupFinancialView = (props) => {
-  const [isError, setIsError] = useState(false);
-
-  useEffect(() => {
-    if (isError) {
-      Alert.alert('데이터를 불러오는데 실패했습니다.');
-    }
-  }, [isError]);
-
   return (
     <View>
-      <FinancialCommentCard charityId={props.charityId} setIsError={setIsError} />
-      <FinancialCard charityId={props.charityId} setIsError={setIsError} />
-      <RevenueCard charityId={props.charityId} setIsError={setIsError} />
-      <AssetCard charityId={props.charityId} setIsError={setIsError} />
-      <RevenueDetailCard charityId={props.charityId} setIsError={setIsError} />
+      <FinancialCommentCard charityId={props.charityId} />
+      <FinancialCard charityId={props.charityId} />
+      <RevenueCard charityId={props.charityId} />
+      <AssetCard charityId={props.charityId} />
+      <RevenueDetailCard charityId={props.charityId} />
     </View>
   );
 };
@@ -48,6 +40,7 @@ export const FinancialCard = (props) => {
   const tableTitle = ['자산', '부채', '사업수익', '기부금품', '사업비용', '분배비용'];
   const [data, setData] = useState(null);
   const [tableDataWithUnit, setTableDataWithUnit] = useState(null);
+  const [isError, setIsError] = useState(false);
   useEffect(() => {
     const getGraphFinancial = async () => {
       try {
@@ -55,11 +48,10 @@ export const FinancialCard = (props) => {
         if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
         else {
           console.error('GroupFinancialModule.js > FinancialCard: responseData가 없습니다.');
-          props.setIsError(true);
+          setIsError(true);
         }
       } catch (error) {
         console.error('GroupFinancialModule.js > FinancialCard: ' + error);
-        props.setIsError(true);
       }
     };
     getGraphFinancial();
@@ -75,7 +67,7 @@ export const FinancialCard = (props) => {
 
   return (
     <View style={{ flex: 1, padding: 8, marginVertical: 6 }}>
-      {data != null && tableDataWithUnit != null ? (
+      {data != null && tableDataWithUnit != null && !isError ? (
         <>
           <Heading fontSize={18}>재무 현황</Heading>
           <Spacer space={14} />
@@ -121,6 +113,7 @@ export const FinancialCard = (props) => {
 
 export const RevenueCard = (props) => {
   const [data, setData] = useState(null);
+  const [isError, setIsError] = useState(false);
   useEffect(() => {
     const getRevenue = async () => {
       try {
@@ -128,11 +121,10 @@ export const RevenueCard = (props) => {
         if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
         else {
           console.error('GroupFinancialModule.js > RevenueCard: responseData가 없습니다.');
-          props.setIsError(true);
+          setIsError(true);
         }
       } catch (error) {
         console.error('GroupFinancialModule.js > RevenueCard: ' + error);
-        props.setIsError(true);
       }
     };
     getRevenue();
@@ -140,7 +132,7 @@ export const RevenueCard = (props) => {
 
   return (
     <View style={{ flex: 1, padding: 8, marginVertical: 6 }}>
-      {data != null ? (
+      {data != null && !isError ? (
         <>
           <Heading fontSize={18}>수익 현황</Heading>
           <Spacer space={14} />
@@ -199,6 +191,7 @@ export const RevenueCard = (props) => {
 
 export const AssetCard = (props) => {
   const [data, setData] = useState(null);
+  const [isError, setIsError] = useState(false);
   useEffect(() => {
     const getAsset = async () => {
       try {
@@ -206,18 +199,17 @@ export const AssetCard = (props) => {
         if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
         else {
           console.error('GroupFinancialModule.js > AssetCard: responseData가 없습니다.');
-          props.setIsError(true);
+          setIsError(true);
         }
       } catch (error) {
         console.error('GroupFinancialModule.js > AssetCard: ' + error);
-        props.setIsError(true);
       }
     };
     getAsset();
   }, []);
   return (
     <View style={{ flex: 1, padding: 8, marginVertical: 6 }}>
-      {data != null ? (
+      {data != null && !isError ? (
         <>
           <Heading fontSize={18}>자산 현황</Heading>
           <Spacer space={14} />
@@ -266,6 +258,7 @@ export const AssetCard = (props) => {
 
 export const RevenueDetailCard = (props) => {
   const [data, setData] = useState(null);
+  const [isError, setIsError] = useState(false);
   useEffect(() => {
     const getPublicProfits = async () => {
       try {
@@ -273,18 +266,17 @@ export const RevenueDetailCard = (props) => {
         if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
         else {
           console.error('GroupFinancialModule.js > RevenueDetailCard: responseData가 없습니다.');
-          props.setIsError(true);
+          setIsError(true);
         }
       } catch (error) {
         console.error('GroupFinancialModule.js > RevenueDetailCard: ' + error);
-        props.setIsError(true);
       }
     };
     getPublicProfits();
   }, []);
   return (
     <View style={{ flex: 1, padding: 8, marginVertical: 6 }}>
-      {data != null ? (
+      {data != null && !isError ? (
         <>
           <Heading fontSize={18}>공익목적사업의 수익세부현황</Heading>
           <Spacer space={10} />
