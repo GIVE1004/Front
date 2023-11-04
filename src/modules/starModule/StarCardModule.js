@@ -43,7 +43,7 @@ export const StarGroupCard = () => {
     <View style={{ flex: 1, alignItems: 'center' }}>
       <Spacer space={12} />
       {tmpdata.map((values, index) => (
-        <View>
+        <View key={index}>
           <StarCard data={values} />
           <Divider />
         </View>

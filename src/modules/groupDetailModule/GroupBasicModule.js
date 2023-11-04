@@ -67,7 +67,7 @@ export const GroupInfoCard = (props) => {
 // selected = 기부액/기부자
 // pmGive = 증감기부액
 // percentPmGive = 증감기부액 퍼센트
-export const GroupGraph = () => {
+export const GroupGraph = (props) => {
   const data = {
     give: Math.random() * 10000000 + 1,
     pmGive: (Math.random() - 0.5) * 100000,

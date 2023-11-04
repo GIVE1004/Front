@@ -71,8 +71,8 @@ export const ReportMyDonationView = (props) => {
   return (
     <View style={{ flex: 1, margin: 10 }}>
       {data.map((value, index) => (
-        <View>
-          <ReportMyDonationCard key={index} data={value} />
+        <View key={index}>
+          <ReportMyDonationCard data={value} />
           <Divider />
         </View>
       ))}

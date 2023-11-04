@@ -79,7 +79,7 @@ export const SearchGroupCard = (props) => {
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
       {tmpdata.map((values, index) => (
-        <SearchCard data={values} />
+        <SearchCard data={values} key={index} />
       ))}
     </View>
   );

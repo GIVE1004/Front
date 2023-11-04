@@ -49,8 +49,9 @@ export const ReportGroupInfoView = (props) => {
             setGroupId(value.groupId);
             setIsVisible(true);
           }}
+          key={index}
         >
-          <ReportGroupInfoCard key={index} groupData={value} />
+          <ReportGroupInfoCard groupData={value} />
           <Divider />
         </TouchableOpacity>
       ))}

@@ -12,19 +12,18 @@ import { GroupDetailInfoCard, GroupGraph, GroupInfoCard } from '../../modules/gr
 import { DoDonation, DonationCheck, DonationStopCheck, DonnationStopSuccess, DonnationSuccess } from '../../modules/groupDetailModule/GroupModalModule';
 
 const GroupDetailScreen = (props) => {
+  // 내가 누른 자선단체의 아이디를 props로 가져와야함.
   const charityId = props.route.params.charityId;
+
+  // To-do
+  // fetch 받을 데이터(내가 기부하고 있는 단체인지) -> 기부하기 모달에 띄울 페이지도 다름.
+  // 이 밑 데이터들은 다 모달, 푸터 컴포넌트화로 뽑고 옮겨가야할 것 같습니당
+  // 컴포넌트화 시 위의 charityId를 프롭스로 끌고 가서 tmpdata를 받는 형식으로!
   const [isVisible, setIsVisible] = useState(false);
   const [isVisibleCheck, setIsVisibleCheck] = useState(false); //확인 모달
   const [isVisibleStopCheck, setIsVisibleStopCheck] = useState(false); //기부멈추기 확인 모달
   const [isVisibleSucess, setIsVisibleSucess] = useState(false); //성공 모달
   const [isVisibleStopSucess, setIsVisibleStopSucess] = useState(false); //기부멈추기 성공 모달
-
-  // fetch 받을 데이터(내가 관심 등록한 단체인지) + onPress시 관심단체 선택/해제 넣기
-  const [isStar, setIsStar] = useState(false);
-  // To-do
-  // fetch 받을 데이터(내가 기부하고 있는 단체인지) -> 기부하기 모달에 띄울 페이지도 다름.
-  const [isGive, setIsGive] = useState(true);
-
   const tmpdata = {
     source: 'https://picsum.photos/300',
     charityId: 1,
@@ -37,31 +36,38 @@ const GroupDetailScreen = (props) => {
     monthlyDonationbudget: '5000',
     expectedDonationCount: 12,
     expectedDonationTotal: '60000',
+    isDonation: true,
   };
 
   return (
     <View style={styles.container}>
-      <StarHeader isStar={isStar} setIsStar={setIsStar} />
+      <StarHeader charityId={charityId} />
       <KeyboardAwareScrollView>
         <GroupInfoCard charityId={charityId} />
         <Spacer space={6} />
-        <GroupGraph />
+        <GroupGraph charityId={charityId} />
         <Spacer space={10} />
         <GroupDetailInfoCard charityId={charityId} />
         <Spacer space={6} />
       </KeyboardAwareScrollView>
+
       {/* 그룹 디테일 Footer */}
+      {/* 
+        TO-DO
+        Footer부터 modal까지 다 컴포넌트로 빼서 랜더링 문제 막아야할 것 같습니다.
+        tmpdata, isViesible 등 필요 데이터를 모두 들고 컴포넌트화 해주세요.
+       */}
       <Footer>
         <BasicButton
           onPress={() => {
-            isGive ? setIsVisible(true) : setIsVisibleStopCheck(true);
+            tmpdata.isDonation ? setIsVisible(true) : setIsVisibleStopCheck(true);
           }}
           width='100%'
-          backgroundColor={isGive ? Color.Primary_50 : Color.Secondary_50}
-          borderColor={isGive ? Color.Primary_50 : Color.Secondary_50}
+          backgroundColor={tmpdata.isDonation ? Color.Primary_50 : Color.Secondary_50}
+          borderColor={tmpdata.isDonation ? Color.Primary_50 : Color.Secondary_50}
         >
-          <Heading fontSize={16} color={isGive || Color.White_100}>
-            {isGive ? '기부하기' : '기부 그만하기'}
+          <Heading fontSize={16} color={tmpdata.isDonation || Color.White_100}>
+            {tmpdata.isDonation ? '기부하기' : '기부 그만하기'}
           </Heading>
         </BasicButton>
       </Footer>

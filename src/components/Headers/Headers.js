@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { View, useWindowDimensions, Text, TouchableOpacity } from 'react-native';
 import { Platform } from 'react-native';
@@ -31,6 +31,10 @@ export const Header = (props) => {
 };
 
 export const StarHeader = (props) => {
+  console.log(props.charityId);
+  // fetch 받을 데이터(내가 관심 등록한 단체인지) + onPress시 관심단체 선택/해제 넣기
+  const [isStar, setIsStar] = useState(false);
+
   const navigation = useNavigation();
   return (
     <Header>
@@ -46,10 +50,10 @@ export const StarHeader = (props) => {
       <View style={{ size: 24 }}>
         <TouchableOpacity
           onPress={() => {
-            props.setIsStar(!props.isStar);
+            setIsStar(!isStar);
           }}
         >
-          <Icon name={props.isStar ? IconName.FILLSTAR : IconName.STAR} size={22} iconColor={Color.Primary_50} />
+          <Icon name={isStar ? IconName.FILLSTAR : IconName.STAR} size={22} iconColor={Color.Primary_50} />
         </TouchableOpacity>
       </View>
     </Header>
