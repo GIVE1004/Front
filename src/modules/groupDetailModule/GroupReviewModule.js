@@ -36,7 +36,7 @@ export const ReviewView = () => {
       <ReviewCommentCard />
       <ReviewTotalCard />
       {data.map((value, index) => (
-        <ReviewCard data={value} />
+        <ReviewCard data={value} key={index} />
       ))}
     </View>
   );

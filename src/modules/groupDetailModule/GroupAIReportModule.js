@@ -67,8 +67,8 @@ export const GroupScoreCard = () => {
       <Heading fontSize={18}>단체 분석 점수</Heading>
       <Spacer space={14} />
       <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-evenly' }}>
-        {Object.keys(data).map((key) => (
-          <View style={{ alignItems: 'center' }}>
+        {Object.keys(data).map((key, index) => (
+          <View style={{ alignItems: 'center' }} key={index}>
             <ProgressPie value={data[key]} color={Color.Success_50} type='socre' />
             <Spacer space={4} />
             <Heading fontSize={14}>{key}</Heading>
@@ -89,8 +89,8 @@ export const GroupRealGiveCntCard = () => {
     <View style={{ flex: 1, padding: 8, marginVertical: 6 }}>
       <Heading fontSize={18}>기부액 대비 실제 기부금 사용률</Heading>
       <Spacer space={14} />
-      {Object.keys(data).map((key) => (
-        <View>
+      {Object.keys(data).map((key, index) => (
+        <View key={index}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
             <ProgressBar progress={data[key] / 100} color={Color.Secondary_50} unfilledColor={Color.White_100} width={width * 0.64} height={12} borderRadius={10} />
             <Heading fontSize={12}>
