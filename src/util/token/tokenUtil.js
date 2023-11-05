@@ -9,6 +9,12 @@ export const getTokens = async (setAccessToken, setRefreshToken) => {
   });
 };
 
+export const getAccessToken = async (setAccessToken) => {
+  getAsync('accessToken').then((res) => {
+    setAccessToken(res);
+  });
+};
+
 export const setTokens = async (accessToken, refreshToken) => {
   if (accessToken != null && refreshToken != null) {
     setAsync('accessToken', accessToken);
