@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Alert, useWindowDimensions, View } from 'react-native';
-import { BackWithLogoHeader, MainHeader } from '../../components/Headers/Headers';
+import { BackWithLogoHeader } from '../../components/Headers/Headers';
 import { Spacer } from '../../components/Basic/Spacer';
 import { Heading } from '../../components/Typography/Typography';
 import { LoginButton } from '../../components/Buttons/Buttons';
@@ -71,7 +71,7 @@ const OauthScreen = () => {
       const data = await response.json();
       if (data != undefined && data.dataHeader != undefined) {
         if (data.dataHeader.successCode == 0) {
-          setTokens(data.dataBody.tokens.accessToken, data.dataBody.tokens.refreshToken);
+          await setTokens(data.dataBody.tokens.accessToken, data.dataBody.tokens.refreshToken);
           setMemberInfo(data.dataBody.memberInfo);
           const responseData = await getIsAnswerQuestionData(data.dataBody.tokens.accessToken);
           setIsAnswer(responseData.dataBody);
