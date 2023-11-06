@@ -14,6 +14,76 @@ import { BasicButton } from '../../components/Buttons/Buttons';
 import { AddComma } from '../../util/util';
 import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { MyModal } from '../../components/Modals/Modals';
+
+export const FooterAndModalView = (props) => {
+  const charityId = props.charityId;
+
+  const [isVisible, setIsVisible] = useState(false);
+  const [isVisibleCheck, setIsVisibleCheck] = useState(false); //확인 모달
+  const [isVisibleStopCheck, setIsVisibleStopCheck] = useState(false); //기부멈추기 확인 모달
+  const [isVisibleSucess, setIsVisibleSucess] = useState(false); //성공 모달
+  const [isVisibleStopSucess, setIsVisibleStopSucess] = useState(false); //기부멈추기 성공 모달
+
+  const tmpdata = {
+    source: 'https://picsum.photos/300',
+    charityId: 1,
+    groupName: '사회복지법인 굿네이버스1',
+    groupTag: '사회복지',
+    groupLabel: '지정기부금단체',
+    userEmail: 'give1004@mail.com',
+    donatorName: '홍길동',
+    donnationStartdate: '2023.10.14',
+    monthlyDonationbudget: '5000',
+    expectedDonationCount: 12,
+    expectedDonationTotal: '60000',
+    isDonation: true,
+  };
+
+  return (
+    <>
+      <Footer>
+        <BasicButton
+          onPress={() => {
+            tmpdata.isDonation ? setIsVisible(true) : setIsVisibleStopCheck(true);
+          }}
+          width='100%'
+          backgroundColor={tmpdata.isDonation ? Color.Primary_50 : Color.Secondary_50}
+          borderColor={tmpdata.isDonation ? Color.Primary_50 : Color.Secondary_50}
+        >
+          <Heading fontSize={16} color={tmpdata.isDonation || Color.White_100}>
+            {tmpdata.isDonation ? '기부하기' : '기부 그만하기'}
+          </Heading>
+        </BasicButton>
+      </Footer>
+
+      {/* 기부하기 모달 */}
+      <MyModal height='80%' isVisible={isVisible} setIsVisible={setIsVisible}>
+        <DoDonation data={tmpdata} setIsVisible={setIsVisible} setIsVisibleCheck={setIsVisibleCheck} />
+      </MyModal>
+
+      {/* 확인 모달(기부하기->기부확인) */}
+      <MyModal height='60%' isVisible={isVisibleCheck} setIsVisible={setIsVisibleCheck}>
+        <DonationCheck data={tmpdata} setIsVisibleCheck={setIsVisibleCheck} setIsVisibleSucess={setIsVisibleSucess} />
+      </MyModal>
+
+      {/* 성공 모달 */}
+      <MyModal height='50%' isVisible={isVisibleSucess} setIsVisible={setIsVisibleSucess}>
+        <DonnationSuccess setIsVisibleSucess={setIsVisibleSucess} />
+      </MyModal>
+
+      {/* 기부 멈추기 확인 모달 */}
+      <MyModal height='60%' isVisible={isVisibleStopCheck} setIsVisible={setIsVisibleStopCheck}>
+        <DonationStopCheck data={tmpdata} setIsVisibleStopCheck={setIsVisibleStopCheck} setIsVisibleStopSucess={setIsVisibleStopSucess} />
+      </MyModal>
+
+      {/* 기부 멈추기 성공 모달 */}
+      <MyModal height='50%' isVisible={isVisibleStopSucess} setIsVisible={setIsVisibleStopSucess}>
+        <DonnationStopSuccess setIsVisibleStopSucess={setIsVisibleStopSucess} />
+      </MyModal>
+    </>
+  );
+};
 
 export const DoDonation = (props) => {
   const data = props.data;

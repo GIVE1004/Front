@@ -13,25 +13,9 @@ import { AddComma } from '../../util/util';
 
 export const ReportGroupInfoView = (props) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [groupId, setGroupId] = useState(0);
-  let data;
-  if (props.type == 'nowDonation') {
-    data = [
-      { source: 'https://picsum.photos/300', groupId: 1, groupName: '사회복지법인 굿네이버스1', groupTag: '사회복지', groupLabel: '지정기부금단체' },
-      { source: 'https://picsum.photos/300', groupId: 2, groupName: '사회복지법인 굿네이버스2', groupTag: '사회복지', groupLabel: '지정기부금단체' },
-      { source: 'https://picsum.photos/300', groupId: 3, groupName: '사회복지법인 굿네이버스3', groupTag: '사회복지', groupLabel: '지정기부금단체' },
-      { source: 'https://picsum.photos/300', groupId: 4, groupName: '사회복지법인 굿네이버스4', groupTag: '사회복지', groupLabel: '지정기부금단체' },
-      { source: 'https://picsum.photos/300', groupId: 5, groupName: '사회복지법인 굿네이버스5', groupTag: '사회복지', groupLabel: '지정기부금단체' },
-    ];
-  } else if (props.type == 'finDonation') {
-    data = [
-      { source: 'https://picsum.photos/300', groupId: 1, groupName: '사회복지법인 굿네이버스11', groupTag: '사회복지', groupLabel: '지정기부금단체' },
-      { source: 'https://picsum.photos/300', groupId: 2, groupName: '사회복지법인 굿네이버스22', groupTag: '사회복지', groupLabel: '지정기부금단체' },
-      { source: 'https://picsum.photos/300', groupId: 3, groupName: '사회복지법인 굿네이버스33', groupTag: '사회복지', groupLabel: '지정기부금단체' },
-      { source: 'https://picsum.photos/300', groupId: 4, groupName: '사회복지법인 굿네이버스44', groupTag: '사회복지', groupLabel: '지정기부금단체' },
-      { source: 'https://picsum.photos/300', groupId: 5, groupName: '사회복지법인 굿네이버스55', groupTag: '사회복지', groupLabel: '지정기부금단체' },
-    ];
-  }
+  const [charityId, setCharityId] = useState(0);
+  const data = props.data;
+
   return (
     <View style={{ flex: 1, margin: 10 }}>
       {props.type == 'nowDonation' ? (
@@ -42,23 +26,23 @@ export const ReportGroupInfoView = (props) => {
         </Heading>
       )}
       <Spacer space={6} />
-      {data.map((value, index) => (
+      {data.map((value) => (
         <TouchableOpacity
           style={{ justifyContent: 'space-between' }}
           onPress={() => {
-            setGroupId(value.groupId);
+            setCharityId(value.charityId);
             setIsVisible(true);
           }}
-          key={index}
+          key={value.charityId}
         >
           <ReportGroupInfoCard groupData={value} />
           <Divider />
         </TouchableOpacity>
       ))}
       {props.type == 'nowDonation' ? (
-        <NowDonationModal groupId={groupId} setIsVisible={setIsVisible} isVisible={isVisible} />
+        <NowDonationModal charityId={charityId} setIsVisible={setIsVisible} isVisible={isVisible} />
       ) : (
-        <FinDonationModal groupId={groupId} setIsVisible={setIsVisible} isVisible={isVisible} />
+        <FinDonationModal charityId={charityId} setIsVisible={setIsVisible} isVisible={isVisible} />
       )}
     </View>
   );
@@ -90,7 +74,7 @@ export const FinDonationModal = (props) => {
 
   return (
     <MyModal isVisible={props.isVisible} setIsVisible={props.setIsVisible}>
-      <FinDonationView groupId={props.groupId} />
+      <FinDonationView charityId={props.charityId} />
       <Footer>
         <BasicButton
           onPress={() => {
@@ -109,11 +93,11 @@ export const FinDonationModal = (props) => {
 };
 
 export const FinDonationView = (props) => {
-  const groupId = props.groupId;
-  console.log(props.groupId);
+  const charityId = props.charityId;
+  console.log(props.charityId);
   const groupData = {
     source: 'https://picsum.photos/300',
-    groupId: 1,
+    charityId: 1,
     groupName: '사회복지법인 굿네이버스1',
     groupTag: '사회복지',
     groupLabel: '지정기부금단체',
@@ -166,7 +150,7 @@ export const NowDonationModal = (props) => {
 
   return (
     <MyModal isVisible={props.isVisible} setIsVisible={props.setIsVisible}>
-      <NowDonationView groupId={props.groupId} />
+      <NowDonationView charityId={props.charityId} />
       <Footer>
         <BasicButton width='50%' backgroundColor={Color.Secondary_50} borderColor={Color.Secondary_50}>
           <Heading fontSize={16} color={Color.White_100}>
@@ -190,11 +174,11 @@ export const NowDonationModal = (props) => {
 };
 
 export const NowDonationView = (props) => {
-  const groupId = props.groupId;
-  console.log(props.groupId);
+  const charityId = props.charityId;
+  console.log(props.charityId);
   const groupData = {
     source: 'https://picsum.photos/300',
-    groupId: 1,
+    charityId: 1,
     groupName: '사회복지법인 굿네이버스1',
     groupTag: '사회복지',
     groupLabel: '지정기부금단체',

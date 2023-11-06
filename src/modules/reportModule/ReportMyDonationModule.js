@@ -60,18 +60,18 @@ export const ReportMonthNaviBar = (props) => {
 export const ReportMyDonationView = (props) => {
   console.log(props.curMonthIdx);
   const data = [
-    { source: 'https://picsum.photos/300', groupId: 1, groupName: '사회복지법인 굿네이버스' + props.curMonthIdx, money: 5000, date: '2020.10.04' },
-    { source: 'https://picsum.photos/300', groupId: 2, groupName: '사회복지법인 굿네이버스22', money: 5000, date: '2020.10.04' },
-    { source: 'https://picsum.photos/300', groupId: 3, groupName: '사회복지법인 굿네이버스33', money: 5000, date: '2020.10.04' },
-    { source: 'https://picsum.photos/300', groupId: 4, groupName: '사회복지법인 굿네이버스44', money: 5000, date: '2020.10.04' },
-    { source: 'https://picsum.photos/300', groupId: 5, groupName: '사회복지법인 굿네이버스55', money: 5000, date: '2020.10.04' },
-    { source: 'https://picsum.photos/300', groupId: 6, groupName: '사회복지법인 굿네이버스66', money: 5000, date: '2020.10.04' },
+    { source: 'https://picsum.photos/300', charityId: 1, groupName: '사회복지법인 굿네이버스' + props.curMonthIdx, money: 5000, date: '2020.10.04' },
+    { source: 'https://picsum.photos/300', charityId: 2, groupName: '사회복지법인 굿네이버스22', money: 5000, date: '2020.10.04' },
+    { source: 'https://picsum.photos/300', charityId: 3, groupName: '사회복지법인 굿네이버스33', money: 5000, date: '2020.10.04' },
+    { source: 'https://picsum.photos/300', charityId: 4, groupName: '사회복지법인 굿네이버스44', money: 5000, date: '2020.10.04' },
+    { source: 'https://picsum.photos/300', charityId: 5, groupName: '사회복지법인 굿네이버스55', money: 5000, date: '2020.10.04' },
+    { source: 'https://picsum.photos/300', charityId: 6, groupName: '사회복지법인 굿네이버스66', money: 5000, date: '2020.10.04' },
   ];
 
   return (
     <View style={{ flex: 1, margin: 10 }}>
-      {data.map((value, index) => (
-        <View key={index}>
+      {data.map((value) => (
+        <View key={value.charityId}>
           <ReportMyDonationCard data={value} />
           <Divider />
         </View>

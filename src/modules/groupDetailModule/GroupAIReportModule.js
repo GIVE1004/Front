@@ -69,7 +69,7 @@ export const GroupScoreCard = () => {
       <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-evenly' }}>
         {Object.keys(data).map((key, index) => (
           <View style={{ alignItems: 'center' }} key={index}>
-            <ProgressPie value={data[key]} color={Color.Success_50} type='socre' />
+            <ProgressPie value={data[key]} color={Color.Success_50} type='score' />
             <Spacer space={4} />
             <Heading fontSize={14}>{key}</Heading>
           </View>
