@@ -9,13 +9,14 @@ export const MyRadioButton = (props) => {
   const [checked, setChecked] = useState();
   return (
     <View>
-      {props.values.map((value) => (
+      {props.values.map((value, index) => (
         <Pressable
+          key={index}
           onPress={() => {
             props.setChecked(value);
             setChecked(value);
           }}
-          style={{ flexDirection: 'row', marginVertical: 8, marginHorizontal: 8 }}
+          style={{ flexDirection: 'row', marginVertical: 8, marginHorizontal: 8, alignItems: 'center' }}
         >
           <Icon name={checked == value ? 'radio-button-on' : 'radio-button-off'} size={26} iconColor={checked == value ? props.color : Color.Black_20} />
           <Body> {value}</Body>

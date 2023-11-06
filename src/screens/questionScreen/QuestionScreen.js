@@ -21,10 +21,15 @@ const QuestionScreen = () => {
   const [refreshToken, setRefreshToken] = useState(null);
 
   const questionData = [
-    { questionId: '1', question: '추위에 떨고 있는 노인과 아이가 있다.\n누구부터 구할까?', answer1: '미안하지만 어르신부터 구해야겠어', answer2: '어린이부터 구해야할 것 같아' },
-    { questionId: '2', question: '냉장고가 비었다! 어떻게 채울까?', answer1: '조금씩 매일', answer2: '하루에 잔뜩' },
-    { questionId: '3', question: '아침에 등교를 한다. 어덯게 갈까?', answer1: '여러명과 활기차게 등교', answer2: '친구 한 명과 차분히 등교' },
-    { questionId: '4', question: '당신은 비행기 티켓을 한 장 가지고 있다!\n어디로 갈까?', answer1: '한국의 아름다운 명소', answer2: '새로운 해외의 모험' },
+    {
+      questionId: '1',
+      question: '추위에 떨고 있는 노인과 아이가 있다.\n누구부터 구할까?',
+      answer: ['미안하지만 어르신부터 구해야겠어', '어린이부터 구해야할 것 같아', '3', '4', '5'],
+    },
+    { questionId: '2', question: '냉장고가 비었다! 어떻게 채울까?', answer: ['조금씩 매일', '하루에 잔뜩'] },
+    { questionId: '3', question: '아침에 등교를 한다. 어덯게 갈까?', answer: ['여러명과 활기차게 등교', '친구 한 명과 차분히 등교'] },
+    { questionId: '4', question: '당신은 비행기 티켓을 한 장 가지고 있다!\n어디로 갈까?', answer: ['한국의 아름다운 명소', '새로운 해외의 모험'] },
+    { questionId: '5', question: '당신은 비행기 티켓을 한 장 가지고 있다!\n어디로 갈까?', answer: ['한국의 아름다운 명소', '새로운 해외의 모험'] },
   ];
 
   const pressGoMain = async () => {
@@ -58,49 +63,37 @@ const QuestionScreen = () => {
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <ViewSliders slideCount={questionData.length}>
           {questionData.map((value, index) => (
-            <View style={{ width: width, justifyContent: 'center', padding: 20 }}>
+            <View style={{ width: width, justifyContent: 'center', padding: 20 }} key={value.questionId}>
               <Heading>✍ 기부 유형 테스트</Heading>
               <Spacer space={24} />
 
               <View style={{ paddingHorizontal: 14 }}>
                 <Heading fontSize={16}>
-                  {index + 1}. "{value.question}"
+                  {value.questionId}. "{value.question}"
                 </Heading>
               </View>
               <Spacer space={18} />
-
-              <BasicButton
-                borderColor={Color.Primary_50}
-                backgroundColor={answer[index] == 0 ? Color.Primary_50 : Color.White_100}
-                onPress={() => {
-                  setAnswer((prevAnswers) => {
-                    const updatedAnswers = [...prevAnswers];
-                    updatedAnswers[index] = 0;
-                    return updatedAnswers;
-                  });
-                }}
-              >
-                <Body fontSize={14}>{value.answer1}</Body>
-              </BasicButton>
-              <Spacer space={6} />
-
-              <BasicButton
-                borderColor={Color.Primary_50}
-                backgroundColor={answer[index] == 1 ? Color.Primary_50 : Color.White_100}
-                onPress={() => {
-                  setAnswer((prevAnswers) => {
-                    const updatedAnswers = [...prevAnswers];
-                    updatedAnswers[index] = 1;
-                    return updatedAnswers;
-                  });
-                }}
-              >
-                <Body fontSize={14}>{value.answer2}</Body>
-              </BasicButton>
+              {value.answer.map((val, idx) => (
+                <>
+                  <BasicButton
+                    borderColor={Color.Primary_50}
+                    backgroundColor={answer[index] == idx ? Color.Primary_50 : Color.White_100}
+                    onPress={() => {
+                      setAnswer((prevAnswers) => {
+                        const updatedAnswers = [...prevAnswers];
+                        updatedAnswers[index] = idx;
+                        return updatedAnswers;
+                      });
+                    }}
+                  >
+                    <Body fontSize={14}>{val}</Body>
+                  </BasicButton>
+                  <Spacer space={6} />
+                </>
+              ))}
             </View>
           ))}
         </ViewSliders>
-        <Spacer space={Platform.OS == 'android' ? 100 : 120} />
       </View>
       <Footer backgroundColor={Color.White_100} width={width}>
         {answer.every((value) => value >= 0) ? (

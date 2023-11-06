@@ -56,11 +56,27 @@ export const ReportGroupView = () => {
     }, 500);
   }, []);
 
+  const [nowDonationData, setNowDonationData] = useState([
+    { source: 'https://picsum.photos/300', charityId: 1, groupName: '사회복지법인 굿네이버스1', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+    { source: 'https://picsum.photos/300', charityId: 2, groupName: '사회복지법인 굿네이버스2', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+    { source: 'https://picsum.photos/300', charityId: 3, groupName: '사회복지법인 굿네이버스3', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+    { source: 'https://picsum.photos/300', charityId: 4, groupName: '사회복지법인 굿네이버스4', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+    { source: 'https://picsum.photos/300', charityId: 5, groupName: '사회복지법인 굿네이버스5', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+  ]);
+
+  const [finDonationData, setFinDonationData] = useState([
+    { source: 'https://picsum.photos/300', charityId: 6, groupName: '사회복지법인 굿네이버스6', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+    { source: 'https://picsum.photos/300', charityId: 7, groupName: '사회복지법인 굿네이버스7', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+    { source: 'https://picsum.photos/300', charityId: 8, groupName: '사회복지법인 굿네이버스8', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+    { source: 'https://picsum.photos/300', charityId: 9, groupName: '사회복지법인 굿네이버스9', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+    { source: 'https://picsum.photos/300', charityId: 10, groupName: '사회복지법인 굿네이버스10', groupTag: '사회복지', groupLabel: '지정기부금단체' },
+  ]);
+
   return (
     <KeyboardAwareScrollView style={styles.container} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-      <ReportGroupInfoView type='nowDonation' />
+      <ReportGroupInfoView type='nowDonation' data={nowDonationData} />
       <Spacer space={20} />
-      <ReportGroupInfoView type='finDonation' />
+      <ReportGroupInfoView type='finDonation' data={finDonationData} />
       <Spacer space={6} />
     </KeyboardAwareScrollView>
   );
