@@ -46,7 +46,8 @@ const SplashScreen = () => {
       }
     } catch (e) {
       console.error('SplashScreen.js > getRefreshData: ' + e);
-      Alert.alert('서버 통신 에러');
+      // Alert.alert('서버 통신 에러');
+      navigation.navigate('OauthScreen');
     }
   };
 
