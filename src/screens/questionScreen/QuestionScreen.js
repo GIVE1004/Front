@@ -16,7 +16,7 @@ import { getTokens } from '../../util/token/tokenUtil';
 const QuestionScreen = () => {
   const [goMainPage, setGoMainPage] = useRecoilState(goMainPageState);
   const { width } = useWindowDimensions();
-  const [answer, setAnswer] = useState([-1, -1, -1, -1]);
+  const [answer, setAnswer] = useState([-1, -1, -1, -1, -1]);
   const [accessToken, setAccessToken] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
 
@@ -31,6 +31,7 @@ const QuestionScreen = () => {
     { questionId: '4', question: '당신은 비행기 티켓을 한 장 가지고 있다!\n어디로 갈까?', answer: ['한국의 아름다운 명소', '새로운 해외의 모험'] },
     { questionId: '5', question: '당신은 비행기 티켓을 한 장 가지고 있다!\n어디로 갈까?', answer: ['한국의 아름다운 명소', '새로운 해외의 모험'] },
   ];
+  console.log(answer);
 
   const pressGoMain = async () => {
     const sendData = {
@@ -38,6 +39,7 @@ const QuestionScreen = () => {
       second: answer[1],
       third: answer[2],
       fourth: answer[3],
+      five: answer[4],
     };
     try {
       const responseData = await postQuestionData(sendData, accessToken.slice(1, -1));
