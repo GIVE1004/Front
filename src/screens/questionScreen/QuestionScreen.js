@@ -11,14 +11,11 @@ import { Footer } from '../../components/Footers/Footers';
 import { goMainPageState } from '../../util/recoil/Atoms';
 import { useRecoilState } from 'recoil';
 import { postQuestionData } from '../../util/fetch/fetchUtil';
-import { getTokens } from '../../util/token/tokenUtil';
 
 const QuestionScreen = () => {
   const [goMainPage, setGoMainPage] = useRecoilState(goMainPageState);
   const { width } = useWindowDimensions();
   const [answer, setAnswer] = useState([-1, -1, -1, -1, -1]);
-  const [accessToken, setAccessToken] = useState(null);
-  const [refreshToken, setRefreshToken] = useState(null);
 
   const questionData = [
     {
@@ -42,7 +39,7 @@ const QuestionScreen = () => {
       five: answer[4],
     };
     try {
-      const responseData = await postQuestionData(sendData, accessToken.slice(1, -1));
+      const responseData = await postQuestionData(sendData);
       if (responseData.dataHeader && responseData.dataHeader.successCode == 0) {
         setGoMainPage(true);
       } else {
@@ -54,10 +51,6 @@ const QuestionScreen = () => {
       Alert.alert('서버 통신 에러');
     }
   };
-
-  useEffect(() => {
-    getTokens(setAccessToken, setRefreshToken);
-  }, []);
 
   return (
     <SafeAreaProvider style={{ flex: 1, backgroundColor: Color.White_100 }}>
@@ -76,7 +69,7 @@ const QuestionScreen = () => {
               </View>
               <Spacer space={18} />
               {value.answer.map((val, idx) => (
-                <>
+                <View key={idx}>
                   <BasicButton
                     borderColor={Color.Primary_50}
                     backgroundColor={answer[index] == idx ? Color.Primary_50 : Color.White_100}
@@ -91,7 +84,7 @@ const QuestionScreen = () => {
                     <Body fontSize={14}>{val}</Body>
                   </BasicButton>
                   <Spacer space={6} />
-                </>
+                </View>
               ))}
             </View>
           ))}

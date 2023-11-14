@@ -73,7 +73,7 @@ const OauthScreen = () => {
         if (data.dataHeader.successCode == 0) {
           await setTokens(data.dataBody.tokens.accessToken, data.dataBody.tokens.refreshToken);
           setMemberInfo(data.dataBody.memberInfo);
-          const responseData = await getIsAnswerQuestionData(data.dataBody.tokens.accessToken);
+          const responseData = await getIsAnswerQuestionData();
           setIsAnswer(responseData.dataBody);
         } else {
           Alert.alert('로그인 실패', '다시 시도해주세요.');

@@ -1,30 +1,40 @@
 import { View, useWindowDimensions } from 'react-native';
 import * as Color from '../../components/Colors/colors';
 import { Spacer } from '../../components/Basic/Spacer';
-import { Body, Caption, Heading } from '../../components/Typography/Typography';
+import { Body, Heading } from '../../components/Typography/Typography';
 import { ProgressBar, ProgressPie } from '../../components/ProgressStatus/ProgressStatus';
+import { useEffect, useState } from 'react';
+import { getGIVEAICommentData } from '../../util/fetch/fetchUtil';
 
-export const AIReportView = () => {
+export const AIReportView = (props) => {
   return (
     <View>
-      <AIReportCommentCard />
-      <GroupScoreCard />
-      <GroupRealGiveCntCard />
-      <GroupReportCard />
+      <AIReportCommentCard charityId={props.charityId} />
+      <GroupScoreCard charityId={props.charityId} />
+      <GroupRealGiveCntCard charityId={props.charityId} />
+      <GroupReportCard charityId={props.charityId} />
     </View>
   );
 };
 
-export const AIReportCommentCard = () => {
-  // API로 이 데이터 한번에 묶어서 주면 아마 글씨 크기 조정은 안 될 겁니당~, 이건 나중가서 생각하죵
-  const data = {
-    summary:
-      '굿네이버스(Good Neighbors)는 한국에서 설립된 국제구호단체로, 굶주림 없는 세상과 더불어 사는 세상을 만들기 위한 활동을 수행하는 글로벌 아동권리 전문 NGO입니다. 아래는 굿네이버스에 대한 평가 및 주요 특징에 대한 요약입니다.',
-    good: '1. 미션과 목적: 굿네이버스의 목적은 굶주림을 없애는 것과 더불어 사는 세상을 만드는 것으로, 사회적 문제를 해결하고 사람들의 삶을 개선하기 위한 미션을 가지고 있습니다.\n2. 재무 현황: 굿네이버스의 재무 현황은 안정적으로 보입니다. 총 자산과 순자산의 크기가 상당하며, 부채 비율이 낮아 재무 건전성을 나타냅니다.\n3. 수익 다양성: 다양한 수익원을 보유하고 있으며, 이를 통해 지속적으로 프로젝트와 프로그램을 지원할 수 있습니다.\n4. 독립적인 평가: 굿네이버스는 한국 가이드스타의 공익법인 투명성 및 재무 효율성 평가에서 우수한 평가를 받아 투명성과 효율성을 강조하는 공익법인 중 하나로 인정받았습니다.',
-    warn: "1. 종교적 연관성: 굿네이버스와 관련하여 종교적 색채와 논란이 있으며, 선교와 봉사활동의 경계가 모호하다는 비판이 있습니다. 이러한 종교적 연관성은 기부자에게 중요한 이슈일 수 있습니다.\n2. 광고 논란: 기부 독려와 기부금을 모으기 위해 사용되는 폭력적인 광고 기법인 '빈곤 포르노'를 사용한 적이 있어서 비판을 받은 적이 있습니다. 광고 캠페인과 이미지 관리에 주의가 필요합니다.",
-    total:
-      '종합적으로 굿네이버스는 아동권리와 굶주림 문제에 대한 미션을 가지고 활동하며, 재무 현황과 투명성 측면에서 양호한 성과를 보입니다. 그러나 종교적 연관성과 광고 관련 논란에 대해 고려하여 기부 결정을 내리는 것이 중요할 것입니다. 또한, 독립적인 기부 단체 평가 기관의 평가를 참고하여 결정하는 것도 도움이 될 수 있습니다.',
-  };
+export const AIReportCommentCard = (props) => {
+  const [data, setData] = useState(null);
+  const [isError, setIsError] = useState(false);
+  useEffect(() => {
+    const getGIVEAIComment = async () => {
+      try {
+        const responseData = await getGIVEAICommentData(props.charityId);
+        if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
+        else {
+          console.error('GroupAIReportModule.js > AIReportCommentCard: responseData가 없습니다.');
+          setIsError(true);
+        }
+      } catch (error) {
+        console.error('GroupAIReportModule.js > AIReportCommentCard: ' + error);
+      }
+    };
+    getGIVEAIComment();
+  }, []);
   return (
     <View style={{ padding: 8, marginVertical: 6 }}>
       <Heading>분석</Heading>
@@ -32,24 +42,7 @@ export const AIReportCommentCard = () => {
       <Heading fontSize={22}>👀 AI 종합 분석 코멘트</Heading>
       <Spacer space={10} />
       <View style={{ backgroundColor: Color.Black_20, borderRadius: 20, padding: 14, paddingVertical: 14 }}>
-        <Heading fontSize={16}> 📋 요약</Heading>
-        <Spacer space={4} />
-        <Body fontSize={14}>{data.summary}</Body>
-        <Spacer space={8} />
-
-        <Heading fontSize={16}> 👍 긍정적인 점</Heading>
-        <Spacer space={4} />
-        <Body fontSize={14}>{data.good}</Body>
-        <Spacer space={8} />
-
-        <Heading fontSize={16}> 👎 주의할 점</Heading>
-        <Spacer space={4} />
-        <Body fontSize={14}>{data.warn}</Body>
-        <Spacer space={8} />
-
-        <Heading fontSize={16}> ✨ 종합</Heading>
-        <Spacer space={4} />
-        <Body fontSize={14}>{data.total}</Body>
+        {data != null && !isError ? <Body fontSize={14}>{data}</Body> : <Body fontSize={14}>* 데이터를 불러오는데 실패했습니다 :(</Body>}
       </View>
     </View>
   );

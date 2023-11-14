@@ -37,7 +37,10 @@ export const NewsView = (props) => {
       ) : isError ? (
         <Caption fontSize={16}>* 뉴스 데이터를 불러오는데 실패했습니다 :(</Caption>
       ) : (
-        <ActivityIndicator />
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+          <Caption fontSize={14}>뉴스 데이터를 불러오고 있습니다. </Caption>
+          <ActivityIndicator />
+        </View>
       )}
     </View>
   );
