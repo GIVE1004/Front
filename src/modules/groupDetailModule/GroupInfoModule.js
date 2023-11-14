@@ -5,7 +5,7 @@ import * as Color from '../../components/Colors/colors';
 import { AddComma } from '../../util/util';
 import { openURL } from '../../util/linkUtil';
 import Hyperlink from 'react-native-hyperlink';
-import { getGroupDetailInfoData } from '../../util/fetch/fetchUtil';
+import { getGroupDetailAICommentData, getGroupDetailInfoData } from '../../util/fetch/fetchUtil';
 import { useEffect, useState } from 'react';
 
 export const InfoView = (props) => {
@@ -19,10 +19,23 @@ export const InfoView = (props) => {
 };
 
 export const InfoCommentCard = (props) => {
-  const data = {
-    infoAIData:
-      '굿네이버스(Good Neighbors)는 글로벌 아동권리와 사회복지에 초점을 맞춘 국제 비정부기구입니다. 이 단체는 아동들과 가정, 지역사회의 발전을 촉진하고 어려움을 겪는 곳에서 도움을 주는 사회적 기부 활동을 실시하고 있습니다.\n\n굿네이버스의 주요 활동 분야와 목표는 다음과 같습니다.\n\n1. **아동권리**: 굿네이버스는 아동들의 권리와 이익을 보호하고 증진하는 활동을 펼치며, 아동학대 방지 및 아동권리 옹호에 기여합니다.\n\n2. **국제개발**: 전 세계에서 어려움을 겪는 지역 사회의 발전을 지원합니다. 이를 통해 교육, 의료, 긴급 구호, 인프라 구축 등을 실시하며 지역사회의 삶의 질을 향상시킵니다.\n\n3. **사회복지**: 굿네이버스는 취약 계층과 다양한 사회적 문제에 대한 지원을 제공합니다. 이를 통해 사회의 공정성과 평등성을 촉진하고, 어려움을 겪는 사람들에게 필요한 도움을 제공합니다.\n\n4. **환경 보호**: 환경 보호와 지속 가능한 발전에도 신경을 쓰며, 생태계 보전과 지구 환경 문제에 대한 인식을 높이고 이에 기여합니다.\n\n굿네이버스는 전 세계에서 다양한 사업을 진행하며 사람들의 선한 마음과 기부로 아동들과 지역사회에 긍정적인 영향을 끼치고자 노력하고 있습니다. 이를 통해 아동들의 미래와 희망을 키우고, 어려움을 겪는 지역사회의 발전을 돕는 중요한 역할을 하고 있습니다.',
-  };
+  const [data, setData] = useState(null);
+  const [isError, setIsError] = useState(false);
+  useEffect(() => {
+    const getGroupDetailAIComment = async () => {
+      try {
+        const responseData = await getGroupDetailAICommentData(props.charityId);
+        if (responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
+        else {
+          console.error('GroupAIReportModule.js > GroupReportCard: responseData가 없습니다.');
+          setIsError(true);
+        }
+      } catch (error) {
+        console.error('GroupAIReportModule.js > GroupReportCard: ' + error);
+      }
+    };
+    getGroupDetailAIComment();
+  }, []);
   return (
     <View style={{ padding: 8 }}>
       <Heading>단체 정보 보기</Heading>
@@ -30,7 +43,7 @@ export const InfoCommentCard = (props) => {
       <Heading fontSize={22}>👀 AI 단체 분석 코멘트</Heading>
       <Spacer space={10} />
       <View style={{ backgroundColor: Color.Black_20, borderRadius: 20, padding: 14, paddingVertical: 14 }}>
-        <Body fontSize={14}>{data.infoAIData}</Body>
+        {data != null && !isError ? <Body fontSize={14}>{data}</Body> : <Body fontSize={14}>* 데이터를 불러오는데 실패했습니다 :(</Body>}
       </View>
     </View>
   );
@@ -58,7 +71,7 @@ export const InfoCard = (props) => {
     const getGroupDetailInfo = async () => {
       try {
         const responseData = await getGroupDetailInfoData(props.charityId);
-        if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
+        if (responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
         else {
           console.error('GroupInfoModule.js > InfoCard: responseData가 없습니다.');
           setIsError(true);
