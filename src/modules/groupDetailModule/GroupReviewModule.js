@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Body, Heading } from '../../components/Typography/Typography';
 import * as Color from '../../components/Colors/colors';
 import { View } from 'react-native';
@@ -6,8 +6,9 @@ import { Spacer } from '../../components/Basic/Spacer';
 import { BasicButton } from '../../components/Buttons/Buttons';
 import { Icon } from '../../components/Icons/Icons';
 import * as IconName from '../../components/Icons/IconName';
+import { getReviewCommentData } from '../../util/fetch/fetchUtil';
 
-export const ReviewView = () => {
+export const ReviewView = (props) => {
   const data = [
     {
       reviewTitle: '최고의 자선 단체입니다.',
@@ -33,8 +34,8 @@ export const ReviewView = () => {
   ];
   return (
     <View>
-      <ReviewCommentCard />
-      <ReviewTotalCard />
+      <ReviewCommentCard charityId={props.charityId} />
+      <ReviewTotalCard charityId={props.charityId} />
       {data.map((value, index) => (
         <ReviewCard data={value} key={index} />
       ))}
@@ -42,11 +43,25 @@ export const ReviewView = () => {
   );
 };
 
-export const ReviewCommentCard = () => {
-  const data = {
-    high: '매달 기부금이 어떻게 쓰였는지 알려주고, 직접 봉사도 할 수 있게 연결도 시켜주며 기부자의 세액공제도 할 수 있도록 친절하게 도와줍니다. 유명한 기부 단체이기 때문에 괜찮은 선택이 될 수 있습니다.',
-    low: '기부금이 어디에 쓰였는지 잘 모르겠다는 의견이 있습니다. 또한 특정 종교 단체의 입김이 너무 강해서 불만스럽다는 의견도 있습니다.',
-  };
+export const ReviewCommentCard = (props) => {
+  const [data, setData] = useState(null);
+  const [isError, setIsError] = useState(false);
+  useEffect(() => {
+    const getReviewComment = async () => {
+      try {
+        const responseData = await getReviewCommentData(props.charityId);
+        if (responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
+        else {
+          console.error('GroupReviewModule.js > ReviewCommentCard: responseData가 없습니다.');
+          setIsError(true);
+        }
+      } catch (error) {
+        console.error('GroupReviewModule.js > ReviewCommentCard: ' + error);
+      }
+    };
+    getReviewComment();
+  }, []);
+
   return (
     <View style={{ padding: 8 }}>
       <Heading>리뷰</Heading>
@@ -54,13 +69,7 @@ export const ReviewCommentCard = () => {
       <Heading fontSize={22}>👀 AI 리뷰 분석 코멘트</Heading>
       <Spacer space={10} />
       <View style={{ backgroundColor: Color.Black_20, borderRadius: 20, padding: 14, paddingVertical: 14 }}>
-        <Heading fontSize={16}> 👍 높은 평점 요약</Heading>
-        <Spacer space={4} />
-        <Body fontSize={14}>{data.high}</Body>
-        <Spacer space={8} />
-        <Heading fontSize={16}> 👎 낮은 평점 요약</Heading>
-        <Spacer space={4} />
-        <Body fontSize={14}>{data.low}</Body>
+        {data != null && !isError ? <Body fontSize={14}>{data}</Body> : <Body fontSize={14}>* 데이터를 불러오는데 실패했습니다 :(</Body>}
       </View>
     </View>
   );

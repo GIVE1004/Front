@@ -5,7 +5,7 @@ import { Body, Caption, Heading } from '../../components/Typography/Typography';
 import { AddComma, Scaleing } from '../../util/util';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
 import { useEffect, useState } from 'react';
-import { getAssetData, getGraphFinancialData, getPublicProfitsData, getRevenueData } from '../../util/fetch/fetchUtil';
+import { getAssetData, getFinancialAICommentData, getGraphFinancialData, getPublicProfitsData, getRevenueData } from '../../util/fetch/fetchUtil';
 
 export const GroupFinancialView = (props) => {
   return (
@@ -20,9 +20,23 @@ export const GroupFinancialView = (props) => {
 };
 
 export const FinancialCommentCard = (props) => {
-  const data = {
-    financialAIData: '굿네이버스의 재무 현황은 안정적으로 보입니다. 총 자산과 순자산의 크기가 상당하며, 부채 비율이 낮아 재무 건전성을 나타냅니다.',
-  };
+  const [data, setData] = useState(null);
+  const [isError, setIsError] = useState(false);
+  useEffect(() => {
+    const getFinancialAIComment = async () => {
+      try {
+        const responseData = await getFinancialAICommentData(props.charityId);
+        if (responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
+        else {
+          console.error('GroupFinancialModule.js > FinancialCommentCard: responseData가 없습니다.');
+          setIsError(true);
+        }
+      } catch (error) {
+        console.error('GroupFinancialModule.js > FinancialCommentCard: ' + error);
+      }
+    };
+    getFinancialAIComment();
+  }, []);
   return (
     <View style={{ padding: 8 }}>
       <Heading>재무 재표</Heading>
@@ -30,7 +44,7 @@ export const FinancialCommentCard = (props) => {
       <Heading fontSize={22}>👀 AI 재무재표 분석 코멘트</Heading>
       <Spacer space={10} />
       <View style={{ backgroundColor: Color.Black_20, borderRadius: 20, padding: 14, paddingVertical: 14 }}>
-        <Body fontSize={14}>{data.financialAIData}</Body>
+        {data != null && !isError ? <Body fontSize={14}>{data}</Body> : <Body fontSize={14}>* 데이터를 불러오는데 실패했습니다 :(</Body>}
       </View>
     </View>
   );
@@ -45,7 +59,7 @@ export const FinancialCard = (props) => {
     const getGraphFinancial = async () => {
       try {
         const responseData = await getGraphFinancialData(props.charityId);
-        if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
+        if (responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
         else {
           console.error('GroupFinancialModule.js > FinancialCard: responseData가 없습니다.');
           setIsError(true);
@@ -196,7 +210,7 @@ export const AssetCard = (props) => {
     const getAsset = async () => {
       try {
         const responseData = await getAssetData(props.charityId);
-        if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
+        if (responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
         else {
           console.error('GroupFinancialModule.js > AssetCard: responseData가 없습니다.');
           setIsError(true);

@@ -20,7 +20,7 @@ export const GroupInfoCard = (props) => {
     const getGroupDetailInfo = async () => {
       try {
         const responseData = await getGroupDetailInfoData(props.charityId);
-        if (responseData.dataHeader && responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
+        if (responseData.dataHeader.successCode == 0) setData(responseData.dataBody);
         else {
           console.error('GroupBasicModule.js > GroupInfoCard: responseData가 없습니다.');
         }

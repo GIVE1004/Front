@@ -85,6 +85,16 @@ export const getCharityNews = async (charityId) => {
   return response.data;
 };
 
+// 작업 JS: GroupNewsModule.js > NewsCommentCard
+// URI: /charities/{charityId}/news/analysis
+// 요약: 언론보도 내 뉴스의 종합 AI Comment를 가져온다.
+export const getNewsCommentData = async (charityId) => {
+  const baseUrl = `${url}/charities/${charityId}/news/analysis`;
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
+
+/////////////FINANCIAL/////////////
 // 작업 JS: GroupFinancialModule.js > RevenueCard
 // URI: /charities/{charityId}/profits/current
 // 요약: 재무재표 내 수익현황을 뿌려준다.
@@ -121,6 +131,15 @@ export const getGraphFinancialData = async (charityId) => {
   return response.data;
 };
 
+// 작업 JS: GroupFinancialModule.js > FinancialCommentCard
+// URI: /charities/{charityId}/finance/analysis
+// 요약: 재무재표 내 AI Comment를 가져온다.
+export const getFinancialAICommentData = async (charityId) => {
+  const baseUrl = `${url}/charities/${charityId}/finance/analysis`;
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
+
 /////////////INFO/////////////
 // 작업 JS: GroupInfoModule.js > InfoCard
 // URI: /charities/{charityId}
@@ -131,12 +150,41 @@ export const getGroupDetailInfoData = async (charityId) => {
   return response.data;
 };
 
+// 작업 JS: GroupInfoModule.js > InfoCommentCard
+// URI: /charities/{chairtyId}/profile/analysis
+// 요약: 단체정보 내 기부단체의 AI Comment를 가져온다.
+export const getGroupDetailAICommentData = async (charityId) => {
+  const baseUrl = `${url}/charities/${charityId}/profile/analysis`;
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
+//
+
 /////////////GIVE AI/////////////
 // 작업 JS: GroupAIReportModule.js > AIReportCommentCard
 // URI: /charities/{charityId}/overall/analysis
 // 요약: 단체정보 내 GIVE AI 분석 코맨트를 가져온다.
 export const getGIVEAICommentData = async (charityId) => {
   const baseUrl = `${url}/charities/${charityId}/overall/analysis`;
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
+
+// 작업 JS: GroupAIReportModule.js > GroupReportCard
+// URI: /charities/{charityId}/audit/analysis
+// 요약: 단체정보 내 감사 분석 AI 코맨트를 가져온다.
+export const getReportAICommentData = async (charityId) => {
+  const baseUrl = `${url}/charities/${charityId}/audit/analysis`;
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
+
+////////////REVIEW///////////////
+// 작업 JS: GroupReviewModule.js > ReviewCommentCard
+// URI: /charities/{charityId}/review/analysis
+// 요약: 리뷰 내 AI Comment를 가져온다.
+export const getReviewCommentData = async (charityId) => {
+  const baseUrl = `${url}/charities/${charityId}/review/analysis`;
   const response = await axios.get(baseUrl);
   return response.data;
 };
