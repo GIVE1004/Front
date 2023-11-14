@@ -214,3 +214,68 @@ export const getIsAnswerQuestionData = async () => {
   const response = await axios.get(baseUrl, { headers: { Authorization: `Bearer ${accessToken}` } });
   return response.data;
 };
+
+// 작업 JS: SearchScreen.js
+// URL: /keyword/trending
+// 조회수가 가장 많은 단체들을 보여준다
+export const getTrendingGroupInfoData = async () => {
+  const baseUrl = `${url}/keyword/trending`;
+  console.log(baseUrl);
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
+
+// 작업 JS: SearchScreen.js
+// URL: /keyword/activity
+// 활동점수가 가장 많은 기부단체를 보여준다
+export const getActivityGroupInfoData = async () => {
+  const baseUrl = `${url}/keyword/activity`;
+  console.log(baseUrl);
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
+
+// 작업 JS: SearchScreen.js
+// URL: /keyword/trust
+// 신뢰도가 가장 높은 기부단체를 보여준다
+export const getTrustGroupInfoData = async () => {
+  const baseUrl = `${url}/keyword/trust`;
+  console.log(baseUrl);
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
+
+// 작업 JS: SearchScreen.js
+// URL: /keyword/match
+// 추천점수가 높은 기부단체를 보여준다
+export const getMatchingGroupInfoData = async () => {
+  const baseUrl = `${url}/keyword/match`;
+  console.log(baseUrl);
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
+
+// 작업 JS: SearchScreen.js
+// URL: /keyword/interest
+// 관심점수가 높은 기부단체를 보여준다
+export const getInterestingroupInfoData = async () => {
+  const baseUrl = `${url}/keyword/interest`;
+  console.log(baseUrl);
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
+
+//********* Search **********/
+// 작업 JS: QuestionScreen.js
+// URI: /keyword/search
+// 요약: 검색
+export const getSearchData = async (sendData) => {
+  const baseUrl = `${url}/keyword/search`;
+  const response = await axios({
+    method: 'post',
+    url: baseUrl,
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+    data: sendData,
+  });
+  return response.data;
+};
