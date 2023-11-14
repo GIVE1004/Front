@@ -2,17 +2,19 @@ import { setAsync, getAsync, removeAsync } from '../async/asyncUtil';
 
 export const getTokens = async (setAccessToken, setRefreshToken) => {
   getAsync('accessToken').then((res) => {
-    setAccessToken(res);
+    setAccessToken(JSON.parse(res));
   });
   getAsync('refreshToken').then((res) => {
-    setRefreshToken(res);
+    setRefreshToken(JSON.parse(res));
   });
 };
 
-export const getAccessToken = async (setAccessToken) => {
-  getAsync('accessToken').then((res) => {
-    setAccessToken(res);
+export const getAccessToken = async () => {
+  let accessToken = null;
+  await getAsync('accessToken').then((res) => {
+    accessToken = JSON.parse(res);
   });
+  return accessToken;
 };
 
 export const setTokens = async (accessToken, refreshToken) => {

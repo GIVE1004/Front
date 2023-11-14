@@ -36,17 +36,16 @@ const SplashScreen = () => {
       const response = await getRefreshFetch(accessToken, refreshToken);
       const data = await response.json();
       if (data.dataHeader.successCode == 0) {
-        await setTokens(data.dataBody.accessToken, data.dataBody.refreshToken);
+        await setTokens(data.dataBody.tokens.accessToken, data.dataBody.tokens.refreshToken);
         setMemberInfo(data.dataBody.memberInfo);
 
-        const responseData = await getIsAnswerQuestionData(accessToken.slice(1, -1));
+        const responseData = await getIsAnswerQuestionData(accessToken);
         setIsAnswer(responseData.dataBody);
       } else {
         navigation.navigate('OauthScreen');
       }
     } catch (e) {
       console.error('SplashScreen.js > getRefreshData: ' + e);
-      // Alert.alert('서버 통신 에러');
       navigation.navigate('OauthScreen');
     }
   };

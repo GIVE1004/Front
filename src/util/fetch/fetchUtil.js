@@ -1,9 +1,10 @@
 import { Platform } from 'react-native';
 import axios from 'axios';
+import { getAccessToken } from '../token/tokenUtil';
 
 const _ANDROID_AVD_API_HOST = 'http://10.0.2.2:8080';
 const _IOS_API_HOST = 'http://localhost:8080';
-export default getAPIHost = () => {
+export const getAPIHost = () => {
   if (Platform.OS === 'ios') {
     return _IOS_API_HOST;
   } else if (Platform.OS === 'android') {
@@ -60,11 +61,6 @@ export const getLoginFetch = async (oAuthServerType, code) => {
 // 요약: token 상태 확인 및 memberInfo 받아오기
 export const getRefreshFetch = async (accessToken, refreshToken) => {
   const baseUrl = `${url}/oauth/refresh`;
-  if (accessToken != null && refreshToken != null) {
-    accessToken = accessToken.slice(1, -1);
-    refreshToken = refreshToken.slice(1, -1);
-  }
-
   return await fetch(baseUrl, {
     method: 'POST',
     headers: {
@@ -135,11 +131,22 @@ export const getGroupDetailInfoData = async (charityId) => {
   return response.data;
 };
 
+/////////////GIVE AI/////////////
+// 작업 JS: GroupAIReportModule.js > AIReportCommentCard
+// URI: /charities/{charityId}/overall/analysis
+// 요약: 단체정보 내 GIVE AI 분석 코맨트를 가져온다.
+export const getGIVEAICommentData = async (charityId) => {
+  const baseUrl = `${url}/charities/${charityId}/overall/analysis`;
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
+
 //********* question **********/
 // 작업 JS: QuestionScreen.js
 // URI: /members/me/surveys
 // 요약: 취향조사 답변 전송
-export const postQuestionData = async (sendData, accessToken) => {
+export const postQuestionData = async (sendData) => {
+  const accessToken = await getAccessToken();
   const baseUrl = `${url}/members/me/surveys`;
   const response = await axios({
     method: 'post',
@@ -153,7 +160,8 @@ export const postQuestionData = async (sendData, accessToken) => {
 // 작업 JS: SplashScreen.js, OauthScreen.js
 // URI: /members/me/surveys/check
 // 요약: 시작 시 question 대답에 대한 여부 가져오기
-export const getIsAnswerQuestionData = async (accessToken) => {
+export const getIsAnswerQuestionData = async () => {
+  const accessToken = await getAccessToken();
   const baseUrl = `${url}/members/me/surveys/check`;
   const response = await axios.get(baseUrl, { headers: { Authorization: `Bearer ${accessToken}` } });
   return response.data;
