@@ -6,11 +6,46 @@ import { ImageLoader } from '../../components/Images/ImageLoader';
 import { useNavigation } from '@react-navigation/native';
 import { Spacer } from '../../components/Basic/Spacer';
 import { formatNumberWithSign } from '../../util/util';
-import { getTrendingGroupInfoData } from '../../util/fetch/fetchUtil';
+import {
+  getTrendingGroupInfoData,
+  getActivityGroupInfoData,
+  getTrustGroupInfoData,
+  getMatchingGroupInfoData,
+  getInterestingroupInfoData,
+  getSearchData,
+} from '../../util/fetch/fetchUtil';
 
 export const SearchGroupCard = (props) => {
   const [data, setData] = useState(null);
-  // console.log(props);
+  console.log(props.selectedLabel);
+
+  useEffect(() => {
+    if (props.searchPress) {
+      //fetch
+      console.log('유즈');
+      console.log(props.searchInput);
+      const getSearchResult = async () => {
+        try {
+          const sendData = {
+            search_word: props.searchInput,
+          };
+          const responseData = await getSearchData(sendData);
+          console.log(responseData.dataBody);
+
+          if (responseData.dataHeader && responseData.dataHeader.successCode == 0) {
+            setData(responseData.dataBody);
+          } else {
+            console.error('SearchModule.js > SearchGroupCard: responseData가 없습니다.');
+          }
+        } catch (error) {
+          console.error('SearchModule.js > SearchGroupCard: ' + error);
+        }
+      };
+      getSearchResult();
+      props.setSearchPress(false);
+    }
+  }, [props.searchPress]);
+
   useEffect(() => {
     if (props.selectedLabel == '🔥 지금 뜨는') {
       const getTrendingGroupInfo = async () => {
@@ -27,19 +62,72 @@ export const SearchGroupCard = (props) => {
         }
       };
       getTrendingGroupInfo();
-    } else {
-    }
-  }, []);
+    } else if (props.selectedLabel == '활발한 활동') {
+      const getActivityGroupInfo = async () => {
+        try {
+          const responseData = await getActivityGroupInfoData();
 
-  if (props.selectedLabel == '지금뜨는') {
-    //fetch(주소)
-  } else {
-    // fetch(다른 주소)
-  }
+          if (responseData.dataHeader && responseData.dataHeader.successCode == 0) {
+            setData(responseData.dataBody);
+          } else {
+            console.error('SearchModule.js > SearchGroupCard: responseData가 없습니다.');
+          }
+        } catch (error) {
+          console.error('SearchMoudle.js > SearchGroupCard: ' + error);
+        }
+      };
+      getActivityGroupInfo();
+    } else if (props.selectedLabel == '높은 신뢰도') {
+      const getTrustGroupInfo = async () => {
+        try {
+          const responseData = await getTrustGroupInfoData();
+
+          if (responseData.dataHeader && responseData.dataHeader.successCode == 0) {
+            setData(responseData.dataBody);
+          } else {
+            console.error('SearchModule.js > SearchGroupCard: responseData가 없습니다.');
+          }
+        } catch (error) {
+          console.error('SearchMoudle.js > SearchGroupCard: ' + error);
+        }
+      };
+      getTrustGroupInfo();
+    } else if (props.selectedLabel == '나와 맞는') {
+      const getMatchingGroupInfo = async () => {
+        try {
+          const responseData = await getMatchingGroupInfoData();
+
+          if (responseData.dataHeader && responseData.dataHeader.successCode == 0) {
+            setData(responseData.dataBody);
+          } else {
+            console.error('SearchModule.js > SearchGroupCard: responseData가 없습니다.');
+          }
+        } catch (error) {
+          console.error('SearchMoudle.js > SearchGroupCard: ' + error);
+        }
+      };
+      getMatchingGroupInfo();
+    } else if (props.selectedLabel == '인기') {
+      const getInterestingGroupInfo = async () => {
+        try {
+          const responseData = await getInterestingroupInfoData();
+
+          if (responseData.dataHeader && responseData.dataHeader.successCode == 0) {
+            setData(responseData.dataBody);
+          } else {
+            console.error('SearchModule.js > SearchGroupCard: responseData가 없습니다.');
+          }
+        } catch (error) {
+          console.error('SearchMoudle.js > SearchGroupCard: ' + error);
+        }
+      };
+      getInterestingGroupInfo();
+    }
+  }, [props.selectedLabel]);
 
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
-      {console.log(data)}
+      {/* {console.log(data)} */}
       {data != null ? (
         data.map((values, index) => <SearchCard data={values} key={index} />)
       ) : (
@@ -80,11 +168,11 @@ export const SearchCard = (props) => {
           <Spacer space={16} horizontal={true} />
           <View>
             <Heading fontSize={14} color={Color.Black_80}>
-              {data.groupName}
+              {data.group_name}
             </Heading>
             <Spacer space={4}></Spacer>
             <Caption fontSize={12}>
-              {data.groupTag}|{data.groupLabel}
+              {data.group_tag}|{data.group_label}
             </Caption>
           </View>
         </View>
@@ -95,22 +183,22 @@ export const SearchCard = (props) => {
             {/* 평점란 */}
             <Body fontSize={12}>리뷰 평점</Body>
             <Spacer space={4} />
-            <Heading fontSize={12}>{data.groupScore} / 100</Heading>
+            <Heading fontSize={12}>{data.group_score} / 100</Heading>
           </View>
           <View style={{ alignItems: 'center' }}>
             {/* 기부자 */}
             <Body fontSize={12}>기부자(월 단위 증감)</Body>
             <Spacer space={4} />
-            <Heading fontSize={12} color={data.groupNumberPm >= 0 ? Color.Success_50 : Color.Danger_50}>
-              {data.groupNumber} 명 ({formatNumberWithSign(data.groupNumberPm)})
+            <Heading fontSize={12} color={data.group_number_pm >= 0 ? Color.Success_50 : Color.Danger_50}>
+              {data.group_number} 명 ({formatNumberWithSign(data.group_number_pm)})
             </Heading>
           </View>
           <View style={{ alignItems: 'center' }}>
             {/* 관심지수 */}
             <Body fontSize={12}>관심지수</Body>
             <Spacer space={4} />
-            <Heading fontSize={12} color={data.gruopStarPm >= 0 ? Color.Success_50 : Color.Danger_50}>
-              {data.groupStar} 점 ({formatNumberWithSign(data.groupStarPm)})
+            <Heading fontSize={12} color={data.gruop_star_pm >= 0 ? Color.Success_50 : Color.Danger_50}>
+              {data.group_star} 점 ({formatNumberWithSign(data.group_star_pm)})
             </Heading>
           </View>
         </View>

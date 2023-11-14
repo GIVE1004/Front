@@ -43,7 +43,7 @@ export const SwiftLabel = (props) => {
     <ScrollView horizontal={true} style={{ paddingVertical: 10 }}>
       <View style={{ width: width, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
         {props.labels.map((label, index) => (
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} key={index}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingHorizontal: 15 }} key={index}>
             <SwiftButton
               borderRadius={10}
               width={props.width}

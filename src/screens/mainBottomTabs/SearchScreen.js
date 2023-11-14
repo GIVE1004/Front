@@ -7,17 +7,22 @@ import { Body } from '../../components/Typography/Typography';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { SwiftLabel } from '../../components/Labels/Labels';
 import { SearchGroupCard } from '../../modules/searchModule/SearchModule';
+import { postSearchData } from '../../util/fetch/fetchUtil';
 
 const SearchScreen = () => {
-  const labels = ['🔥 지금 뜨는', '높은 신뢰도', '작은 기부단위', '활발한 활동'];
+  const labels = ['🔥 지금 뜨는', '활발한 활동', '높은 신뢰도', '나와 맞는', '인기'];
   const [isFocus, setIsFocus] = useState([true, false]);
   const selectedLabel = labels[isFocus.indexOf(true)];
+  const [searchInput, setSearchInput] = useState('');
+  const [searchPress, setSearchPress] = useState(false);
 
   return (
     <View style={styles.container}>
       <SearchHeader
+        onChangeText={setSearchInput}
         onSubmitEditing={() => {
-          console.log('press Search');
+          console.log(searchInput);
+          setSearchPress(true);
         }}
       />
       <View style={{ width: '100%', paddingHorizontal: 15 }}>
@@ -27,7 +32,7 @@ const SearchScreen = () => {
         <SwiftLabel isFocus={isFocus} setIsFocus={setIsFocus} labels={labels} />
       </View>
       <KeyboardAwareScrollView>
-        <SearchGroupCard selectedLabel={selectedLabel} />
+        <SearchGroupCard selectedLabel={selectedLabel} searchPress={searchPress} setSearchPress={setSearchPress} searchInput={searchInput} />
       </KeyboardAwareScrollView>
     </View>
   );
