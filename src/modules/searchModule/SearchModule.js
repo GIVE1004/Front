@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Body, Caption, Heading } from '../../components/Typography/Typography';
 import * as Color from '../../components/Colors/colors';
 import { View, useWindowDimensions, TouchableOpacity } from 'react-native';
@@ -6,81 +6,48 @@ import { ImageLoader } from '../../components/Images/ImageLoader';
 import { useNavigation } from '@react-navigation/native';
 import { Spacer } from '../../components/Basic/Spacer';
 import { formatNumberWithSign } from '../../util/util';
+import { getTrendingGroupInfoData } from '../../util/fetch/fetchUtil';
 
 export const SearchGroupCard = (props) => {
-  console.log(props);
+  const [data, setData] = useState(null);
+  // console.log(props);
+  useEffect(() => {
+    if (props.selectedLabel == '🔥 지금 뜨는') {
+      const getTrendingGroupInfo = async () => {
+        try {
+          const responseData = await getTrendingGroupInfoData();
+
+          if (responseData.dataHeader && responseData.dataHeader.successCode == 0) {
+            setData(responseData.dataBody);
+          } else {
+            console.error('SearchModule.js > SearchGroupCard: responseData가 없습니다.');
+          }
+        } catch (error) {
+          console.error('SearchMoudle.js > SearchGroupCard: ' + error);
+        }
+      };
+      getTrendingGroupInfo();
+    } else {
+    }
+  }, []);
+
   if (props.selectedLabel == '지금뜨는') {
     //fetch(주소)
   } else {
     // fetch(다른 주소)
   }
-  const tmpdata = [
-    {
-      source: 'https://picsum.photos/300',
-      groupId: 1,
-      groupName: '사회복지법인 굿네이버스1',
-      groupTag: '사회복지',
-      groupLabel: '지정기부금단체',
-      groupScore: '80',
-      groupNumber: '1234',
-      groupNumberPm: '12',
-      groupStar: '1234',
-      gruopStarPm: '-12',
-    },
-    {
-      source: 'https://picsum.photos/300',
-      groupId: 2,
-      groupName: '사회복지법인 굿네이버스2',
-      groupTag: '사회복지',
-      groupLabel: '지정기부금단체',
-      groupScore: '80',
-      groupNumber: '1234',
-      groupNumberPm: '12',
-      groupStar: '1234',
-      gruopStarPm: '-12',
-    },
-    {
-      source: 'https://picsum.photos/300',
-      groupId: 3,
-      groupName: '사회복지법인 굿네이버스3',
-      groupTag: '사회복지',
-      groupLabel: '지정기부금단체',
-      groupScore: '80',
-      groupNumber: '1234',
-      groupNumberPm: '12',
-      groupStar: '1234',
-      gruopStarPm: '-12',
-    },
-    {
-      source: 'https://picsum.photos/300',
-      groupId: 4,
-      groupName: '사회복지법인 굿네이버스4',
-      groupTag: '사회복지',
-      groupLabel: '지정기부금단체',
-      groupScore: '80',
-      groupNumber: '1234',
-      groupNumberPm: '12',
-      groupStar: '1234',
-      gruopStarPm: '12',
-    },
-    {
-      source: 'https://picsum.photos/300',
-      groupId: 5,
-      groupName: '사회복지법인 굿네이버스5',
-      groupTag: '사회복지',
-      groupLabel: '지정기부금단체',
-      groupScore: '80',
-      groupNumber: '1234',
-      groupNumberPm: '12',
-      groupStar: '1234',
-      gruopStarPm: '12',
-    },
-  ];
+
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
-      {tmpdata.map((values, index) => (
-        <SearchCard data={values} key={index} />
-      ))}
+      {console.log(data)}
+      {data != null ? (
+        data.map((values, index) => <SearchCard data={values} key={index} />)
+      ) : (
+        <>
+          <View style={{ marginHorizontal: 8 }}></View>
+          <Caption fontSize={16}>* 데이터를 불러오는데 실패했습니다 :</Caption>
+        </>
+      )}
     </View>
   );
 };
@@ -143,7 +110,7 @@ export const SearchCard = (props) => {
             <Body fontSize={12}>관심지수</Body>
             <Spacer space={4} />
             <Heading fontSize={12} color={data.gruopStarPm >= 0 ? Color.Success_50 : Color.Danger_50}>
-              {data.groupStar} 점 ({formatNumberWithSign(data.gruopStarPm)})
+              {data.groupStar} 점 ({formatNumberWithSign(data.groupStarPm)})
             </Heading>
           </View>
         </View>

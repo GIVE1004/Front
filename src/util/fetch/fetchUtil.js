@@ -158,3 +158,13 @@ export const getIsAnswerQuestionData = async (accessToken) => {
   const response = await axios.get(baseUrl, { headers: { Authorization: `Bearer ${accessToken}` } });
   return response.data;
 };
+
+// 작업 JS: SearchScreen.js
+// URL: /keyword/trending
+// 조회수가 가장 많은 단체들을 보여준다
+export const getTrendingGroupInfoData = async () => {
+  const baseUrl = `http://192.168.50.250:8080/keyword/trending`;
+  console.log(baseUrl);
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
